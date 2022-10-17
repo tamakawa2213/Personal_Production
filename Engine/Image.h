@@ -33,6 +33,5 @@ namespace Image
 	void SetAlpha(int hPict, int alpha);	//“§–¾“x‚ÌŽæ“¾
 	void SetColor(int hPict, int red, int blue, int green); //RBG‚ÌŽæ“¾
 	void SetTransform(int hPict, Transform transform_);
-	void RayCast(int hImage, RayCastData* data);
 };
 

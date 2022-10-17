@@ -42,7 +42,7 @@ public:
 	HRESULT Initialize(LPCWSTR fileName);
 	void Draw(Transform& transform, XMFLOAT4 color);
 	void Release();
-	void RayCast(RayCastData* data);
+
 private:
 	XMMATRIX size_;	//‰æ‘œ‚ÌƒTƒCƒY
 	virtual void Index();

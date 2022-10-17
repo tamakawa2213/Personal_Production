@@ -87,21 +87,3 @@ void Image::SetTransform(int hPict, Transform transform_)
 {
 	ImageList_[hPict]->TransformImage = transform_;
 }
-
-//レイキャスト（レイを飛ばして当たり判定）
-void Image::RayCast(int hPict, RayCastData* data)
-{
-	XMFLOAT3 target;
-	target.x = data->start.x + data->dir.x;
-	target.y = data->start.y + data->dir.y;
-	target.z = data->start.z + data->dir.z;
-	XMMATRIX matInv = XMMatrixInverse(nullptr, ImageList_[hPict]->TransformImage.GetWorldMatrix());
-	XMVECTOR vecStart = XMVector3TransformCoord(XMLoadFloat3(&data->start), matInv);
-	XMVECTOR vecTarget = XMVector3TransformCoord(XMLoadFloat3(&target), matInv);
-	XMVECTOR vecDir = vecTarget - vecStart;
-
-	XMStoreFloat3(&data->start, vecStart);
-	XMStoreFloat3(&data->dir, vecDir);
-
-	ImageList_[hPict]->pSprite->RayCast(data);
-}

@@ -1,52 +1,46 @@
 #include "Input.h"
+#include "CallDef.h"
+#include <assert.h>
 
 namespace Input
 {
-	LPDIRECTINPUT8   pDInput = nullptr;
 	//キーボード
-	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;
-	BYTE keyState[256] = { 0 };
-	BYTE prevKeyState[256];    //前フレームでの各キーの状態
+	LPDIRECTINPUT8   pDInput = nullptr;
+	LPDIRECTINPUTDEVICE8 pKeyDevice = nullptr;	//デバイスオブジェクト
+	BYTE keyState[256] = { 0 };					//現在の各キーの状態
+	BYTE prevKeyState[256];						//前フレームでの各キーの状態
 
 	//マウス
-	LPDIRECTINPUTDEVICE8	pMouseDevice_;
-	DIMOUSESTATE mouseState_;
-	DIMOUSESTATE prevMouseState_;
-	XMFLOAT3 mousePosition;
+	LPDIRECTINPUTDEVICE8 pMouseDevice = nullptr;	//マウス
+	DIMOUSESTATE mouseState;						//マウスの状態
+	DIMOUSESTATE prevMouseState;					//前フレームのマウスの状態
+	DirectX::XMFLOAT3 mousePosition;				//マウスの位置
+	DirectX::XMFLOAT3 prevMousePosition;
 
-	//コントローラ
-	const int MAX_NUM = 4;
-	XINPUT_STATE controllerState_[MAX_NUM];
-	XINPUT_STATE prevControllerState_[MAX_NUM];
+	//コントローラー
+	XINPUT_STATE controllerState_;
+	XINPUT_STATE prevControllerState_;
 
-	HRESULT Initialize(HWND hWnd)
+
+	void Initialize(HWND hWnd)
 	{
-		HRESULT hr = DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
-		if (FAILED(hr))
-		{
-			MessageBox(NULL, L"インプットに失敗しました", L"エラー", MB_OK);
-			SAFE_RELEASE(pDInput);
-			return hr;
-		}
+		HRESULT hr;
+		hr = DirectInput8Create(GetModuleHandle(nullptr), DIRECTINPUT_VERSION, IID_IDirectInput8, (VOID**)&pDInput, nullptr);
+		assert(hr == S_OK);
+
+		//キーボード
 		hr = pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice, nullptr);
-		if (FAILED(hr))
-		{
-			MessageBox(NULL, L"キーボードの取得に失敗しました", L"エラー", MB_OK);
-			SAFE_RELEASE(pDInput);
-			return hr;
-		}
+		assert(hr == S_OK);
 		pKeyDevice->SetDataFormat(&c_dfDIKeyboard);
 		pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
 
-		hr = pDInput->CreateDevice(GUID_SysMouse, &pMouseDevice_, nullptr);
-		if (FAILED(hr))
-		{
-			MessageBox(NULL, L"マウスの取得に失敗しました", L"エラー", MB_OK);
-			SAFE_RELEASE(pDInput);
-			return hr;
-		}
-		pMouseDevice_->SetDataFormat(&c_dfDIMouse);
-		pMouseDevice_->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+		//マウス
+		hr = pDInput->CreateDevice(GUID_SysMouse, &pMouseDevice, nullptr);
+		assert(hr == S_OK);
+		pMouseDevice->SetDataFormat(&c_dfDIMouse);
+		pMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_FOREGROUND);
+
+
 	}
 
 	void Update()
@@ -55,30 +49,32 @@ namespace Input
 		pKeyDevice->Acquire();
 		pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
 
-		memcpy(&prevMouseState_, &mouseState_, sizeof(mouseState_));
-		pMouseDevice_->Acquire();
-		pMouseDevice_->GetDeviceState(sizeof(mouseState_), &mouseState_);
-		for (int i = 0; i < MAX_NUM; i++)
-		{
-			memcpy(&prevControllerState_[i], &controllerState_[i], sizeof(controllerState_[i]));
-			XInputGetState(0, &controllerState_[i]);
-		}
+		pMouseDevice->Acquire();
+		memcpy(&prevMouseState, &mouseState, sizeof(mouseState));
+		pMouseDevice->GetDeviceState(sizeof(mouseState), &mouseState);
+		prevMousePosition = mousePosition;
+
+		//コントローラー
+		prevControllerState_ = controllerState_;
+		XInputGetState(0, &controllerState_);
 	}
 
-	//キーボード
+	///////////////////////////////////////////////////キーボード関連///////////////////////////////////////////
+
 	bool IsKey(int keyCode)
 	{
-		if (keyState[keyCode] & 0x80)
+		if (keyState[keyCode] & 0x80)	//16進数80との論理積
 		{
 			return true;
 		}
+
 		return false;
 	}
 
 	bool IsKeyDown(int keyCode)
 	{
 		//今は押してて、前回は押してない
-		if (prevKeyState[keyCode] != keyState[keyCode] && keyState[keyCode])
+		if (IsKey(keyCode) && !(prevKeyState[keyCode] & 0x80))
 		{
 			return true;
 		}
@@ -87,178 +83,147 @@ namespace Input
 
 	bool IsKeyUp(int keyCode)
 	{
-		//押されてて、今離した
-		if (prevKeyState[keyCode] != keyState[keyCode] && prevKeyState[keyCode])
+		//前回は押してて、今は押してない
+		if ((prevKeyState[keyCode] & 0x80) && !IsKey(keyCode))
 		{
 			return true;
 		}
 		return false;
 	}
 
-	bool IsKeyUpDown(int keyCode)
-	{
-		//今は押してて、前回は押してない + 押されてて、今離した
-		if (prevKeyState[keyCode] != keyState[keyCode])
-		{
-			return true;
-		}
-		return false;
-	}
+	///////////////////////////////////////////////////////マウス関連//////////////////////////////////////////////////
 
-	//マウス
-	bool IsMouce(int mouceCode)
-	{
-		if (mouseState_.rgbButtons[mouceCode] & 0x80)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool IsMouceDown(int mouceCode)
-	{
-		//今は押してて、前回は押してない
-		if (prevMouseState_.rgbButtons[mouceCode] != mouseState_.rgbButtons[mouceCode] && mouseState_.rgbButtons[mouceCode])
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool IsMouceUp(int mouceCode)
-	{
-		//押されてて、今離した
-		if (prevMouseState_.rgbButtons[mouceCode] != mouseState_.rgbButtons[mouceCode] && prevMouseState_.rgbButtons[mouceCode])
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool IsMouceUpDown(int mouceCode)
-	{
-		//今は押してて、前回は押してない + 押されてて、今離した
-		if (prevMouseState_.rgbButtons[mouceCode] != mouseState_.rgbButtons[mouceCode])
-		{
-			return true;
-		}
-		return false;
-	}
-
-	XMFLOAT3 GetMousePosition()
+	DirectX::XMFLOAT3 GetMousePosition()
 	{
 		return mousePosition;
 	}
 
 	void SetMousePosition(int x, int y)
 	{
-		mousePosition = XMFLOAT3((float)x, (float)y, 0);
+		mousePosition = DirectX::XMFLOAT3((float)x, (float)y, 0);
 	}
 
-	//コントローラー
-	bool IsController(int controllerCode, int controllerID)
+	DirectX::XMFLOAT3 GetMouseMovement()
 	{
-		if (controllerState_[controllerID].Gamepad.wButtons & controllerCode)
-		{
-			return TRUE; //押してる
+		DirectX::XMFLOAT3 MouseMovement;
+		MouseMovement.x = mousePosition.x - prevMousePosition.x;
+		MouseMovement.y = mousePosition.y - prevMousePosition.y;
+		MouseMovement.z = mousePosition.z - prevMousePosition.z;
+		return MouseMovement;
+	}
+
+	bool IsMouseMove()
+	{
+		DirectX::XMFLOAT3 MouseMovement;
+		MouseMovement.x = mousePosition.x - prevMousePosition.x;
+		MouseMovement.y = mousePosition.y - prevMousePosition.y;
+		MouseMovement.z = mousePosition.z - prevMousePosition.z;
+		if (MouseMovement.x == 0 && MouseMovement.y == 0 && MouseMovement.z == 0) {
+			return false;
 		}
-		return FALSE; //押してない
+		return true;
 	}
 
-	bool IsControllerDown(int controllerCode, int controllerID)
+	bool IsMouse(int mouseBotton)
 	{
-		//今は押してて、前回は押してない
-		if (prevControllerState_[controllerID].Gamepad.wButtons != controllerState_[controllerID].Gamepad.wButtons && controllerState_[controllerID].Gamepad.wButtons == controllerCode)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool IsControllerUp(int controllerCode, int controllerID)
-	{
-		//押されてて、今離した
-		if (prevControllerState_[controllerID].Gamepad.wButtons != controllerState_[controllerID].Gamepad.wButtons && prevControllerState_[controllerID].Gamepad.wButtons == controllerCode)
-		{
-			return true;
-		}
-		return false;
-	}
-
-	bool IsControllerUpDown(int controllerCode, int controllerID)
-	{
-		//今は押してて、前回は押してない + 押されてて、今離した
-		if (prevControllerState_[controllerID].Gamepad.wButtons != controllerState_[controllerID].Gamepad.wButtons)
+		if (mouseState.rgbButtons[mouseBotton] & 0x80)	//16進数80との論理積
 		{
 			return true;
 		}
 		return false;
 	}
 
-	//ズレを直す
-	float GetAnalogValue(int value, int max, int deadZone)
+	bool IsMouseDown(int mouseBotton)
 	{
-		float result = (float)value;
-		if (result > 0)
+		if (IsMouse(mouseBotton) && !(prevMouseState.rgbButtons[mouseBotton] & 0x80))
 		{
-			//+の場合
-			if (result < deadZone)
-			{
-				result = 0;
-			}
-			else
-			{
-				result = (result - deadZone) / (max - deadZone);
-			}
+			return true;
 		}
+		return false;
+	}
 
-		else
+	bool IsMouseUp(int mouseBotton)
+	{
+		if (!IsMouse(mouseBotton) && prevMouseState.rgbButtons[mouseBotton] & 0x80)
 		{
-			//-の場合
-			if (result > -deadZone)
-			{
-				result = 0;
-			}
-			else
-			{
-				result = (result + deadZone) / (max - deadZone);
-			}
+			return true;
 		}
-
-		return result;
+		return false;
 	}
 
-	//左スティックを傾ける
-	XMFLOAT3 GetPadStickL(int controllerID)
+	//////////////////////////////////////////コントローラー////////////////////////////////////////////
+
+	bool IsCtrl(int ctrlBotton)
 	{
-		float x = GetAnalogValue(controllerState_[controllerID].Gamepad.sThumbLX, 32767, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-		float y = GetAnalogValue(controllerState_[controllerID].Gamepad.sThumbLY, 32767, XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE);
-		return XMFLOAT3(x, y, 0);
+		if (controllerState_.Gamepad.wButtons & ctrlBotton)
+		{
+			return true;
+		}
+		return false;
 	}
 
-	//右スティックを傾ける
-	XMFLOAT3 GetPadStickR(int controllerID)
+	bool IsCtrlUp(int ctrlBotton)
 	{
-		float x = GetAnalogValue(controllerState_[controllerID].Gamepad.sThumbRX, 32767, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-		float y = GetAnalogValue(controllerState_[controllerID].Gamepad.sThumbRY, 32767, XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE);
-		return XMFLOAT3(x, y, 0);
+		if (IsCtrl(ctrlBotton) && !(prevControllerState_.Gamepad.wButtons & ctrlBotton))
+		{
+			return true;
+		}
+		return false;
 	}
 
-	//左スティックを押す
-	float GetPadTrrigerL(int controllerID)
+	bool IsCtrlDown(int ctrlBotton)
 	{
-		return GetAnalogValue(controllerState_[controllerID].Gamepad.bLeftTrigger, 255, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		if (!IsCtrl(ctrlBotton) && prevControllerState_.Gamepad.wButtons & ctrlBotton)
+		{
+			return true;
+		}
+		return false;
 	}
 
-	//右スティックを押す
-	float GetPadTrrigerR(int controllerID)
+	DirectX::XMFLOAT3 CtrlL_StickInclination()
 	{
-		return GetAnalogValue(controllerState_[controllerID].Gamepad.bRightTrigger, 255, XINPUT_GAMEPAD_TRIGGER_THRESHOLD);
+		if ((controllerState_.Gamepad.sThumbLX <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+			controllerState_.Gamepad.sThumbLX > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) &&
+			(controllerState_.Gamepad.sThumbLY <  XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+				controllerState_.Gamepad.sThumbLY > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE))
+		{
+			controllerState_.Gamepad.sThumbLX = 0;
+			controllerState_.Gamepad.sThumbLY = 0;
+		}
+		float x = (float)controllerState_.Gamepad.sThumbLX / 32767.0f;
+		float y = (float)controllerState_.Gamepad.sThumbLY / 32767.0f;
+		return DirectX::XMFLOAT3(x, y, 0);
+	}
+
+	DirectX::XMFLOAT3 CtrlR_StickInclination()
+	{
+		if ((controllerState_.Gamepad.sThumbRX <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+			controllerState_.Gamepad.sThumbRX > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) &&
+			(controllerState_.Gamepad.sThumbRY <  XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+				controllerState_.Gamepad.sThumbRY > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE))
+		{
+			controllerState_.Gamepad.sThumbRX = 0;
+			controllerState_.Gamepad.sThumbRY = 0;
+		}
+		float x = (float)controllerState_.Gamepad.sThumbRX / 32767.0f;
+		float y = (float)controllerState_.Gamepad.sThumbRY / 32767.0f;
+		return DirectX::XMFLOAT3(x, y, 0);
+	}
+
+	float CtrlTriggerInclination(BYTE Trigger)
+	{
+		float value = Trigger;
+		if (value < XINPUT_GAMEPAD_TRIGGER_THRESHOLD)
+		{
+			value = 0.0f;
+		}
+		value = value / 255;
+		return value;
 	}
 
 	void Release()
 	{
-		SAFE_RELEASE(pMouseDevice_);
+		SAFE_RELEASE(pMouseDevice);
 		SAFE_RELEASE(pKeyDevice);
 		SAFE_RELEASE(pDInput);
 	}

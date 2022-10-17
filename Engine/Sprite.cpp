@@ -208,38 +208,3 @@ void Sprite::SetBufferToPipeline()
 	Direct3D::SetDepthBafferWriteEnable(true);
 }
 
-//レイキャスト
-void Sprite::RayCast(RayCastData* data)
-{
-	data->hit = FALSE;
-	for (int i = 0; i < 2; i++)
-	{
-		//3頂点
-		XMVECTOR ver[3];
-
-		ver[0] = vertices_[index_[i * 3 + 0]].position;
-		ver[1] = vertices_[index_[i * 3 + 1]].position;
-		ver[2] = vertices_[index_[i * 3 + 2]].position;
-
-		//画像のサイズに合わせる
-		ver[0] = XMVector3TransformCoord(ver[0], size_);
-		ver[1] = XMVector3TransformCoord(ver[1], size_);
-		ver[2] = XMVector3TransformCoord(ver[2], size_);
-
-		XMFLOAT3 ver_[3];
-		XMStoreFloat3(&ver_[0], ver[0]);
-		XMStoreFloat3(&ver_[1], ver[1]);
-		XMStoreFloat3(&ver_[2], ver[2]);
-
-		BOOL  hit = FALSE;
-		float dist = 0.0f;
-
-		hit = Direct3D::Intersect(data->start, data->dir, ver_[0], ver_[1], ver_[2], &dist);
-
-		if (hit && dist < data->dist)
-		{
-			data->hit = TRUE;
-			data->dist = dist;
-		}
-	}
-}

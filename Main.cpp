@@ -13,8 +13,8 @@
 
 //定数宣言
 LPCWSTR WIN_CLASS_NAME = L"個人製作";	//ウィンドウクラス名
-const int WINDOW_WIDTH = 1920;				//ウィンドウの幅
-const int WINDOW_HEIGHT = 1080;				//ウィンドウの高さ
+const int WINDOW_WIDTH = 800;				//ウィンドウの幅
+const int WINDOW_HEIGHT = 600;				//ウィンドウの高さ
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
