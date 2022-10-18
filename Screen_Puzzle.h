@@ -26,9 +26,19 @@ const Move Direction[4]
 	{-1,0}		//下
 };
 
+enum
+{
+	Board_HLt,
+	Board_HR,
+	Board_LwLt,
+	Board_LwR,
+	Board_LtR,
+	Board_MAX		//ボードの種類の最大値
+};
+
 class Screen_Puzzle : public GameObject
 {
-	int hModel_;
+	int hModel_[Board_MAX];
 	int Board_[BoardSize_][BoardSize_];
 	void Swap(int x, int z);
 public:

@@ -7,10 +7,10 @@
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(-1)
+	: GameObject(parent, "Screen_Puzzle"), hModel_()
 {
 	ZeroMemory(Board_, sizeof(Board_));
-	Board_[BoardSize_ - 1][BoardSize_ - 1] = Empty_;
+	Board_[NULL][BoardSize_ - 1] = Empty_;
 }
 
 Screen_Puzzle::~Screen_Puzzle()
@@ -19,6 +19,14 @@ Screen_Puzzle::~Screen_Puzzle()
 
 void Screen_Puzzle::Initialize()
 {
+	Board_[1][0] = 3;
+	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
+	for (int i = NULL; i < Board_MAX; i++)
+	{
+		std::string Name = "Assets\\" + Filename[i] + ".fbx";
+		hModel_[i] = Model::Load(Name);
+		assert(hModel_ >= NULL);
+	}
 }
 
 void Screen_Puzzle::Update()
@@ -68,24 +76,27 @@ void Screen_Puzzle::Update()
 		{
 			for (int z = 0; z < BoardSize_; z++)
 			{
-						RayCastData data;
-						XMStoreFloat3(&data.start, front);
-						XMStoreFloat3(&data.dir, ray);
+				for (int type = NULL; type < Board_MAX; type++)
+				{
+					RayCastData data;
+					XMStoreFloat3(&data.start, front);
+					XMStoreFloat3(&data.dir, ray);
 
-						Transform Tr;
-						Tr.position_ = XMFLOAT3((float)x, NULL, (float)z);
-						Model::SetTransform(hModel_, Tr);
+					Transform Tr;
+					Tr.position_ = XMFLOAT3((float)x, 1, (float)z);
+					Model::SetTransform(hModel_[type], Tr);
 
-						Model::RayCast(hModel_, data);
+					Model::RayCast(hModel_[type], data);
 
-						if (data.hit && distance > data.dist)
-						{
-							distance = data.dist;
-							boardX = x;
-							boardZ = z;
-							Ishit = true;
-						}
+					if (data.hit && distance > data.dist)
+					{
+						distance = data.dist;
+						boardX = x;
+						boardZ = z;
+						Ishit = true;
+					}
 				}
+			}
 		}
 		if (Ishit)
 		{
@@ -96,6 +107,20 @@ void Screen_Puzzle::Update()
 
 void Screen_Puzzle::Draw()
 {
+	for (char x = NULL; x < BoardSize_; x++)
+	{
+		for (char z = NULL; z < BoardSize_; z++)
+		{
+			int Type = Board_[x][z];
+			if (Type != Empty_)
+			{
+				Transform Tr = transform_;
+				Tr.position_ = XMFLOAT3(x, NULL, z);
+				Model::SetTransform(hModel_[Type], Tr);
+				Model::Draw(hModel_[Type]);
+			}
+		}
+	}
 }
 
 void Screen_Puzzle::Release()

@@ -1,7 +1,7 @@
 //───────────────────────────────────────
- // テクスチャ＆サンプラーデータのグローバル変数定義
+ // テクスチャ＆サンプラーデータのグローバル変数定義 :の後ろにあるものはセマンティクスという
 //───────────────────────────────────────
-Texture2D		g_texture : register(t0);	//テクスチャー
+Texture2D	g_texture : register(t0);	//テクスチャー
 SamplerState	g_sampler : register(s0);	//サンプラー
 
 //───────────────────────────────────────
@@ -10,14 +10,10 @@ SamplerState	g_sampler : register(s0);	//サンプラー
 //───────────────────────────────────────
 cbuffer global
 {
-	float4x4	matWVP;			// ワールド・ビュー・プロジェクションの合成行列
-	float4x4	matNormal;		//法線変形用の行列
-	float4		diffuseColor;		// ディフューズカラー（マテリアルの色）
+	float4x4	matWVP;			//ワールド・ビュー・プロジェクションの合成行列
+	float4x4	matNormal;		//移動行列を除いたワールド行列
+	float4		diffuseColor;	// ディフューズカラー（マテリアルの色）
 	bool		isTexture;		// テクスチャ貼ってあるかどうか
-	float		red;			//赤色
-	float		green;			//緑色
-	float		blue;			//青色
-	float		alpha;			//透明度
 };
 
 //───────────────────────────────────────
@@ -25,9 +21,9 @@ cbuffer global
 //───────────────────────────────────────
 struct VS_OUT
 {
-	float4 pos  : SV_POSITION;	//位置
+	float4 pos	: SV_POSITION;	//位置
 	float2 uv	: TEXCOORD;		//UV座標
-	float4 color	: COLOR;	//色（明るさ）
+	float4 color: COLOR;		//色（明るさ）
 };
 
 //───────────────────────────────────────
@@ -43,11 +39,13 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	outData.pos = mul(pos, matWVP);
 	outData.uv = uv;
 
+	//法線にワールド行列を掛けて回転
 	normal = mul(normal, matNormal);
 
-	float4 light = float4(1, 0.8, -0.3, 0);
+	float4 light = float4(1.0f, 1.0f, -0.3f, 0.0f);
 	light = normalize(light);
 	outData.color = clamp(dot(normal, light), 0, 1);
+
 	//まとめて出力
 	return outData;
 }
@@ -58,16 +56,17 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 float4 PS(VS_OUT inData) : SV_Target
 {
 	float4 diffuse;
-	float4 ambient;
-	if (isTexture == true)
+	diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
+
+	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2f, 0.2f, 0.2f, 1);
+
+	if (isTexture)
 	{
-		diffuse = float4(red, green, blue, alpha) * g_texture.Sample(g_sampler, inData.uv) * inData.color;
-		ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2, 0.2, 0.2, 1.0);
+		return (diffuse + ambient);
 	}
 	else
 	{
-		diffuse = float4(red, green, blue, alpha) * diffuseColor * inData.color;
-		ambient = diffuseColor * float4(0.2, 0.2, 0.2, 1.0);
+		return diffuseColor * inData.color;
 	}
-	return (diffuse + ambient) * float4(1.0f , 1.0f, 1.0f, alpha);
 }
+//Illegal character in shader file のエラーが出たら使用不可の全角が使用されている

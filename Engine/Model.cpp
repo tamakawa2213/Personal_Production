@@ -77,19 +77,4 @@ namespace Model
 
         FileSet[hModel]->pFbx->RayCast(Raydata);
     }
-
-
-    void Model::PushOut(int handle, XMFLOAT3* position, float size, XMFLOAT3 dir)
-    {
-        XMFLOAT3 target = XMFLOAT3(position->x + dir.x, position->y + dir.y, position->z + dir.z);
-        XMMATRIX matInv = XMMatrixInverse(nullptr, FileSet[handle]->transform.GetWorldMatrix());
-        XMVECTOR vecStart = XMVector3TransformCoord(XMLoadFloat3(position), matInv);
-        XMVECTOR vecTarget = XMVector3TransformCoord(XMLoadFloat3(&target), matInv);
-        XMVECTOR vecDir = vecTarget - vecStart;
-
-        XMStoreFloat3(position, vecStart);
-        XMStoreFloat3(&dir, vecDir);
-
-        FileSet[handle]->pFbx->PushOut(position, size, dir);
-    }
 }

@@ -1,24 +1,22 @@
 #pragma once
 #include <string>
 #include <vector>
-#include "Fbx.h"
+#include "Sprite.h"
 #include "Transform.h"
 
-struct Fileset
+struct PictureSet
 {
-	Fbx* pFbx = nullptr;		//Fbxのポインタ
+	Sprite* pSprite = nullptr;	//Spriteのポインタ
 	Transform transform;		//transformクラス
-	std::string FileName;		//ファイルの名前
+	LPCWSTR FileName = L"";		//ファイルの名前
 	bool FindFbx = false;		//Fbxファイルを事前にロードしているか
 };
 
-namespace Model
+namespace Picture
 {
-	int Load(std::string filename);
+	int Load(LPCWSTR filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
 
 	void Release();
-
-	void RayCast(int hModel, RayCastData& Raydata);
 }

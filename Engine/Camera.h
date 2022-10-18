@@ -1,6 +1,6 @@
 #pragma once
-#include <DirectXMath.h>
 #include "Direct3D.h"
+#include <DirectXMath.h>
 
 using namespace DirectX;
 
@@ -10,7 +10,7 @@ using namespace DirectX;
 namespace Camera
 {
 	//初期化（プロジェクション行列作成）
-	void Initialize(int WINDOW_WIDTH, int WINDOW_HEIGHT);
+	void Initialize();
 
 	//更新（ビュー行列作成）
 	void Update();

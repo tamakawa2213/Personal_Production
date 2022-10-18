@@ -1,27 +1,29 @@
 #pragma once
+//#ifndef _DIRECT3D_H_
+//#define _DIRECT3D_H_
+
 #include <assert.h>
-#include <DirectXMath.h>
 #include <d3d11.h>
-#include "CallDef.h"
+#include <DirectXMath.h>
+#include <iterator>
+
+using namespace DirectX;
 
 //リンカ
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-using namespace DirectX;
-
-
-enum SHADER_TYPE
-{
-	SHADER_2D,
-	SHADER_3D,
-	SHADER_MAX
+enum SHADER_TYPE {
+	SHADER_2D,	//2D用シェーダー
+	SHADER_3D,	//3D用シェーダー
+	SHADER_MAX	//これは使わない
 };
 
 namespace Direct3D
 {
-	extern ID3D11Device* pDevice;				//デバイス
-	extern ID3D11DeviceContext* pContext;		//デバイスコンテキスト
+//extern = どこかで生成されていて、複数回生成されないようにするためのもの
+	extern ID3D11Device* pDevice;			//デバイス
+	extern ID3D11DeviceContext* pContext;	//デバイスコンテキスト
 	extern int scrWidth, scrHeight;			//スクリーンの幅と高さ
 
 	//初期化
@@ -29,10 +31,10 @@ namespace Direct3D
 
 	//シェーダー準備
 	HRESULT InitShader();
-	HRESULT InitShader3D();
 	HRESULT InitShader2D();
+	HRESULT InitShader3D();
 
-	void SetShader(SHADER_TYPE type);
+	void SetShader(int type);
 
 	//描画開始
 	void BeginDraw();
@@ -42,13 +44,6 @@ namespace Direct3D
 
 	//解放
 	void Release();
-
-	//スクリーンの色の取得
-	void SetColor(float red, float blue, float green);
-
-	//ZバッファのON,OFF
-	void SetDepthBafferWriteEnable(bool isWrite);
-
-	//三角形と線分の衝突判定
-	bool Intersect(XMFLOAT3& start, XMFLOAT3& direction, XMFLOAT3& v0, XMFLOAT3& v1, XMFLOAT3& v2, float* distance);
 };
+
+//#endif

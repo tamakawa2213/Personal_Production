@@ -19,7 +19,7 @@ struct RayCastData
 	float dist;
 	bool hit;
 
-	RayCastData() : start(), dir(), dist(9999.0f), hit(false) {}
+	RayCastData() : start(), dir(), dist(9999.0f), hit(false){}
 };
 
 class Fbx
@@ -29,7 +29,6 @@ class Fbx
 	{
 		Texture* pTexture;
 		XMFLOAT4 diffuse;
-		DWORD		polygonCount;//マテリアルのポリゴン数
 	};
 	struct CONSTANT_BUFFER
 	{
@@ -67,5 +66,4 @@ public:
 	void RayCast(RayCastData& rayData);
 	void Draw(Transform& transform);
 	void Release();
-	void PushOut(XMFLOAT3* position, float size, XMFLOAT3 dir);
 };

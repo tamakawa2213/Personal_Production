@@ -2,8 +2,8 @@
 #include "CallDef.h"
 #include "GameObject.h"
 
-Transform::Transform() :matTranslate_(XMMatrixIdentity()), matRotate_(XMMatrixIdentity()), matScale_(XMMatrixIdentity()),
-position_(0, 0, 0), rotate_(), scale_(1, 1, 1), pParent_(nullptr)
+Transform::Transform():matTranslate_(XMMatrixIdentity()),matRotate_(XMMatrixIdentity()),matScale_(XMMatrixIdentity()),
+position_(0,0,0),rotate_(),scale_(1,1,1), pParent_(nullptr)
 {
 }
 
@@ -14,7 +14,7 @@ Transform::~Transform()
 void Transform::Calclation()
 {
     //à⁄ìÆçsóÒ
-    matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.z);
+    matTranslate_ = XMMatrixTranslation( position_.x, position_.y, position_.z);
 
     //âÒì]çsóÒ
     matRotate_ = XMMatrixRotationX(XMConvertToRadians(rotate_.x))

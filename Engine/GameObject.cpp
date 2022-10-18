@@ -140,13 +140,13 @@ void GameObject::Collision(GameObject* pTarget)
 			}
 		}
 	}
-	//子オブジェクトの判定も呼ぶ
-	if (!pTarget->childList_.empty())
-	{
-		for (auto itr = pTarget->childList_.begin(); itr != pTarget->childList_.end(); itr++)
-		{	//listの数だけ回帰処理
-			Collision(*itr);
+		//子オブジェクトの判定も呼ぶ
+		if (!pTarget->childList_.empty())
+		{
+			for (auto itr = pTarget->childList_.begin(); itr != pTarget->childList_.end(); itr++)
+			{	//listの数だけ回帰処理
+				Collision(*itr);
+			}
 		}
-	}
-
+	
 }

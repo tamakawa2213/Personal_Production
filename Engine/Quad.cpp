@@ -1,31 +1,31 @@
+#include "Quad.h"
 #include "Camera.h"
 #include "CallDef.h"
-#include "Sprite.h"
 
 using namespace DirectX;
 
-Sprite::Sprite() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr), index_(0)
+Quad::Quad():pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pTexture_(nullptr), index_ (0)
 {
 }
 
 //デストラクタでRELEASEを呼び出す
-Sprite::~Sprite()
+Quad::~Quad()
 {
 	Release();
 }
 
 
-HRESULT Sprite::Initialize(LPCWSTR filename)
+HRESULT Quad::Initialize()
 {
 	HRESULT hr;
 
 	// 頂点情報
 	VERTEX vertices[] =
 	{
-		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（左上）
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },	// 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },	// 四角形の頂点（左下）
+		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（左上）
+		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(2.0f, 0.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（右上）
+		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(2.0f, 2.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（右下）
+		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 2.0f, 0.0f, 0.0f) ,XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f) },	// 四角形の頂点（左下）
 	};
 
 	// 頂点データ用バッファの設定
@@ -39,6 +39,7 @@ HRESULT Sprite::Initialize(LPCWSTR filename)
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
 	hr = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
+
 	HR_FAILED(hr, L"バッファの作成に失敗しました");
 
 	//インデックス情報
@@ -58,13 +59,14 @@ HRESULT Sprite::Initialize(LPCWSTR filename)
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 	hr = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
-	HR_FAILED(hr, L"インデックスバッファの作成に失敗しました");
 
-	hr = ConBuf(filename);
+	HR_FAILED(hr, L"インデクスバッファの作成に失敗しました");
+
+	hr = ConBuf();
 	return hr;
 }
 
-HRESULT Sprite::ConBuf(LPCWSTR filename) {
+HRESULT Quad::ConBuf() {
 	HRESULT hr;
 	//コンスタントバッファ作成
 	D3D11_BUFFER_DESC cb;
@@ -78,28 +80,27 @@ HRESULT Sprite::ConBuf(LPCWSTR filename) {
 	HR_FAILED(hr, L"コンスタントバッファの作成に失敗しました");
 
 	pTexture_ = new Texture;
-	hr = Load(filename);
-
+	hr = LoadTex();
+	HR_FAILED(hr, L"pngファイルのロードに失敗しました");
+	
 	return S_OK;
 }
 
-HRESULT Sprite::Load(LPCWSTR filename) {
+HRESULT Quad::LoadTex() {
 	HRESULT hr;
 	//テクスチャをロード
-	hr = pTexture_->Load(filename);
+	hr = pTexture_->Load(L"Assets\\dice.png");
 	return hr;
 }
 
-void Sprite::Draw(Transform& transform)
+void Quad::Draw(Transform& transform)
 {
-	Direct3D::SetShader(SHADER_2D);
+	Direct3D::SetShader(SHADER_3D);
 
-	//XMMATRIX Size = ((float)pTexture_->GetFileSize()->FileWidth,pTexture_->GetFileSize()->FileHeight,0.0f,0.0f);
 	CONSTANT_BUFFER cb;
-
-	//行列の計算をして、ワールド行列を返す
 	transform.Calclation();
-	cb.matW = XMMatrixTranspose(transform.GetWorldMatrix());
+	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//行列なので順番は固定
+	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
@@ -129,7 +130,7 @@ void Sprite::Draw(Transform& transform)
 	Direct3D::pContext->DrawIndexed(index_, 0, 0);
 }
 
-void Sprite::Release()
+void Quad::Release()
 {
 	SAFE_RELEASE(pTexture_);
 	SAFE_DELETE(pTexture_);	//newしたのでDELETEも行う

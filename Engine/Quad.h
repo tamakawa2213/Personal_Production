@@ -1,15 +1,17 @@
 #pragma once
+
 #include "Direct3D.h"
 #include "Texture.h"
 #include "Transform.h"
 
-class Sprite
+class Quad
 {
 protected:
 	//コンスタントバッファ
 	struct CONSTANT_BUFFER
 	{
-		XMMATRIX matW;
+		XMMATRIX matWVP;
+		XMMATRIX matNormal;
 	};
 
 	//頂点情報
@@ -17,6 +19,7 @@ protected:
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
 	ID3D11Buffer* pIndexBuffer_;	//インデックスバッファ
@@ -24,14 +27,12 @@ protected:
 
 	Texture* pTexture_;
 	int index_;		//頂点数
-
 public:
-	Sprite();				//コンストラクタ
-	~Sprite();				//デストラクタ
-	virtual HRESULT Initialize(LPCWSTR filename);	//初期化
-	HRESULT ConBuf(LPCWSTR filename);
-	virtual HRESULT Load(LPCWSTR filename);
-	//Transformを引数にとる
+	Quad();				//コンストラクタ
+	~Quad();			//デストラクタ
+	virtual HRESULT Initialize();	//初期化
+	HRESULT ConBuf();
+	virtual HRESULT LoadTex();	//テクスチャのロード
 	void Draw(Transform& transform);	//描画
-	void Release();						//解放
+	void Release();		//解放
 };

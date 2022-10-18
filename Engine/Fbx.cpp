@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include "Math.h"
 
-Fbx::Fbx() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr), indexCount_(nullptr),
+Fbx::Fbx():pVertexBuffer_(nullptr),pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr),indexCount_(nullptr),
 vertexCount_(0), polygonCount_(0), materialCount_(0), pVertices_(nullptr), ppIndex_(nullptr)
 {
 }
@@ -113,10 +113,10 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* pMesh)
 void Fbx::InitIndex(fbxsdk::FbxMesh* pMesh)
 {
 	int VertexCount = polygonCount_ * 3;
-	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
+	pIndexBuffer_ = new ID3D11Buffer* [materialCount_];
 	indexCount_ = new int[materialCount_];
 
-	ppIndex_ = new int* [materialCount_];
+	ppIndex_ = new int*[materialCount_];
 	for (int i = 0; i < materialCount_; i++)
 	{
 		ppIndex_[i] = new int[VertexCount];
@@ -160,7 +160,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* pMesh)
 	}
 }
 
-HRESULT Fbx::IntConstantBuffer()
+HRESULT Fbx::IntConstantBuffer() 
 {
 	HRESULT hr;
 	D3D11_BUFFER_DESC cb;
@@ -196,7 +196,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 		{
 			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
 			const char* textureFilePath = textureInfo->GetRelativeFileName();
-
+			
 			//ファイル名+拡張だけにする
 			char name[_MAX_FNAME];	//ファイル名
 			char ext[_MAX_EXT];	//拡張子
@@ -243,14 +243,14 @@ void Fbx::RayCast(RayCastData& rayData)
 			XMFLOAT3 v1; XMStoreFloat3(&v1, pVertices_[ppIndex_[material][poly * 3 + 1]].position);
 			XMFLOAT3 v2; XMStoreFloat3(&v2, pVertices_[ppIndex_[material][poly * 3 + 2]].position);
 
-			rayData.hit = Math::Intersect(rayData.start, rayData.dir, v0, v1, v2);
+			rayData.hit = Math::Intersect(rayData.start, rayData.dir, v0, v1, v2, &rayData.dist);
 
 			if (rayData.hit)
 			{
 				return;
 			}
 		}
-
+		
 	}
 }
 
@@ -273,16 +273,16 @@ void Fbx::Draw(Transform& transform)
 			cb.isTexture = 1;
 		}
 
-		if (cb.isTexture == 0)
+		if(cb.isTexture == 0)
 		{
-			cb.diffuseColor = pMaterialList_[i].diffuse;
+		cb.diffuseColor = pMaterialList_[i].diffuse;
 
 		}
 
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// データを値を送る
-
+		
 		if (cb.isTexture == 1)
 		{
 			ID3D11SamplerState* pSampler = pMaterialList_[i].pTexture->GetSampler();
@@ -325,47 +325,4 @@ void Fbx::Release()
 	}
 	SAFE_DELETE_ARRAY(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
-}
-
-void Fbx::PushOut(XMFLOAT3* position, float size, XMFLOAT3 dir)
-{
-	XMVECTOR vDir = XMLoadFloat3(&dir);
-	vDir = -vDir;
-	vDir = XMVector3Normalize(vDir);
-	XMStoreFloat3(&dir, vDir);
-	float dist1 = 9999.0f;
-	float dist2 = 9999.0f;
-	XMFLOAT3 pos1 = *position;
-	XMFLOAT3 pos2 = XMFLOAT3(position->x + dir.x, position->y + dir.y, position->z + dir.z);
-
-	float Storage = dist1;
-
-	//マテリアル毎
-	for (int material = 0; material < materialCount_; material++)
-	{
-		//そのマテリアルのポリゴン毎
-		for (int poly = 0; poly < indexCount_[material] / 3; poly++)
-		{
-			XMFLOAT3 v0; XMStoreFloat3(&v0, pVertices_[ppIndex_[material][poly * 3]].position);
-			XMFLOAT3 v1; XMStoreFloat3(&v1, pVertices_[ppIndex_[material][poly * 3 + 1]].position);
-			XMFLOAT3 v2; XMStoreFloat3(&v2, pVertices_[ppIndex_[material][poly * 3 + 2]].position);
-
-
-			Math::CircleToPlane(pos1, size, v0, v1, v2, &dist1);
-			if (dist1 < Storage)
-			{
-				Storage = dist1;
-				Math::CircleToPlane(pos2, size, v0, v1, v2, &dist2);
-			}
-			else
-			{
-				dist1 = Storage;
-			}
-			
-		}
-	}
-
-	float ans = size / (dist2 - dist1);
-	XMFLOAT3 adir = XMFLOAT3(dir.x * ans, dir.y * ans, dir.z * ans);
-	*position = XMFLOAT3(position->x + adir.x, position->y + adir.y, position->z + adir.z);
 }
