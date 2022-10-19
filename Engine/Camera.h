@@ -10,7 +10,7 @@ using namespace DirectX;
 namespace Camera
 {
 	//初期化（プロジェクション行列作成）
-	void Initialize();
+	void Initialize(int winW, int winH);
 
 	//更新（ビュー行列作成）
 	void Update();

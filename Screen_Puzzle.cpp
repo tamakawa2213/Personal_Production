@@ -83,7 +83,7 @@ void Screen_Puzzle::Update()
 					XMStoreFloat3(&data.dir, ray);
 
 					Transform Tr;
-					Tr.position_ = XMFLOAT3((float)x, 1, (float)z);
+					Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
 					Model::SetTransform(hModel_[type], Tr);
 
 					Model::RayCast(hModel_[type], data);

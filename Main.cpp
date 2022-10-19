@@ -94,7 +94,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	Input::Initialize(hWnd);
 
 	//カメラの初期化
-	Camera::Initialize();
+	Camera::Initialize(winW, winH);
 
 	//メッセージループ(何か起きるのを待つ)
 	MSG msg;
