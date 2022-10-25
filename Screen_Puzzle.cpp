@@ -1,6 +1,5 @@
 #include "Screen_Puzzle.h"
 #include "Engine/Camera.h"
-#include "Engine/Direct3D.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 
