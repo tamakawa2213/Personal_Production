@@ -2,19 +2,19 @@
 #include "Engine/GameObject.h"
 
 
-struct Move
-{
-	int moveHLw;
-	int moveLtR;
-};
-
-const Move Direction[4]
-{
-	{0,1},		//âE
-	{0,-1},		//ç∂
-	{1,0},		//è„
-	{-1,0}		//â∫
-};
+//struct Move
+//{
+//	int moveHLw;
+//	int moveLtR;
+//};
+//
+//const Move Direction[4]
+//{
+//	{0,1},		//âE
+//	{0,-1},		//ç∂
+//	{1,0},		//è„
+//	{-1,0}		//â∫
+//};
 
 enum
 {

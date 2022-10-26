@@ -6,6 +6,10 @@
 Screen_Room::Screen_Room(GameObject* parent)
 	: GameObject(parent, "Screen_Room"), hModel_()
 {
+	transform_.position_ = XMFLOAT3(-1.0f, 4.0f, 1.5f);
+	transform_.rotate_.x = 90;
+	float scale = 0.2f;
+	transform_.scale_ = XMFLOAT3(scale, scale, scale);
 }
 
 Screen_Room::~Screen_Room()
@@ -29,6 +33,9 @@ void Screen_Room::Update()
 
 void Screen_Room::Draw()
 {
+	int type = 2;
+	Model::SetTransform(hModel_[type], transform_);
+	Model::Draw(hModel_[type]);
 }
 
 void Screen_Room::Release()

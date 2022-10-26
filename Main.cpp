@@ -15,7 +15,7 @@
 
 //定数宣言
 LPCWSTR WIN_CLASS_NAME = L"SampleGame";	//ウィンドウクラス名
-const unsigned int WINDOW_WIDTH = 800;	//ウィンドウの幅
+const unsigned int WINDOW_WIDTH = 1200;	//ウィンドウの幅
 const unsigned int WINDOW_HEIGHT = 600;	//ウィンドウの高さ
 
 RootJob* pRootJob;
