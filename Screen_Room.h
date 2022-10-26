@@ -1,21 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-
-//struct Move
-//{
-//	int moveHLw;
-//	int moveLtR;
-//};
-//
-//const Move Direction[4]
-//{
-//	{0,1},		//âE
-//	{0,-1},		//ç∂
-//	{1,0},		//è„
-//	{-1,0}		//â∫
-//};
-
 enum
 {
 	Room_HLt,
@@ -29,6 +14,11 @@ enum
 class Screen_Room : public GameObject
 {
 	int hModel_[Room_MAX];
+
+	short PrevPosX_;
+	short PrevPosY_;
+
+	void Look_Around();
 public:
 	Screen_Room(GameObject* parent);
 

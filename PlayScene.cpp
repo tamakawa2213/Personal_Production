@@ -1,6 +1,5 @@
 #include "PlayScene.h"
-#include "Screen_Puzzle.h"
-#include "Screen_Room.h"
+#include "Player.h"
 
 PlayScene::PlayScene(GameObject* parent)
 	: GameObject(parent, "PlayScene")
@@ -13,8 +12,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	Instantiate<Screen_Puzzle>(this);
-	Instantiate<Screen_Room>(this);
+	Instantiate<Player>(this);
 }
 
 void PlayScene::Update()
