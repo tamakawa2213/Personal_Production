@@ -3,10 +3,12 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 
+#include "Door.h"
+
 Screen_Room::Screen_Room(GameObject* parent)
 	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL)
 {
-	transform_.position_ = XMFLOAT3(0.0f, 5.0f, 1.5f);
+	transform_.position_ = XMFLOAT3(0.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
 	float scale = 0.1f;
 	transform_.scale_ = XMFLOAT3(scale, scale, scale);
@@ -24,6 +26,11 @@ void Screen_Room::Initialize()
 		std::string Name = "Assets\\" + Filename[i] + ".fbx";
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= NULL);
+	}
+
+	for (int i = NULL; i < 2; i++)
+	{
+		Instantiate<Door>(this);
 	}
 }
 
