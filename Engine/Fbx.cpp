@@ -5,7 +5,7 @@
 #include "Texture.h"
 #include "Math.h"
 
-Fbx::Fbx():pVertexBuffer_(nullptr),pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr),indexCount_(nullptr),
+Fbx::Fbx() :pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr), pMaterialList_(nullptr), indexCount_(nullptr),
 vertexCount_(0), polygonCount_(0), materialCount_(0), pVertices_(nullptr), ppIndex_(nullptr)
 {
 }
@@ -113,10 +113,10 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* pMesh)
 void Fbx::InitIndex(fbxsdk::FbxMesh* pMesh)
 {
 	int VertexCount = polygonCount_ * 3;
-	pIndexBuffer_ = new ID3D11Buffer* [materialCount_];
+	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 	indexCount_ = new int[materialCount_];
 
-	ppIndex_ = new int*[materialCount_];
+	ppIndex_ = new int* [materialCount_];
 	for (int i = 0; i < materialCount_; i++)
 	{
 		ppIndex_[i] = new int[VertexCount];
@@ -160,7 +160,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* pMesh)
 	}
 }
 
-HRESULT Fbx::IntConstantBuffer() 
+HRESULT Fbx::IntConstantBuffer()
 {
 	HRESULT hr;
 	D3D11_BUFFER_DESC cb;
@@ -196,7 +196,7 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 		{
 			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
 			const char* textureFilePath = textureInfo->GetRelativeFileName();
-			
+
 			//ファイル名+拡張だけにする
 			char name[_MAX_FNAME];	//ファイル名
 			char ext[_MAX_EXT];	//拡張子
@@ -250,12 +250,17 @@ void Fbx::RayCast(RayCastData& rayData)
 				return;
 			}
 		}
-		
+
 	}
 }
 
 
 void Fbx::Draw(Transform& transform)
+{
+	Draw(transform, XMFLOAT3(0.3f, 0.3f, 0.3f), 255);
+}
+
+void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright)
 {
 	Direct3D::SetShader(SHADER_3D);
 
@@ -263,6 +268,10 @@ void Fbx::Draw(Transform& transform)
 	transform.Calclation();
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//行列なので順番は固定
 	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+	cb.chromaR = Chroma.x;
+	cb.chromaG = Chroma.y;
+	cb.chromaB = Chroma.z;
+	cb.bright = Bright;
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -273,16 +282,16 @@ void Fbx::Draw(Transform& transform)
 			cb.isTexture = 1;
 		}
 
-		if(cb.isTexture == 0)
+		if (cb.isTexture == 0)
 		{
-		cb.diffuseColor = pMaterialList_[i].diffuse;
+			cb.diffuseColor = pMaterialList_[i].diffuse;
 
 		}
 
 		D3D11_MAPPED_SUBRESOURCE pdata;
 		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// データを値を送る
-		
+
 		if (cb.isTexture == 1)
 		{
 			ID3D11SamplerState* pSampler = pMaterialList_[i].pTexture->GetSampler();

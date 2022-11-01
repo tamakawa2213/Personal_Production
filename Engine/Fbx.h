@@ -19,7 +19,7 @@ struct RayCastData
 	float dist;
 	bool hit;
 
-	RayCastData() : start(), dir(), dist(9999.0f), hit(false){}
+	RayCastData() : start(), dir(), dist(9999.0f), hit(false) {}
 };
 
 class Fbx
@@ -36,6 +36,10 @@ class Fbx
 		XMMATRIX	matNormal;
 		XMFLOAT4	diffuseColor;
 		int			isTexture;
+		float		bright;
+		float		chromaR;
+		float		chromaG;
+		float		chromaB;
 	};
 
 	struct VERTEX
@@ -65,5 +69,6 @@ public:
 	void InitMaterial(fbxsdk::FbxNode* pNode);
 	void RayCast(RayCastData& rayData);
 	void Draw(Transform& transform);
+	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright);	//transform, RGBÇÃíl, ñæìx(0 Å`255)
 	void Release();
 };

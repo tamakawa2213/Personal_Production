@@ -46,6 +46,11 @@ namespace Model
         FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform);
     }
 
+    void Draw(int hModel, XMFLOAT3 Chroma, short Bright)
+    {
+        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, Chroma, Bright);
+    }
+
     void Release()
     {
         for (int i = 0; i < FileSet.size(); i++)

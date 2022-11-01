@@ -14,6 +14,10 @@ cbuffer global
 	float4x4	matNormal;		//移動行列を除いたワールド行列
 	float4		diffuseColor;	// ディフューズカラー（マテリアルの色）
 	bool		isTexture;		// テクスチャ貼ってあるかどうか
+	float		bright;			//ポリゴンの明るさ
+	float		chromaR;		//Rの彩度
+	float		chromaG;		//Gの彩度
+	float		chromaB;		//Bの彩度
 };
 
 //───────────────────────────────────────
@@ -56,17 +60,20 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 float4 PS(VS_OUT inData) : SV_Target
 {
 	float4 diffuse;
-	diffuse = g_texture.Sample(g_sampler, inData.uv) * inData.color;
 
-	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(0.2f, 0.2f, 0.2f, 1);
+	float Bright_ = (float)(bright / 255);
+
+	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(Bright_, Bright_, Bright_, 1);
 
 	if (isTexture)
 	{
-		return (diffuse + ambient);
+		diffuse = float4(chromaR, chromaG, chromaB, 1) * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 	}
 	else
 	{
-		return diffuseColor * inData.color;
+		diffuse = float4(chromaR, chromaG, chromaB, 1) * diffuseColor * inData.color;
+		//return diffuseColor * inData.color;
 	}
+	return (diffuse + ambient);
 }
 //Illegal character in shader file のエラーが出たら使用不可の全角が使用されている
