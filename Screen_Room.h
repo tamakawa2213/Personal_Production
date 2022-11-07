@@ -28,16 +28,16 @@ const char DoorConfig[Room_MAX] = { 0x0a, 0x09, 0x06, 0x05, 0x03 };
 
 const char POSITION[POSITION_MAX] = { 0x08, 0x04, 0x02, 0x01 };
 
+const XMFLOAT3 DoorPos[POSITION_MAX] =
+{
+	XMFLOAT3(NULL, NULL, -4.0f),
+	XMFLOAT3(NULL, NULL, 4.0f),
+	XMFLOAT3(-4.0f, NULL, NULL),
+	XMFLOAT3(4.0f, NULL, NULL)
+};
+
 class Screen_Room : public GameObject
 {
-	const struct DoorPos
-	{
-		XMFLOAT3 Door_H = XMFLOAT3(NULL, NULL, -4.0f);
-		XMFLOAT3 Door_Lw = XMFLOAT3(NULL, NULL, 4.0f);
-		XMFLOAT3 Door_Lt = XMFLOAT3(-4.0f, NULL, NULL);
-		XMFLOAT3 Door_R = XMFLOAT3(4.0f, NULL, NULL);
-	};
-
 	int hModel_[Room_MAX];
 
 	char RoomType_;

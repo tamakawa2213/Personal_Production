@@ -30,78 +30,75 @@ void Screen_Puzzle::Initialize()
 
 void Screen_Puzzle::Update()
 {
-	if (Input::IsMouseDown(0))
+
+	//ビューポート行列
+	float w = (float)Direct3D::scrWidth / 2.0f;
+	float h = (float)Direct3D::scrHeight / 2.0f;
+	XMMATRIX vp =
 	{
-		//ビューポート行列
-		float w = (float)Direct3D::scrWidth / 2.0f;
-		float h = (float)Direct3D::scrHeight / 2.0f;
-		XMMATRIX vp =
+		w, 0, 0, 0,
+		0,-h, 0, 0,
+		0, 0, 1, 0,
+		w, h, 0, 1
+	};
+
+	//各行列の逆行列
+	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+
+	//マウス位置
+	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+	mousePosFront.z = NULL;
+
+	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	mousePosBack.z = 1.0f;
+
+	XMVECTOR front = XMLoadFloat3(&mousePosFront);
+	XMVECTOR back = XMLoadFloat3(&mousePosBack);
+
+	XMMATRIX mat = invVp * invPrj * invView;
+
+	front = XMVector3TransformCoord(front, mat);
+	back = XMVector3TransformCoord(back, mat);
+
+	XMVECTOR ray = back - front;
+	ray = XMVector3Normalize(ray);
+
+	float distance = 9999.0f;
+	bool Ishit = false;
+
+	for (int x = 0; x < BoardSize_; x++)
+	{
+		for (int z = 0; z < BoardSize_; z++)
 		{
-			w, 0, 0, 0,
-			0,-h, 0, 0,
-			0, 0, 1, 0,
-			w, h, 0, 1
-		};
-
-		//各行列の逆行列
-		XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-		XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-		XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
-
-		//マウス位置
-		XMFLOAT3 mousePosFront = Input::GetMousePosition();
-		mousePosFront.z = NULL;
-
-		XMFLOAT3 mousePosBack = Input::GetMousePosition();
-		mousePosBack.z = 1.0f;
-
-		XMVECTOR front = XMLoadFloat3(&mousePosFront);
-		XMVECTOR back = XMLoadFloat3(&mousePosBack);
-
-		XMMATRIX mat = invVp * invPrj * invView;
-
-		front = XMVector3TransformCoord(front, mat);
-		back = XMVector3TransformCoord(back, mat);
-
-		XMVECTOR ray = back - front;
-		ray = XMVector3Normalize(ray);
-
-		float distance = 9999.0f;
-		bool Ishit = false;
-
-		int boardX, boardZ;
-
-		for (int x = 0; x < BoardSize_; x++)
-		{
-			for (int z = 0; z < BoardSize_; z++)
+			for (int type = NULL; type < Board_MAX; type++)
 			{
-				for (int type = NULL; type < Board_MAX; type++)
+				RayCastData data;
+				XMStoreFloat3(&data.start, front);
+				XMStoreFloat3(&data.dir, ray);
+
+				Transform Tr;
+				Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
+				Model::SetTransform(hModel_[type], Tr);
+
+				Model::RayCast(hModel_[type], data);
+
+				if (data.hit && distance > data.dist)
 				{
-					RayCastData data;
-					XMStoreFloat3(&data.start, front);
-					XMStoreFloat3(&data.dir, ray);
-
-					Transform Tr;
-					Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
-					Model::SetTransform(hModel_[type], Tr);
-
-					Model::RayCast(hModel_[type], data);
-
-					if (data.hit && distance > data.dist)
-					{
-						distance = data.dist;
-						boardX = x;
-						boardZ = z;
-						Ishit = true;
-					}
+					distance = data.dist;
+					PuzX_ = x;
+					PuzZ_ = z;
+					Ishit = true;
 				}
 			}
 		}
-		if (Ishit)
-		{
-			Swap(boardX, boardZ);
-		}
 	}
+	if (Input::IsMouseDown(0) && Ishit)
+	{
+		Swap(PuzX_, PuzZ_);
+	}
+
 }
 
 void Screen_Puzzle::Draw()
@@ -116,7 +113,16 @@ void Screen_Puzzle::Draw()
 				Transform Tr = transform_;
 				Tr.position_ = XMFLOAT3(x, NULL, z);
 				Model::SetTransform(hModel_[Type], Tr);
-				Model::Draw(hModel_[Type]);
+
+				if (PuzX_ == x && PuzZ_ == z)
+				{
+					const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
+					Model::Draw(hModel_[Type], Chroma, 200);
+				}
+				else
+				{
+					Model::Draw(hModel_[Type]);
+				}
 			}
 		}
 	}

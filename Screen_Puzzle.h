@@ -38,6 +38,8 @@ enum
 
 class Screen_Puzzle : public GameObject
 {
+	char PuzX_;
+	char PuzZ_;
 	int hModel_[Board_MAX];
 	int Board_[BoardSize_][BoardSize_];
 	void Swap(int x, int z);

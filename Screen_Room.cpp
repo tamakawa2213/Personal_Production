@@ -6,7 +6,7 @@
 #include "Door.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
-	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(NULL)
+	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(1)
 {
 	transform_.position_ = XMFLOAT3(0.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
@@ -27,7 +27,7 @@ void Screen_Room::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= NULL);
 	}
-	MoveOther(NULL);
+	MoveOther(RoomType_);
 }
 
 void Screen_Room::Update()
@@ -56,14 +56,15 @@ void Screen_Room::MoveOther(char Type)
 	Door* pDoor[DoorNum] = { Instantiate<Door>(this), Instantiate<Door>(this) };
 	int Num = NULL;
 	int PosNum = NULL;
-	DoorPos Pos;
 
 	while (PosNum < POSITION_MAX)
 	{
 		if (DoorConfig[Type] & POSITION[PosNum])
 		{
-
+			pDoor[Num]->SetPosition(DoorPos[PosNum]);
+			Num++;
 		}
+		PosNum++;
 	}
 }
 

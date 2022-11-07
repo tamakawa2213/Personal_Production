@@ -46,7 +46,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	//法線にワールド行列を掛けて回転
 	normal = mul(normal, matNormal);
 
-	float4 light = float4(1.0f, 1.0f, -0.3f, 0.0f);
+	float4 light = float4(1.0f, 1.0f, 1.0f, 0.0f);
 	light = normalize(light);
 	outData.color = clamp(dot(normal, light), 0, 1);
 
