@@ -6,7 +6,7 @@
 #include "Door.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
-	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL)
+	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(NULL)
 {
 	transform_.position_ = XMFLOAT3(0.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
@@ -27,11 +27,7 @@ void Screen_Room::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= NULL);
 	}
-
-	for (int i = NULL; i < 2; i++)
-	{
-		Instantiate<Door>(this);
-	}
+	MoveOther(NULL);
 }
 
 void Screen_Room::Update()
@@ -45,13 +41,30 @@ void Screen_Room::Update()
 
 void Screen_Room::Draw()
 {
-	int type = 2;
-	Model::SetTransform(hModel_[type], transform_);
-	Model::Draw(hModel_[type]);
+	Model::SetTransform(hModel_[RoomType_], transform_);
+	Model::Draw(hModel_[RoomType_]);
 }
 
 void Screen_Room::Release()
 {
+}
+
+void Screen_Room::MoveOther(char Type)
+{
+	KillAllChildren();
+
+	Door* pDoor[DoorNum] = { Instantiate<Door>(this), Instantiate<Door>(this) };
+	int Num = NULL;
+	int PosNum = NULL;
+	DoorPos Pos;
+
+	while (PosNum < POSITION_MAX)
+	{
+		if (DoorConfig[Type] & POSITION[PosNum])
+		{
+
+		}
+	}
 }
 
 void Screen_Room::Look_Around()
