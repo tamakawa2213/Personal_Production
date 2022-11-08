@@ -86,13 +86,20 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	HR_FAILED_RELEASE(hr, L"レンダーターゲットビューの作成に失敗しました", pBackBuffer);
 	
 	//レンダリング結果を表示する範囲
-	D3D11_VIEWPORT vp;
-	vp.Width = (float)winW;	//幅
-	vp.Height = (float)winH;//高さ
-	vp.MinDepth = 0.0f;		//手前
-	vp.MaxDepth = 1.0f;		//奥
-	vp.TopLeftX = 0;		//左
-	vp.TopLeftY = 0;		//上
+	D3D11_VIEWPORT vp[VpNum];
+	vp[0].Width = (float)winW / 2;	//幅
+	vp[0].Height = (float)winH;//高さ
+	vp[0].MinDepth = 0.0f;		//手前
+	vp[0].MaxDepth = 1.0f;		//奥
+	vp[0].TopLeftX = 0;		//左
+	vp[0].TopLeftY = 0;		//上
+
+	vp[1].Width = (float)winW / 2;	//幅
+	vp[1].Height = (float)winH;//高さ
+	vp[1].MinDepth = 0.0f;		//手前
+	vp[1].MaxDepth = 1.0f;		//奥
+	vp[1].TopLeftX = (float)winW / 2;		//左
+	vp[1].TopLeftY = 0;		//上
 
 	//深度ステンシルビューの作成
 	D3D11_TEXTURE2D_DESC descDepth;
@@ -113,8 +120,12 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
 	//データを画面に描画するための一通りの設定（パイプライン）
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	// データの入力種類を指定
-	pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);		// 描画先を設定
-	pContext->RSSetViewports(1, &vp);
+	for (int i = NULL; i < VpNum; i++)
+	{
+		pContext->OMSetRenderTargets(i, &pRenderTargetView, pDepthStencilView);		// 描画先を設定
+		pContext->RSSetViewports(VpNum - i, &vp[i]);
+	}
+	
 
 	//シェーダー準備(処理が長くなったので分割)
 	hr = InitShader();
@@ -246,7 +257,7 @@ void Direct3D::BeginDraw()
 
 	//画面をクリア
 	pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
-
+	
 	Camera::Update();
 
 	//深度バッファクリア

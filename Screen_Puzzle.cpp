@@ -44,8 +44,8 @@ void Screen_Puzzle::Update()
 
 	//各行列の逆行列
 	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix(1));
+	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix(1));
 
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();

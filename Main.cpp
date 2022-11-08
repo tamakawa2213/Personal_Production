@@ -54,7 +54,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//ウィンドウを作成
 	HWND hWnd = CreateWindow(
 		WIN_CLASS_NAME,			//ウィンドウクラス名
-		L"サンプルゲーム",		//タイトルバーに表示する内容
+		L"個人製作",		//タイトルバーに表示する内容
 		WS_OVERLAPPEDWINDOW,	//スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,			//表示位置左（おまかせ）
 		CW_USEDEFAULT,			//表示位置上（おまかせ）

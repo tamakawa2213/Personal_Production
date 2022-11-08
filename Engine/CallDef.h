@@ -14,3 +14,5 @@
 
 //シーン切り替えを行うマクロ
 #define SCENE_CHANGE(SCENE_ID) SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager"); pSceneManager->ChangeScene(SCENE_ID);
+
+#define VpNum 2
