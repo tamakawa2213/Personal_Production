@@ -32,6 +32,7 @@ void Screen_Room::Initialize()
 
 void Screen_Room::Update()
 {
+	//画面左にマウスがある場合にのみ呼び出す
 	if (Input::IsMouse(0) && Input::GetMousePosition().x < Direct3D::scrWidth / VpNum)
 	{
 		Look_Around();
@@ -52,19 +53,22 @@ void Screen_Room::MoveOther(char Type)
 {
 	KillAllChildren();
 
+	//2つのドアを作成
 	Door* pDoor[DoorNum] = { Instantiate<Door>(this), Instantiate<Door>(this) };
 	int Num = NULL;
-	char PosNum = 0x0f;
+	char PosNum = POSITION_MAX;
 
 	while (Num < DoorNum || PosNum >= NULL)
 	{
+		PosNum--;
+
+		//部屋のタイプに合致したドアの配置にする
 		if (DoorConfig[Type] & POSITION[PosNum])
 		{
 			pDoor[Num]->SetPosition(DoorPos[PosNum]);
 			pDoor[Num]->SetID(PosNum);
 			Num++;
 		}
-		PosNum--;
 	}
 }
 
@@ -74,7 +78,7 @@ void Screen_Room::SendIdInfo(char ID)
 
 void Screen_Room::Look_Around()
 {
-	if (Input::IsMouseDown(0))
+	if (Input::IsMouseDown(0))	//初期化
 	{
 		PrevPosX_ = (short)Input::GetMousePosition().x;
 		PrevPosY_ = (short)Input::GetMousePosition().y;

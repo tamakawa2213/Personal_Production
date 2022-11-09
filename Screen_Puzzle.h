@@ -42,7 +42,11 @@ class Screen_Puzzle : public GameObject
 	char PuzZ_;
 	int hModel_[Board_MAX];
 	int Board_[BoardSize_][BoardSize_];
-	void Swap(int x, int z);
+
+	void Swap(int x, int z);				//空白に隣り合っていれば交換する
+
+	bool MakeMouseRay();
+	XMVECTOR SetInvMat(XMFLOAT3 pos);		//行列をかけてマウスカーソルのレイを作る
 public:
 	Screen_Puzzle(GameObject* parent);
 

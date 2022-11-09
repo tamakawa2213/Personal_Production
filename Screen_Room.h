@@ -28,6 +28,7 @@ const char DoorConfig[Room_MAX] = { 0x0a, 0x09, 0x06, 0x05, 0x03 };
 
 const char POSITION[POSITION_MAX] = { 0x08, 0x04, 0x02, 0x01 };
 
+//ドアの位置
 const XMFLOAT3 DoorPos[POSITION_MAX] =
 {
 	XMFLOAT3(NULL, NULL, -4.0f),
@@ -40,12 +41,12 @@ class Screen_Room : public GameObject
 {
 	int hModel_[Room_MAX];
 
-	char RoomType_;
+	char RoomType_;		//部屋のタイプ
 
-	short PrevPosX_;
+	short PrevPosX_;	//直前の位置
 	short PrevPosY_;
 
-	void Look_Around();
+	void Look_Around();	//視点を移動させる
 public:
 	Screen_Room(GameObject* parent);
 
@@ -59,6 +60,7 @@ public:
 
 	void Release() override;
 
+	//部屋の移動と初期化
 	void MoveOther(char Type);
 
 	void SendIdInfo(char ID);

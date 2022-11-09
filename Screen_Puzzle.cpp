@@ -30,72 +30,9 @@ void Screen_Puzzle::Initialize()
 
 void Screen_Puzzle::Update()
 {
+	bool Ishit = MakeMouseRay();
 
-	//ビューポート行列
-	float w = (float)Direct3D::scrWidth / 4.0f;
-	float h = (float)Direct3D::scrHeight / 2.0f;
-	XMMATRIX vp =
-	{
-		w, 0, 0, 0,
-		0,-h, 0, 0,
-		0, 0, 1, 0,
-		w, h, 0, 1
-	};
-
-	//各行列の逆行列
-	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
-
-	//マウス位置
-	XMFLOAT3 mousePosFront = Input::GetMousePosition();
-	mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / VpNum);
-	mousePosFront.z = NULL;
-
-	XMFLOAT3 mousePosBack = Input::GetMousePosition();
-	mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / VpNum);
-	mousePosBack.z = 1.0f;
-
-	XMVECTOR front = XMLoadFloat3(&mousePosFront);
-	XMVECTOR back = XMLoadFloat3(&mousePosBack);
-
-	XMMATRIX mat = invVp * invPrj * invView;
-
-	front = XMVector3TransformCoord(front, mat);
-	back = XMVector3TransformCoord(back, mat);
-
-	XMVECTOR ray = back - front;
-	ray = XMVector3Normalize(ray);
-
-	float distance = 9999.0f;
-	bool Ishit = false;
-
-	for (int x = 0; x < BoardSize_; x++)
-	{
-		for (int z = 0; z < BoardSize_; z++)
-		{
-			for (int type = NULL; type < Board_MAX; type++)
-			{
-				RayCastData data;
-				XMStoreFloat3(&data.start, front);
-				XMStoreFloat3(&data.dir, ray);
-
-				Transform Tr;
-				Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
-				Model::SetTransform(hModel_[type], Tr);
-
-				Model::RayCast(hModel_[type], data);
-
-				if (data.hit && distance > data.dist)
-				{
-					distance = data.dist;
-					PuzX_ = x;
-					PuzZ_ = z;
-					Ishit = true;
-				}
-			}
-		}
-	}
+	//いずれかのパネルにカーソルが当たっていて左クリックをしたら呼び出す
 	if (Input::IsMouseDown(0) && Ishit)
 	{
 		Swap(PuzX_, PuzZ_);
@@ -150,4 +87,81 @@ void Screen_Puzzle::Swap(int x, int z)
 			return;
 		}
 	}
+}
+
+bool Screen_Puzzle::MakeMouseRay()
+{
+	//マウス位置
+	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+	mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / VpNum);
+	mousePosFront.z = NULL;
+
+	XMVECTOR front = SetInvMat(mousePosFront);
+
+	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / VpNum);
+	mousePosBack.z = 1.0f;
+
+	XMVECTOR back = SetInvMat(mousePosBack);
+
+	XMVECTOR ray = back - front;
+	ray = XMVector3Normalize(ray);
+
+	float distance = 9999.0f;
+	bool Ishit = false;
+
+	for (int x = 0; x < BoardSize_; x++)
+	{
+		for (int z = 0; z < BoardSize_; z++)
+		{
+			for (int type = NULL; type < Board_MAX; type++)
+			{
+				RayCastData data;
+				XMStoreFloat3(&data.start, front);
+				XMStoreFloat3(&data.dir, ray);
+
+				Transform Tr;
+				Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
+				Model::SetTransform(hModel_[type], Tr);
+
+				Model::RayCast(hModel_[type], data);
+
+				if (data.hit && distance > data.dist)
+				{
+					distance = data.dist;
+					PuzX_ = x;
+					PuzZ_ = z;
+					Ishit = true;
+				}
+			}
+		}
+	}
+	return Ishit;
+}
+
+XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
+{
+	//ビューポート行列
+	float w = (float)Direct3D::scrWidth / 4.0f;
+	float h = (float)Direct3D::scrHeight / 2.0f;
+	XMMATRIX vp =
+	{
+		w, 0, 0, 0,
+		0,-h, 0, 0,
+		0, 0, 1, 0,
+		w, h, 0, 1
+	};
+
+	//各行列の逆行列
+	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
+
+	XMVECTOR vPos = XMLoadFloat3(&pos);
+
+	XMMATRIX mat = invVp * invPrj * invView;
+
+	vPos = XMVector3TransformCoord(vPos, mat);
+
+	return vPos;
 }

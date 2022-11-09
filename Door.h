@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "Engine/Model.h"
 
 class Door : public GameObject
 {
@@ -14,6 +15,9 @@ class Door : public GameObject
 	int hModel_;
 	bool RayHit_;
 	char DoorID_;
+
+	float MakeMouseRay();
+	XMVECTOR SetInvMat(XMFLOAT3 pos);	//行列をかけてマウスカーソルのレイを作る
 public:
 	Door(GameObject* parent);
 	~Door();
