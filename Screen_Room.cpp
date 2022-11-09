@@ -8,9 +8,9 @@
 Screen_Room::Screen_Room(GameObject* parent)
 	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(1)
 {
-	transform_.position_ = XMFLOAT3(0.0f, 4.5f, 1.5f);
+	transform_.position_ = XMFLOAT3(-10.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
-	float scale = 0.1f;
+	float scale = 0.3f;
 	transform_.scale_ = XMFLOAT3(scale, scale, scale);
 }
 
@@ -32,11 +32,10 @@ void Screen_Room::Initialize()
 
 void Screen_Room::Update()
 {
-	if (Input::IsMouse(0))
+	if (Input::IsMouse(0) && Input::GetMousePosition().x < Direct3D::scrWidth / VpNum)
 	{
 		Look_Around();
 	}
-	
 }
 
 void Screen_Room::Draw()

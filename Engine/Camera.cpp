@@ -12,10 +12,9 @@ namespace Camera {
 //初期化
 	void Camera::Initialize(int winW, int winH)
 	{
-			position_ = XMVectorSet(NULL, 5, 1.4f, NULL);	//カメラの位置
-			target_ = XMVectorSet(NULL, NULL, 1.5f, NULL);		//カメラの焦点
-			projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)winW / (FLOAT)winH / 2.0f, 0.1f, 1000.0f);
-		
+		position_ = XMVectorSet(NULL, 5, 1.4f, NULL);	//カメラの位置
+		target_ = XMVectorSet(NULL, NULL, 1.5f, NULL);		//カメラの焦点
+		projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)winW / (FLOAT)winH / 2.0f, 0.1f, 1000.0f);
 	}
 
 	//更新
@@ -55,5 +54,17 @@ namespace Camera {
 	XMMATRIX Camera::GetProjectionMatrix()
 	{
 		return projMatrix_;
+	}
+	XMFLOAT3 GetCameraPosition()
+	{
+		XMFLOAT3 pos;
+		XMStoreFloat3(&pos, position_);
+		return pos;
+	}
+	XMFLOAT3 GetCameraTarget()
+	{
+		XMFLOAT3 tar;
+		XMStoreFloat3(&tar, target_);
+		return tar;
 	}
 }

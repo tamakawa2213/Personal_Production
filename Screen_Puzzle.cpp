@@ -32,7 +32,7 @@ void Screen_Puzzle::Update()
 {
 
 	//ビューポート行列
-	float w = ((float)Direct3D::scrWidth / 4.0f)/* + ((float)Direct3D::scrWidth / 2.0f)*/;
+	float w = (float)Direct3D::scrWidth / 4.0f;
 	float h = (float)Direct3D::scrHeight / 2.0f;
 	XMMATRIX vp =
 	{
@@ -49,9 +49,11 @@ void Screen_Puzzle::Update()
 
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+	mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / VpNum);
 	mousePosFront.z = NULL;
 
 	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / VpNum);
 	mousePosBack.z = 1.0f;
 
 	XMVECTOR front = XMLoadFloat3(&mousePosFront);

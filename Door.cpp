@@ -60,12 +60,11 @@ void Door::Update()
 	XMStoreFloat3(&data.dir, ray);
 
 	Model::SetTransform(hModel_, transform_);
-
 	Model::RayCast(hModel_, data);
 
 	RayHit_ = data.hit;
 
-	if (RayHit_ && Input::IsMouseDown(0))
+	if (RayHit_ && Input::IsMouseDown(0) && data.dist > 1.0)
 	{
 		int i = 0;
 	}

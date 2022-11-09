@@ -147,30 +147,70 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Input::Update();
 			pRootJob->UpdateSub();
 
+			if (Input::GetMousePosition().x < winW / VpNum)
+			{
+				//右画面描画
+				{
+					Direct3D::SetViewPort(1);
+
+					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, NULL));
+					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.5f, NULL));
+
+					Camera::Update();
+
+					//全オブジェクトを描画
+					//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootJob->DrawSub();
+				}
+
+				//左画面描画
+				{
+					Direct3D::SetViewPort(0);
+
+					Camera::SetPosition(XMVectorSet(-10.0f, 5.5f, 1.2f, NULL));
+					Camera::SetTarget(XMVectorSet(-10, NULL, 1.3f, NULL));
+
+					Camera::Update();
+
+					//全オブジェクトを描画
+					//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootJob->DrawSub();
+				}
+			}
+			else
+			{
+				//左画面描画
+				{
+					Direct3D::SetViewPort(0);
+
+					Camera::SetPosition(XMVectorSet(-10.0f, 5.5f, 1.2f, NULL));
+					Camera::SetTarget(XMVectorSet(-10, NULL, 1.3f, NULL));
+
+					Camera::Update();
+
+					//全オブジェクトを描画
+					//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootJob->DrawSub();
+				}
+
+				//右画面描画
+				{
+					Direct3D::SetViewPort(1);
+
+					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, NULL));
+					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.5f, NULL));
+
+					Camera::Update();
+
+					//全オブジェクトを描画
+					//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+					pRootJob->DrawSub();
+				}
+			}
+			
+
 			//描画処理
 			//pRootJob->DrawSub();
-
-			//左画面描画
-			{
-				Direct3D::SetViewPort(0);
-
-				Camera::Update();
-
-				//全オブジェクトを描画
-				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootJob->DrawSub();
-			}
-
-			//右画面描画
-			{
-				Direct3D::SetViewPort(1);
-
-				Camera::Update();
-
-				//全オブジェクトを描画
-				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootJob->DrawSub();
-			}
 
 			Direct3D::EndDraw();
 
