@@ -44,6 +44,8 @@ namespace Direct3D
 
 	//‰ð•ú
 	void Release();
+
+	void SetViewPort(char lr);
 };
 
 //#endif

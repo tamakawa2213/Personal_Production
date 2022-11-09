@@ -8,8 +8,8 @@ struct Door	//通れるドアをビットで示す(上、下、右、左の順)
 {
 	const char DoorH = 0x08;
 	const char DoorLw = 0x04;
-	const char DoorR = 0x02;
-	const char DoorLt = 0x01;
+	const char DoorLt = 0x02;
+	const char DoorR = 0x01;
 };
 
 struct Move

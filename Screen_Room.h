@@ -60,4 +60,6 @@ public:
 	void Release() override;
 
 	void MoveOther(char Type);
+
+	void SendIdInfo(char ID);
 };

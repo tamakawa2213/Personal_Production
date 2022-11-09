@@ -32,7 +32,7 @@ void Screen_Puzzle::Update()
 {
 
 	//ビューポート行列
-	float w = (float)Direct3D::scrWidth / 2.0f;
+	float w = ((float)Direct3D::scrWidth / 4.0f)/* + ((float)Direct3D::scrWidth / 2.0f)*/;
 	float h = (float)Direct3D::scrHeight / 2.0f;
 	XMMATRIX vp =
 	{
@@ -44,8 +44,8 @@ void Screen_Puzzle::Update()
 
 	//各行列の逆行列
 	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix(1));
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix(1));
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
 
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();

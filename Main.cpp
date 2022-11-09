@@ -148,7 +148,29 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			pRootJob->UpdateSub();
 
 			//描画処理
-			pRootJob->DrawSub();
+			//pRootJob->DrawSub();
+
+			//左画面描画
+			{
+				Direct3D::SetViewPort(0);
+
+				Camera::Update();
+
+				//全オブジェクトを描画
+				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+				pRootJob->DrawSub();
+			}
+
+			//右画面描画
+			{
+				Direct3D::SetViewPort(1);
+
+				Camera::Update();
+
+				//全オブジェクトを描画
+				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
+				pRootJob->DrawSub();
+			}
 
 			Direct3D::EndDraw();
 

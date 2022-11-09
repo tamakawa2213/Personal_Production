@@ -55,17 +55,22 @@ void Screen_Room::MoveOther(char Type)
 
 	Door* pDoor[DoorNum] = { Instantiate<Door>(this), Instantiate<Door>(this) };
 	int Num = NULL;
-	int PosNum = NULL;
+	char PosNum = 0x0f;
 
-	while (PosNum < POSITION_MAX)
+	while (Num < DoorNum || PosNum >= NULL)
 	{
 		if (DoorConfig[Type] & POSITION[PosNum])
 		{
 			pDoor[Num]->SetPosition(DoorPos[PosNum]);
+			pDoor[Num]->SetID(PosNum);
 			Num++;
 		}
-		PosNum++;
+		PosNum--;
 	}
+}
+
+void Screen_Room::SendIdInfo(char ID)
+{
 }
 
 void Screen_Room::Look_Around()

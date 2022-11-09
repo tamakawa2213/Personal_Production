@@ -5,7 +5,7 @@
 #include "Engine/Model.h"
 
 Door::Door(GameObject* parent)
-	: GameObject(parent, "Door"), hModel_(-1), RayHit_(false)
+	: GameObject(parent, "Door"), hModel_(-1), RayHit_(false), DoorID_(NULL)
 {
 }
 
@@ -22,7 +22,7 @@ void Door::Initialize()
 void Door::Update()
 {
 	//ビューポート行列
-	float w = (float)Direct3D::scrWidth / 2.0f;
+	float w = (float)Direct3D::scrWidth / 4.0f;
 	float h = (float)Direct3D::scrHeight / 2.0f;
 	XMMATRIX vp =
 	{
@@ -34,8 +34,8 @@ void Door::Update()
 
 	//各行列の逆行列
 	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix(0));
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix(0));
+	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
+	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
 
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
@@ -64,6 +64,11 @@ void Door::Update()
 	Model::RayCast(hModel_, data);
 
 	RayHit_ = data.hit;
+
+	if (RayHit_ && Input::IsMouseDown(0))
+	{
+		int i = 0;
+	}
 }
 
 void Door::Draw()
@@ -79,4 +84,9 @@ void Door::Draw()
 	{
 		Model::Draw(hModel_);
 	}
+}
+
+void Door::SetID(char ID)
+{
+	DoorID_ = ID;
 }

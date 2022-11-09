@@ -24,6 +24,8 @@ namespace Direct3D
 	SHADER shader[SHADER_MAX];
 
 	int scrWidth, scrHeight;
+
+	D3D11_VIEWPORT vp[VpNum];
 }
 
 //初期化
@@ -86,7 +88,6 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	HR_FAILED_RELEASE(hr, L"レンダーターゲットビューの作成に失敗しました", pBackBuffer);
 	
 	//レンダリング結果を表示する範囲
-	D3D11_VIEWPORT vp[VpNum];
 	vp[0].Width = (float)winW / 2;	//幅
 	vp[0].Height = (float)winH;//高さ
 	vp[0].MinDepth = 0.0f;		//手前
@@ -120,11 +121,8 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
 	//データを画面に描画するための一通りの設定（パイプライン）
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	// データの入力種類を指定
-	for (int i = NULL; i < VpNum; i++)
-	{
-		pContext->OMSetRenderTargets(i, &pRenderTargetView, pDepthStencilView);		// 描画先を設定
-		pContext->RSSetViewports(VpNum - i, &vp[i]);
-	}
+	pContext->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);		// 描画先を設定
+	
 	
 
 	//シェーダー準備(処理が長くなったので分割)
@@ -284,4 +282,9 @@ void Direct3D::Release()
 	SAFE_RELEASE(pSwapChain);
 	SAFE_RELEASE(pContext);
 	SAFE_RELEASE(pDevice);
+}
+
+void Direct3D::SetViewPort(char lr)
+{
+	pContext->RSSetViewports(1, &vp[lr]);
 }
