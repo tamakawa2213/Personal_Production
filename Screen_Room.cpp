@@ -6,7 +6,7 @@
 #include "Door.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
-	: GameObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(1)
+	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(1)
 {
 	transform_.position_ = XMFLOAT3(-10.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;

@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include "IDObject.h"
 
 #define DoorNum 2
 
@@ -37,7 +38,7 @@ const XMFLOAT3 DoorPos[POSITION_MAX] =
 	XMFLOAT3(4.0f, NULL, NULL)
 };
 
-class Screen_Room : public GameObject
+class Screen_Room : public IDObject
 {
 	int hModel_[Room_MAX];
 

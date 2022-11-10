@@ -165,3 +165,8 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 
 	return vPos;
 }
+
+bool Screen_Puzzle::SendToken()
+{
+	return false;
+}

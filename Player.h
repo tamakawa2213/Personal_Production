@@ -1,7 +1,7 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "IDObject.h"
 
-class Player : public GameObject
+class Player : public IDObject
 {
 public:
 	Player(GameObject* parent);
@@ -13,4 +13,6 @@ public:
 	void Update() override;
 
 	void Release() override;
+
+	void ReceiveFromDoor();
 };

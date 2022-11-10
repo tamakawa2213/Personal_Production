@@ -1,8 +1,8 @@
 #pragma once
-#include "Engine/GameObject.h"
 #include "Engine/Model.h"
+#include "IDObject.h"
 
-class Door : public GameObject
+class Door : public IDObject
 {
 	enum
 	{
@@ -14,17 +14,15 @@ class Door : public GameObject
 
 	int hModel_;
 	bool RayHit_;
-	char DoorID_;
 
 	float MakeMouseRay();
 	XMVECTOR SetInvMat(XMFLOAT3 pos);	//行列をかけてマウスカーソルのレイを作る
+
+	void SendtoPlayer();				//PlayerクラスにIDを送る
 public:
 	Door(GameObject* parent);
 	~Door();
 	void Initialize() override;
 	void Update() override;
 	void Draw() override;
-	
-	void SetID(char ID);
-	char GetID() { return DoorID_; }
 };

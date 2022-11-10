@@ -2,9 +2,10 @@
 #include "Engine/Camera.h"
 #include "Engine/Direct3D.h"
 #include "Engine/Input.h"
+#include "Player.h"
 
 Door::Door(GameObject* parent)
-	: GameObject(parent, "Door"), hModel_(-1), RayHit_(false), DoorID_(NULL)
+	: IDObject(parent, "Door"), hModel_(-1), RayHit_(false)
 {
 }
 
@@ -25,7 +26,8 @@ void Door::Update()
 	//カメラより手前にあるドアには当たらないようにする
 	if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0)
 	{
-		int i = 0;
+		//ドアをクリックしたらPlayerにIDを送る
+		SendtoPlayer();
 	}
 }
 
@@ -42,11 +44,6 @@ void Door::Draw()
 	{
 		Model::Draw(hModel_);
 	}
-}
-
-void Door::SetID(char ID)
-{
-	DoorID_ = ID;
 }
 
 float Door::MakeMouseRay()
@@ -105,4 +102,12 @@ XMVECTOR Door::SetInvMat(XMFLOAT3 pos)
 	vPos = XMVector3TransformCoord(vPos, mat);
 
 	return vPos;
+}
+
+void Door::SendtoPlayer()
+{
+	Player* pPlayer;
+	pPlayer = (Player*)GetParent()->GetParent();	//親オブジェクトの親オブジェクトがPlayer
+	pPlayer->SetID(this->GetID());					//自分自身のIDを送る
+	pPlayer->ReceiveFromDoor();
 }

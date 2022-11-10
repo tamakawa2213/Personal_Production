@@ -3,7 +3,7 @@
 #include "Screen_Room.h"
 
 Player::Player(GameObject* parent)
-	: GameObject(parent, "Player")
+	: IDObject(parent, "Player")
 {
 }
 
@@ -23,4 +23,9 @@ void Player::Update()
 
 void Player::Release()
 {
+}
+
+void Player::ReceiveFromDoor()
+{
+	int i = 0;
 }
