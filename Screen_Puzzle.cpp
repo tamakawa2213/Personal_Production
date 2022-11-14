@@ -166,7 +166,41 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 	return vPos;
 }
 
-bool Screen_Puzzle::SendToken()
+char Screen_Puzzle::DoorConfig(char BoardType)
 {
-	return false;
+	char ans = NULL;
+	DoorPath data;
+	switch (BoardType)
+	{
+	case Board_HLt: ans = data.DoorH + data.DoorLt; break;
+	case Board_HR: ans = data.DoorH + data.DoorR; break;
+	case Board_LwLt: ans = data.DoorLw + data.DoorLt; break;
+	case Board_LwR: ans = data.DoorLw + data.DoorR; break;
+	case Board_LtR: ans = data.DoorLt + data.DoorR; break;
+	default: break;
+	}
+	return ans;
+}
+
+char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
+{
+	Board_[(int)pPos.x][(int)pPos.y];
+	Direction[DoorID];
+	
+	int moveX, moveZ;
+	moveX = (int)pPos.x + Direction[DoorID].moveLtR;
+	moveZ = (int)pPos.y + Direction[DoorID].moveHLw;
+
+	char path = DoorConfig(Board_[moveX][moveZ]);
+	path = path >> (4 - DoorID);
+
+	if (moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
+	{
+		if (path & 0x01)
+		{
+			return Board_[moveX][moveZ];
+		}
+	}
+
+	return Board_MAX;
 }

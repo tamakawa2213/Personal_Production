@@ -3,6 +3,7 @@
 
 class Player : public IDObject
 {
+	XMFLOAT2 UVPosition_;
 public:
 	Player(GameObject* parent);
 

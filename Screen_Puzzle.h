@@ -4,7 +4,7 @@
 #define BoardSize_  4			//横・縦それぞれの大きさ
 #define Empty_ -1				//空白のマス
 
-struct Door	//通れるドアをビットで示す(上、下、右、左の順)
+struct DoorPath	//通れるドアをビットで示す(上、下、右、左の順)
 {
 	const char DoorH = 0x08;
 	const char DoorLw = 0x04;
@@ -20,10 +20,10 @@ struct Move
 
 const Move Direction[4]
 {
-	{0,1},		//右
-	{0,-1},		//左
 	{1,0},		//上
-	{-1,0}		//下
+	{-1,0},		//下
+	{0,-1},		//左
+	{0,1}		//右
 };
 
 enum
@@ -47,6 +47,8 @@ class Screen_Puzzle : public GameObject
 
 	bool MakeMouseRay();
 	XMVECTOR SetInvMat(XMFLOAT3 pos);		//行列をかけてマウスカーソルのレイを作る
+
+	char DoorConfig(char BoardType);
 public:
 	Screen_Puzzle(GameObject* parent);
 
@@ -60,6 +62,6 @@ public:
 
 	void Release() override;
 
-	bool SendToken();
+	char SendToken(XMFLOAT2 pPos, char DoorID);
 };
 
