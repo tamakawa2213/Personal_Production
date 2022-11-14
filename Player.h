@@ -16,4 +16,7 @@ public:
 	void Release() override;
 
 	void ReceiveFromDoor();
+
+	XMFLOAT2 GetUVPos() { return UVPosition_; }
+	void SetUVPos(XMFLOAT2 move);
 };

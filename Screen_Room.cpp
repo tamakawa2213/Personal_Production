@@ -6,7 +6,7 @@
 #include "Door.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
-	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(1)
+	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(0), pDoor()
 {
 	transform_.position_ = XMFLOAT3(-10.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
@@ -27,6 +27,11 @@ void Screen_Room::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= NULL);
 	}
+
+	//2つのドアを作成
+	pDoor[0] = Instantiate<Door>(this);
+	pDoor[1] = Instantiate<Door>(this);
+
 	MoveOther(RoomType_);
 }
 
@@ -51,10 +56,8 @@ void Screen_Room::Release()
 
 void Screen_Room::MoveOther(char Type)
 {
-	KillAllChildren();
+	RoomType_ = Type;
 
-	//2つのドアを作成
-	Door* pDoor[DoorNum] = { Instantiate<Door>(this), Instantiate<Door>(this) };
 	int Num = NULL;
 	char PosNum = POSITION_MAX;
 

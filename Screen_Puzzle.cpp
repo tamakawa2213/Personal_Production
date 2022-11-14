@@ -2,6 +2,7 @@
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Player.h"
 
 #include <algorithm>
 
@@ -53,6 +54,14 @@ void Screen_Puzzle::Draw()
 				Tr.position_ = XMFLOAT3(x, NULL, z);
 				Model::SetTransform(hModel_[Type], Tr);
 
+				//Playerの位置を可視化するためのもの　後で消す
+				Player* pPlayer = (Player*)GetParent();
+				if (pPlayer->GetUVPos().x == x && pPlayer->GetUVPos().y == z)
+				{
+					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
+					Model::Draw(hModel_[Type], Chroma, 255);
+				}
+
 				if (PuzX_ == x && PuzZ_ == z)
 				{
 					const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
@@ -83,6 +92,14 @@ void Screen_Puzzle::Swap(int x, int z)
 		//あったら移動させる
 		if (Board_[moveX][moveZ] == Empty_)
 		{
+			Player* pPlayer = (Player*)GetParent();
+
+			//押したマスがPlayerのいるマスだった場合
+			if (pPlayer->GetUVPos().x == x && pPlayer->GetUVPos().y == z)
+			{
+				//Playerごと移動させる
+				pPlayer->SetUVPos(XMFLOAT2(Dir.moveLtR, Dir.moveHLw));
+			}
 			std::swap(Board_[x][z], Board_[x + Dir.moveLtR][z + Dir.moveHLw]);
 			return;
 		}
@@ -189,7 +206,7 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 	
 	int moveX, moveZ;
 	moveX = (int)pPos.x + Direction[DoorID].moveLtR;
-	moveZ = (int)pPos.y + Direction[DoorID].moveHLw;
+	moveZ = (int)pPos.y - Direction[DoorID].moveHLw;
 
 	char path = DoorConfig(Board_[moveX][moveZ]);
 	path = path >> (4 - DoorID);

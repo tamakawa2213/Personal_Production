@@ -153,8 +153,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				{
 					Direct3D::SetViewPort(1);
 
-					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, NULL));
-					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.5f, NULL));
+					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.5f, NULL));
+					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.4f, NULL));
 
 					Camera::Update();
 
@@ -197,8 +197,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				{
 					Direct3D::SetViewPort(1);
 
-					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, NULL));
-					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.5f, NULL));
+					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.5f, NULL));
+					Camera::SetTarget(XMVectorSet(1.5f, NULL, 1.4f, NULL));
 
 					Camera::Update();
 

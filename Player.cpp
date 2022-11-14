@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Door.h"
 #include "Screen_Puzzle.h"
 #include "Screen_Room.h"
 
@@ -34,7 +33,13 @@ void Player::ReceiveFromDoor()
 
 	if (path != Board_MAX)
 	{
-		Door* pDoor = (Door*)FindObject("Door");
-		int i = 0;
+		SetUVPos(XMFLOAT2(-Direction[path].moveLtR, Direction[path].moveHLw));
+		Screen_Room* pSR = (Screen_Room*)FindChildObject("Screen_Room");
+		pSR->MoveOther(path);
 	}
+}
+
+void Player::SetUVPos(XMFLOAT2 move)
+{
+	UVPosition_ = XMFLOAT2(UVPosition_.x + move.x, UVPosition_.y + move.y);
 }

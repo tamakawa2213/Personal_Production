@@ -4,6 +4,8 @@
 
 #define DoorNum 2
 
+class Door;
+
 enum
 {
 	Room_HLt,
@@ -48,6 +50,8 @@ class Screen_Room : public IDObject
 	short PrevPosY_;
 
 	void Look_Around();	//Ž‹“_‚ðˆÚ“®‚³‚¹‚é
+
+	Door* pDoor[DoorNum];
 public:
 	Screen_Room(GameObject* parent);
 
