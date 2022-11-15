@@ -15,6 +15,8 @@ class Door : public IDObject
 	int hModel_;
 	bool RayHit_;
 
+	bool IsMouse_[2];
+
 	float MakeMouseRay();
 	XMVECTOR SetInvMat(XMFLOAT3 pos);	//行列をかけてマウスカーソルのレイを作る
 

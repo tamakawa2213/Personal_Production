@@ -8,7 +8,7 @@
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_()
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 }
@@ -31,14 +31,21 @@ void Screen_Puzzle::Initialize()
 
 void Screen_Puzzle::Update()
 {
-	bool Ishit = MakeMouseRay();
 
-	//いずれかのパネルにカーソルが当たっていて左クリックをしたら呼び出す
-	if (Input::IsMouseDown(0) && Ishit)
+	if (Wait_)
 	{
-		Swap(PuzX_, PuzZ_);
+		Moving();
 	}
+	else
+	{
+		bool Ishit = MakeMouseRay();
 
+		//いずれかのパネルにカーソルが当たっていて左クリックをしたら呼び出す
+		if (Input::IsMouseDown(0) && Ishit)
+		{
+			Swap(PuzX_, PuzZ_);
+		}
+	}
 }
 
 void Screen_Puzzle::Draw()
@@ -105,6 +112,7 @@ void Screen_Puzzle::Swap(int x, int z)
 		//あったら移動させる
 		if (Board_[moveX][moveZ] == Empty_)
 		{
+			Wait_ = true;
 			Player* pPlayer = (Player*)GetParent();
 
 			//押したマスがPlayerのいるマスだった場合
@@ -113,7 +121,7 @@ void Screen_Puzzle::Swap(int x, int z)
 				//Playerごと移動させる
 				pPlayer->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
-			std::swap(Board_[x][z], Board_[x + Dir.moveLtR][z + Dir.moveHLw]);
+			std::swap(Board_[x][z], Board_[moveX][moveZ]);
 			return;
 		}
 	}
@@ -220,6 +228,16 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 	default: break;
 	}
 	return path;
+}
+
+void Screen_Puzzle::Moving()
+{
+	Moving_++;
+	if (Moving_ > 100)
+	{
+		Moving_ = NULL;
+		Wait_ = false;
+	}
 }
 
 char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)

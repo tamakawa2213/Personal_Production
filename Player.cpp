@@ -3,7 +3,7 @@
 #include "Screen_Room.h"
 
 Player::Player(GameObject* parent)
-	: IDObject(parent, "Player"), UVPosition_()
+	: IDObject(parent, "Player"), UVPosition_(), Wait_(false)
 {
 }
 
@@ -41,4 +41,9 @@ void Player::ReceiveFromDoor()
 void Player::SetUVPos(XMFLOAT2 move)
 {
 	UVPosition_ = XMFLOAT2(UVPosition_.x + move.x, UVPosition_.y + move.y);
+}
+
+void Player::SetWait(bool wait)
+{
+	Wait_ = wait;
 }

@@ -3,7 +3,10 @@
 
 class Player : public IDObject
 {
-	XMFLOAT2 UVPosition_;
+	XMFLOAT2 UVPosition_;	//パズル画面上の位置
+
+	bool Wait_;				//待機状態かどうか
+
 public:
 	Player(GameObject* parent);
 
@@ -19,4 +22,7 @@ public:
 
 	XMFLOAT2 GetUVPos() { return UVPosition_; }
 	void SetUVPos(XMFLOAT2 move);
+
+	bool GetWait() { return Wait_; }
+	void SetWait(bool wait);
 };

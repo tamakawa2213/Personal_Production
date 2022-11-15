@@ -67,6 +67,4 @@ public:
 
 	//•”‰®‚ÌˆÚ“®‚Æ‰Šú‰»
 	void MoveOther(char Type);
-
-	void SendIdInfo(char ID);
 };

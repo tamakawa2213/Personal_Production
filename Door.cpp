@@ -5,7 +5,7 @@
 #include "Player.h"
 
 Door::Door(GameObject* parent)
-	: IDObject(parent, "Door"), hModel_(-1), RayHit_(false)
+	: IDObject(parent, "Door"), hModel_(-1), RayHit_(false), IsMouse_()
 {
 }
 
@@ -26,8 +26,26 @@ void Door::Update()
 	//カメラより手前にあるドアには当たらないようにする
 	if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0)
 	{
+		IsMouse_[0] = true;
+	}
+
+	if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0)
+	{
+		IsMouse_[1] = true;
+	}
+
+	if (IsMouse_[0] && IsMouse_[1])
+	{
 		//ドアをクリックしたらPlayerにIDを送る
 		SendtoPlayer();
+		IsMouse_[0] = false;
+		IsMouse_[1] = false;
+	}
+
+	if (!Input::IsMouse(0))
+	{
+		IsMouse_[0] = false;
+		IsMouse_[1] = false;
 	}
 }
 

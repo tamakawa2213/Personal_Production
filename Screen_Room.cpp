@@ -75,10 +75,6 @@ void Screen_Room::MoveOther(char Type)
 	}
 }
 
-void Screen_Room::SendIdInfo(char ID)
-{
-}
-
 void Screen_Room::Look_Around()
 {
 	if (Input::IsMouseDown(0))	//‰Šú‰»
