@@ -2,16 +2,16 @@
 #include "Engine/Model.h"
 #include "IDObject.h"
 
+enum
+{
+	DOOR_ID_H,
+	DOOR_ID_LW,
+	DOOR_ID_LT,
+	DOOR_ID_R
+};
+
 class Door : public IDObject
 {
-	enum
-	{
-		DOOR_ID_H,
-		DOOR_ID_LW,
-		DOOR_ID_LT,
-		DOOR_ID_R
-	};
-
 	int hModel_;
 	bool RayHit_;
 

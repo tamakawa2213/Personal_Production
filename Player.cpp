@@ -33,7 +33,6 @@ void Player::ReceiveFromDoor()
 
 	if (path != Board_MAX)
 	{
-		SetUVPos(XMFLOAT2(-Direction[path].moveLtR, Direction[path].moveHLw));
 		Screen_Room* pSR = (Screen_Room*)FindChildObject("Screen_Room");
 		pSR->MoveOther(path);
 	}

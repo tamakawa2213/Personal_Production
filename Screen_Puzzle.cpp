@@ -1,4 +1,5 @@
 #include "Screen_Puzzle.h"
+#include "Door.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
@@ -10,7 +11,6 @@ Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	: GameObject(parent, "Screen_Puzzle"), hModel_()
 {
 	ZeroMemory(Board_, sizeof(Board_));
-	Board_[NULL][BoardSize_ - 1] = Empty_;
 }
 
 Screen_Puzzle::~Screen_Puzzle()
@@ -19,7 +19,7 @@ Screen_Puzzle::~Screen_Puzzle()
 
 void Screen_Puzzle::Initialize()
 {
-	Board_[1][0] = 3;
+	Shuffle();
 	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
 	for (int i = NULL; i < Board_MAX; i++)
 	{
@@ -80,6 +80,19 @@ void Screen_Puzzle::Release()
 {
 }
 
+void Screen_Puzzle::Shuffle()
+{
+	for (int i = NULL; i < BoardSize_; i++)
+	{
+		for (int j = NULL; j < BoardSize_; j++)
+		{
+			Board_[i][j] = rand() % Board_MAX;
+		}
+	}
+	Board_[NULL][NULL] = NULL;
+	Board_[NULL][BoardSize_ - 1] = Empty_;
+}
+
 void Screen_Puzzle::Swap(int x, int z)
 {
 	//—×‚è‡‚Á‚Ä‚¢‚éêŠ‚ÉEmpty‚ª‘¶Ý‚·‚é‚©
@@ -98,7 +111,7 @@ void Screen_Puzzle::Swap(int x, int z)
 			if (pPlayer->GetUVPos().x == x && pPlayer->GetUVPos().y == z)
 			{
 				//Player‚²‚ÆˆÚ“®‚³‚¹‚é
-				pPlayer->SetUVPos(XMFLOAT2(Dir.moveLtR, Dir.moveHLw));
+				pPlayer->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
 			std::swap(Board_[x][z], Board_[x + Dir.moveLtR][z + Dir.moveHLw]);
 			return;
@@ -183,10 +196,11 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 	return vPos;
 }
 
-char Screen_Puzzle::DoorConfig(char BoardType)
+bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 {
 	char ans = NULL;
 	DoorPath data;
+	bool path = false;
 	switch (BoardType)
 	{
 	case Board_HLt: ans = data.DoorH + data.DoorLt; break;
@@ -196,7 +210,16 @@ char Screen_Puzzle::DoorConfig(char BoardType)
 	case Board_LtR: ans = data.DoorLt + data.DoorR; break;
 	default: break;
 	}
-	return ans;
+
+	switch (DoorID)
+	{
+	case DOOR_ID_H: path = ans & data.DoorLw; break;
+	case DOOR_ID_LW: path = ans & data.DoorH; break;
+	case DOOR_ID_LT: path = ans & data.DoorR; break;
+	case DOOR_ID_R: path = ans & data.DoorLt; break;
+	default: break;
+	}
+	return path;
 }
 
 char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
@@ -208,14 +231,17 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 	moveX = (int)pPos.x + Direction[DoorID].moveLtR;
 	moveZ = (int)pPos.y - Direction[DoorID].moveHLw;
 
-	char path = DoorConfig(Board_[moveX][moveZ]);
-	path = path >> (4 - DoorID);
-
-	if (moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
+	if (Board_[moveX][moveZ] != Empty_)
 	{
-		if (path & 0x01)
+
+		if (moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
 		{
-			return Board_[moveX][moveZ];
+			if (DoorConfig(Board_[moveX][moveZ], DoorID))
+			{
+				Player* pPlayer = (Player*)GetParent();
+				pPlayer->SetUVPos(XMFLOAT2((float)Direction[DoorID].moveLtR, (float)-Direction[DoorID].moveHLw));
+				return Board_[moveX][moveZ];
+			}
 		}
 	}
 
