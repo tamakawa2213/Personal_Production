@@ -40,6 +40,7 @@ class Fbx
 		float		chromaR;
 		float		chromaG;
 		float		chromaB;
+		float 		alpha;
 	};
 
 	struct VERTEX
@@ -69,6 +70,6 @@ public:
 	void InitMaterial(fbxsdk::FbxNode* pNode);
 	void RayCast(RayCastData& rayData);
 	void Draw(Transform& transform);
-	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright);	//transform, RGBの値, 明度(0 ～255)
+	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha);	//transform, RGBの値, 明度(0 ～255)
 	void Release();
 };

@@ -67,14 +67,14 @@ void Screen_Puzzle::Draw()
 				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-					Model::Draw(hModel_[Type], Chroma, 255);
+					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
 				if (PuzX_ == x && PuzZ_ == z)
 				{
 					if (!Wait_)
 					{
 						const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
-						Model::Draw(hModel_[Type], Chroma, 200);
+						Model::Draw(hModel_[Type], Chroma, 200, UCHAR_MAX);
 					}
 				}
 				else

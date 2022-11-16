@@ -11,6 +11,7 @@ namespace Direct3D
 	ID3D11DeviceContext* pContext = nullptr;				//デバイスコンテキスト
 	IDXGISwapChain* pSwapChain = nullptr;					//スワップチェイン
 	ID3D11RenderTargetView* pRenderTargetView = nullptr;	//レンダーターゲットビュー
+	ID3D11BlendState* pBlendState = nullptr;				//ブレンドステート
 	ID3D11Texture2D* pDepthStencil = nullptr;				//深度ステンシル
 	ID3D11DepthStencilView* pDepthStencilView = nullptr;	//深度ステンシルビュー
 
@@ -118,6 +119,23 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	pDevice->CreateTexture2D(&descDepth, NULL, &pDepthStencil);
 	assert(pDepthStencil != 0);
 	pDevice->CreateDepthStencilView(pDepthStencil, NULL, &pDepthStencilView);
+
+	//ブレンドステートの作成
+	D3D11_BLEND_DESC BlendDesc;
+	ZeroMemory(&BlendDesc, sizeof(BlendDesc));
+	BlendDesc.AlphaToCoverageEnable = FALSE;
+	BlendDesc.IndependentBlendEnable = FALSE;
+	BlendDesc.RenderTarget[0].BlendEnable = TRUE;
+	BlendDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	BlendDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	BlendDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+	BlendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
+	BlendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	BlendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+	pDevice->CreateBlendState(&BlendDesc, &pBlendState);
+	float blendFactor[4] = { D3D11_BLEND_ZERO, D3D11_BLEND_ZERO, D3D11_BLEND_ZERO, D3D11_BLEND_ZERO };
+	pContext->OMSetBlendState(pBlendState, blendFactor, UINT_MAX);
 
 	//データを画面に描画するための一通りの設定（パイプライン）
 	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);	// データの入力種類を指定
@@ -278,6 +296,7 @@ void Direct3D::Release()
 		SAFE_RELEASE(shader[i].pPixelShader);
 		SAFE_RELEASE(shader[i].pVertexShader);
 	}
+	SAFE_RELEASE(pBlendState);
 	SAFE_RELEASE(pRenderTargetView);
 	SAFE_RELEASE(pSwapChain);
 	SAFE_RELEASE(pContext);

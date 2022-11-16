@@ -18,6 +18,7 @@ cbuffer global
 	float		chromaR;		//Rの彩度
 	float		chromaG;		//Gの彩度
 	float		chromaB;		//Bの彩度
+	float		alpha;			//透明度
 };
 
 //───────────────────────────────────────
@@ -61,18 +62,19 @@ float4 PS(VS_OUT inData) : SV_Target
 {
 	float4 diffuse;
 
-	float Bright_ = (float)(bright / 255);
+	float Bright_ = (bright / 255.0f);
+	float Alpha = (alpha / 255.0f);
+	inData.color.a = 1.0f;
 
 	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(Bright_, Bright_, Bright_, 1);
 
 	if (isTexture)
 	{
-		diffuse = float4(chromaR, chromaG, chromaB, 1) * g_texture.Sample(g_sampler, inData.uv) * inData.color;
+		diffuse = float4(chromaR, chromaG, chromaB, Alpha) * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 	}
 	else
 	{
-		diffuse = float4(chromaR, chromaG, chromaB, 1) * diffuseColor * inData.color;
-		//return diffuseColor * inData.color;
+		diffuse = float4(chromaR, chromaG, chromaB, Alpha) * diffuseColor * inData.color;
 	}
 	return (diffuse + ambient);
 }

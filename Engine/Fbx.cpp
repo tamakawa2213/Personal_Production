@@ -257,10 +257,10 @@ void Fbx::RayCast(RayCastData& rayData)
 
 void Fbx::Draw(Transform& transform)
 {
-	Draw(transform, XMFLOAT3(0.3f, 0.3f, 0.3f), 255);
+	Draw(transform, XMFLOAT3(0.3f, 0.3f, 0.3f), UCHAR_MAX, UCHAR_MAX);
 }
 
-void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright)
+void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 {
 	Direct3D::SetShader(SHADER_3D);
 
@@ -272,6 +272,7 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright)
 	cb.chromaG = Chroma.y;
 	cb.chromaB = Chroma.z;
 	cb.bright = Bright;
+	cb.alpha = Alpha;
 
 	for (int i = 0; i < materialCount_; i++)
 	{

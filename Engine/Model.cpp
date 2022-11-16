@@ -46,9 +46,9 @@ namespace Model
         FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform);
     }
 
-    void Draw(int hModel, XMFLOAT3 Chroma, short Bright)
+    void Draw(int hModel, XMFLOAT3 Chroma, short Bright, short Alpha)
     {
-        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, Chroma, Bright);
+        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, Chroma, Bright, Alpha);
     }
 
     void Release()
