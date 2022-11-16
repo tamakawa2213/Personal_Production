@@ -8,7 +8,7 @@
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL)
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL), MovingPanel_(NULL), pPlayer_(nullptr)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 }
@@ -19,6 +19,7 @@ Screen_Puzzle::~Screen_Puzzle()
 
 void Screen_Puzzle::Initialize()
 {
+	pPlayer_ = (Player*)GetParent();
 	Shuffle();
 	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
 	for (int i = NULL; i < Board_MAX; i++)
@@ -36,7 +37,7 @@ void Screen_Puzzle::Update()
 	{
 		Moving();
 	}
-	else
+	else if(!pPlayer_->GetWait())
 	{
 		bool Ishit = MakeMouseRay();
 
@@ -59,24 +60,45 @@ void Screen_Puzzle::Draw()
 			{
 				Transform Tr = transform_;
 				Tr.position_ = XMFLOAT3(x, NULL, z);
+
 				Model::SetTransform(hModel_[Type], Tr);
 
 				//Playerの位置を可視化するためのもの　後で消す
-				Player* pPlayer = (Player*)GetParent();
-				if (pPlayer->GetUVPos().x == x && pPlayer->GetUVPos().y == z)
+				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, 255);
 				}
-
 				if (PuzX_ == x && PuzZ_ == z)
 				{
-					const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
-					Model::Draw(hModel_[Type], Chroma, 200);
+					if (!Wait_)
+					{
+						const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
+						Model::Draw(hModel_[Type], Chroma, 200);
+					}
 				}
 				else
 				{
 					Model::Draw(hModel_[Type]);
+				}
+			}
+			else
+			{
+				//移動しているマスの処理
+				if (Moving_)
+				{
+					Transform Tr = transform_;
+					Tr.position_ = XMFLOAT3(x, NULL, z);
+					float move = Moving_;
+					switch (MoveDir_)
+					{
+					case 0x08: Tr.position_.z += (move / TIMETOMOVE); break;
+					case 0x04: Tr.position_.z -= (move / TIMETOMOVE); break;
+					case 0x02: Tr.position_.x -= (move / TIMETOMOVE); break;
+					case 0x01: Tr.position_.x += (move / TIMETOMOVE); break;
+					}
+					Model::SetTransform(hModel_[MovingPanel_], Tr);
+					Model::Draw(hModel_[MovingPanel_]);
 				}
 			}
 		}
@@ -85,6 +107,7 @@ void Screen_Puzzle::Draw()
 
 void Screen_Puzzle::Release()
 {
+	SAFE_RELEASE(pPlayer_);
 }
 
 void Screen_Puzzle::Shuffle()
@@ -113,15 +136,33 @@ void Screen_Puzzle::Swap(int x, int z)
 		if (Board_[moveX][moveZ] == Empty_)
 		{
 			Wait_ = true;
-			Player* pPlayer = (Player*)GetParent();
-
+			if (Dir.moveHLw != NULL)
+			{
+				PuzZ_ += Dir.moveHLw;
+				switch (Dir.moveHLw)
+				{
+				case 1: MoveDir_ = 0x08; break;
+				case -1: MoveDir_ = 0x04; break;
+				}
+			}
+			if (Dir.moveLtR != NULL)
+			{
+				PuzX_ += Dir.moveLtR;
+				switch (Dir.moveLtR)
+				{
+				case 1: MoveDir_ = 0x01; break;
+				case -1: MoveDir_ = 0x02; break;
+				}
+			}
 			//押したマスがPlayerのいるマスだった場合
-			if (pPlayer->GetUVPos().x == x && pPlayer->GetUVPos().y == z)
+			if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z)
 			{
 				//Playerごと移動させる
-				pPlayer->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
+				pPlayer_->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
+			MovingPanel_ = Board_[x][z];
 			std::swap(Board_[x][z], Board_[moveX][moveZ]);
+			pPlayer_->SetWait(Wait_);
 			return;
 		}
 	}
@@ -233,10 +274,11 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 void Screen_Puzzle::Moving()
 {
 	Moving_++;
-	if (Moving_ > 100)
+	if (Moving_ > TIMETOMOVE)
 	{
 		Moving_ = NULL;
 		Wait_ = false;
+		pPlayer_->SetWait(Wait_);
 	}
 }
 
@@ -256,12 +298,10 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 		{
 			if (DoorConfig(Board_[moveX][moveZ], DoorID))
 			{
-				Player* pPlayer = (Player*)GetParent();
-				pPlayer->SetUVPos(XMFLOAT2((float)Direction[DoorID].moveLtR, (float)-Direction[DoorID].moveHLw));
+				pPlayer_->SetUVPos(XMFLOAT2((float)Direction[DoorID].moveLtR, (float)-Direction[DoorID].moveHLw));
 				return Board_[moveX][moveZ];
 			}
 		}
 	}
-
 	return Board_MAX;
 }

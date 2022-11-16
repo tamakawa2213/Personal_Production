@@ -3,6 +3,9 @@
 
 #define BoardSize_  4			//横・縦それぞれの大きさ
 #define Empty_ -1				//空白のマス
+#define TIMETOMOVE 60			//移動にかける時間
+
+class Player;
 
 struct DoorPath	//通れるドアをビットで示す(上、下、右、左の順)
 {
@@ -46,10 +49,12 @@ class Screen_Puzzle : public GameObject
 	bool Wait_;
 
 	char Moving_;
-
+	char MovingPanel_;
 	char MoveDir_;
 
 	void Shuffle();
+
+	Player* pPlayer_;
 
 	void Swap(int x, int z);				//空白に隣り合っていれば交換する
 
