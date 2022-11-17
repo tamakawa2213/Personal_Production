@@ -15,4 +15,7 @@
 //シーン切り替えを行うマクロ
 #define SCENE_CHANGE(SCENE_ID) SceneManager* pSceneManager = (SceneManager*)FindObject("SceneManager"); pSceneManager->ChangeScene(SCENE_ID);
 
+//一定の範囲に収めるもの
+#define CLAMP(i, Min, Max) i = min(max( i, Min), Max);
+
 #define VpNum 2

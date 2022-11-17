@@ -127,7 +127,7 @@ void Screen_Puzzle::Swap(int x, int z)
 {
 	//—×‚è‡‚Á‚Ä‚¢‚éêŠ‚ÉEmpty‚ª‘¶İ‚·‚é‚©
 	for (Move Dir : Direction)
-	{
+	{		
 		int moveX, moveZ;
 		moveX = x + Dir.moveLtR;
 		moveZ = z + Dir.moveHLw;

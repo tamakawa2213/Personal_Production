@@ -264,6 +264,10 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 {
 	Direct3D::SetShader(SHADER_3D);
 
+	CLAMP(Chroma.x, 0, 1);
+	CLAMP(Chroma.y, 0, 1);
+	CLAMP(Chroma.z, 0, 1);
+
 	CONSTANT_BUFFER cb;
 	transform.Calclation();
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//çsóÒÇ»ÇÃÇ≈èáî‘ÇÕå≈íË
@@ -278,15 +282,10 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 	{
 		if (pMaterialList_[i].pTexture == nullptr) {
 			cb.isTexture = 0;
+			cb.diffuseColor = pMaterialList_[i].diffuse;
 		}
 		else {
 			cb.isTexture = 1;
-		}
-
-		if (cb.isTexture == 0)
-		{
-			cb.diffuseColor = pMaterialList_[i].diffuse;
-
 		}
 
 		D3D11_MAPPED_SUBRESOURCE pdata;
