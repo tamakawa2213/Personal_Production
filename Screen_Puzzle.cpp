@@ -69,6 +69,7 @@ void Screen_Puzzle::Draw()
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
+
 				if (PuzX_ == x && PuzZ_ == z)
 				{
 					if (!Wait_)
@@ -250,7 +251,7 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 	char ans = NULL;
 	DoorPath data;
 	bool path = false;
-	switch (BoardType)
+	switch (BoardType)	//渡されたIDから通れるドアを出す
 	{
 	case Board_HLt: ans = data.DoorH + data.DoorLt; break;
 	case Board_HR: ans = data.DoorH + data.DoorR; break;
@@ -260,7 +261,7 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 	default: break;
 	}
 
-	switch (DoorID)
+	switch (DoorID)		//ビット演算で通れるかどうかを返す
 	{
 	case DOOR_ID_H: path = ans & data.DoorLw; break;
 	case DOOR_ID_LW: path = ans & data.DoorH; break;
@@ -274,6 +275,8 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 void Screen_Puzzle::Moving()
 {
 	Moving_++;
+
+	//Moving_が設定した時間に達したら終了する
 	if (Moving_ > TIMETOMOVE)
 	{
 		Moving_ = NULL;
@@ -291,14 +294,17 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 	moveX = (int)pPos.x + Direction[DoorID].moveLtR;
 	moveZ = (int)pPos.y - Direction[DoorID].moveHLw;
 
+	//移動先が空白のマスかどうか
 	if (Board_[moveX][moveZ] != Empty_)
 	{
-
+		//範囲外にいかないか
 		if (moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
 		{
 			if (DoorConfig(Board_[moveX][moveZ], DoorID))
 			{
+				//Playerの二次元座標を更新
 				pPlayer_->SetUVPos(XMFLOAT2((float)Direction[DoorID].moveLtR, (float)-Direction[DoorID].moveHLw));
+
 				return Board_[moveX][moveZ];
 			}
 		}

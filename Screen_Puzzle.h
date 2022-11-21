@@ -43,16 +43,16 @@ class Screen_Puzzle : public GameObject
 {
 	char PuzX_;
 	char PuzZ_;
-	int hModel_[Board_MAX];
-	int Board_[BoardSize_][BoardSize_];
+	int hModel_[Board_MAX];	//格納されたオブジェクト番号
+	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
 
-	bool Wait_;
+	bool Wait_;			//待機時間かどうか
 
-	char Moving_;
-	char MovingPanel_;
-	char MoveDir_;
+	char Moving_;		//移動を開始してから経過したフレーム数を記録
+	char MovingPanel_;	//移動中のマスの値が入る
+	char MoveDir_;		//移動する方向
 
-	void Shuffle();
+	void Shuffle();							//パズルをランダムに生成する
 
 	Player* pPlayer_;
 
@@ -61,9 +61,9 @@ class Screen_Puzzle : public GameObject
 	bool MakeMouseRay();
 	XMVECTOR SetInvMat(XMFLOAT3 pos);		//行列をかけてマウスカーソルのレイを作る
 
-	bool DoorConfig(char BoardType, char DoorID);
+	bool DoorConfig(char BoardType, char DoorID);	//押したドアから隣り合う部屋に移動できるか
 
-	void Moving();
+	void Moving();	//押してからの待機時間
 public:
 	Screen_Puzzle(GameObject* parent);
 
@@ -77,6 +77,6 @@ public:
 
 	void Release() override;
 
-	char SendToken(XMFLOAT2 pPos, char DoorID);
+	char SendToken(XMFLOAT2 pPos, char DoorID);	//Playerに移動できるかどうかを返す
 };
 

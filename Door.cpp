@@ -24,16 +24,18 @@ void Door::Update()
 	float dist = MakeMouseRay();
 
 	//カメラより手前にあるドアには当たらないようにする
-	if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0)
+	//マウスを押したタイミングで対象を指しているか
+	if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0f)
 	{
 		IsMouse_[0] = true;
 	}
-
-	if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0)
+	//マウスを離したタイミングで対象を指しているか
+	if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0f)
 	{
 		IsMouse_[1] = true;
 	}
 
+	//両方trueならば呼び出す
 	if (IsMouse_[0] && IsMouse_[1])
 	{
 		//ドアをクリックしたらPlayerにIDを送る
@@ -42,6 +44,7 @@ void Door::Update()
 		IsMouse_[1] = false;
 	}
 
+	//押していなければfalseになる
 	if (!Input::IsMouse(0))
 	{
 		IsMouse_[0] = false;
