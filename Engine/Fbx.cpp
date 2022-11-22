@@ -275,10 +275,10 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 	cb.chroma = XMFLOAT4(Chroma.x, Chroma.y, Chroma.z, Alpha);
 	cb.bright = Bright;
 
-	//cb.light = XMFLOAT4(-0.5f, 0.7f, 1.0f, 0.0f);
-	XMFLOAT3 lgt;
+	cb.light = XMFLOAT4(-0.5f, 0.7f, 1.0f, 0.0f);
+	/*XMFLOAT3 lgt;
 	XMStoreFloat3(&lgt, NormalDotLight(transform));
-	cb.light = XMFLOAT4(lgt.x, lgt.y, lgt.z, 0);
+	cb.light = XMFLOAT4(lgt.x, lgt.y, lgt.z, 0);*/
 
 	for (int i = 0; i < materialCount_; i++)
 	{

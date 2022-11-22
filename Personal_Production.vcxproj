@@ -173,6 +173,7 @@
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Screen_Puzzle.cpp" />
     <ClCompile Include="Screen_Room.cpp" />
+    <ClCompile Include="Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple2D.hlsl" />
@@ -201,6 +202,7 @@
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Screen_Puzzle.h" />
     <ClInclude Include="Screen_Room.h" />
+    <ClInclude Include="Storage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -4,11 +4,12 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 #include "Player.h"
+#include "Storage.h"
 
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL), MovingPanel_(NULL), pPlayer_(nullptr)
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL), MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 }
@@ -28,6 +29,7 @@ void Screen_Puzzle::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= NULL);
 	}
+	Mode_ = Storage::GetDifficulty();
 }
 
 void Screen_Puzzle::Update()
@@ -51,9 +53,9 @@ void Screen_Puzzle::Update()
 
 void Screen_Puzzle::Draw()
 {
-	for (char x = NULL; x < BoardSize_; x++)
+	for (char x = 0; x < BoardSize_; x++)
 	{
-		for (char z = NULL; z < BoardSize_; z++)
+		for (char z = 0; z < BoardSize_; z++)
 		{
 			int Type = Board_[x][z];
 			if (Type != Empty_)
@@ -64,7 +66,7 @@ void Screen_Puzzle::Draw()
 				Model::SetTransform(hModel_[Type], Tr);
 
 				//Player‚ÌˆÊ’u‚ð‰ÂŽ‹‰»‚·‚é‚½‚ß‚Ì‚à‚Ì@Œã‚ÅÁ‚·
-				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z)
+				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == 0)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
@@ -99,7 +101,15 @@ void Screen_Puzzle::Draw()
 					case 0x01: Tr.position_.x += (move / TIMETOMOVE); break;
 					}
 					Model::SetTransform(hModel_[MovingPanel_], Tr);
-					Model::Draw(hModel_[MovingPanel_]);
+					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == 0)
+					{
+						const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
+						Model::Draw(hModel_[MovingPanel_], Chroma, UCHAR_MAX, UCHAR_MAX);
+					}
+					else
+					{
+						Model::Draw(hModel_[MovingPanel_]);
+					}
 				}
 			}
 		}
@@ -120,8 +130,8 @@ void Screen_Puzzle::Shuffle()
 			Board_[i][j] = rand() % Board_MAX;
 		}
 	}
-	Board_[NULL][NULL] = NULL;
-	Board_[NULL][BoardSize_ - 1] = Empty_;
+	Board_[0][0] = Board_HLt;
+	Board_[0][BoardSize_ - 1] = Empty_;
 }
 
 void Screen_Puzzle::Swap(int x, int z)
@@ -132,7 +142,7 @@ void Screen_Puzzle::Swap(int x, int z)
 		int moveX, moveZ;
 		moveX = x + Dir.moveLtR;
 		moveZ = z + Dir.moveHLw;
-		if(moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
+		if(moveX >= 0 && moveX < BoardSize_ && moveZ >= 0 && moveZ < BoardSize_)
 		//‚ ‚Á‚½‚çˆÚ“®‚³‚¹‚é
 		if (Board_[moveX][moveZ] == Empty_)
 		{
@@ -194,7 +204,7 @@ bool Screen_Puzzle::MakeMouseRay()
 	{
 		for (int z = 0; z < BoardSize_; z++)
 		{
-			for (int type = NULL; type < Board_MAX; type++)
+			for (int type = 0; type < Board_MAX; type++)
 			{
 				RayCastData data;
 				XMStoreFloat3(&data.start, front);

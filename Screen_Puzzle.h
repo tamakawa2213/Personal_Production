@@ -48,6 +48,8 @@ class Screen_Puzzle : public GameObject
 
 	bool Wait_;			//待機時間かどうか
 
+	char Mode_;			//難易度指定
+
 	char Moving_;		//移動を開始してから経過したフレーム数を記録
 	char MovingPanel_;	//移動中のマスの値が入る
 	char MoveDir_;		//移動する方向
