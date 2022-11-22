@@ -12,13 +12,11 @@ cbuffer global
 {
 	float4x4	matWVP;			//ワールド・ビュー・プロジェクションの合成行列
 	float4x4	matNormal;		//移動行列を除いたワールド行列
-	float4		diffuseColor;	// ディフューズカラー（マテリアルの色）
-	bool		isTexture;		// テクスチャ貼ってあるかどうか
+	float4		diffuseColor;	//ディフューズカラー（マテリアルの色）
+	float4		chroma;			//Red, Green, Blue, Alpha
+	float4		light;			//光のベクトル
+	bool		isTexture;		//テクスチャ貼ってあるかどうか
 	float		bright;			//ポリゴンの明るさ
-	float		chromaR;		//Rの彩度
-	float		chromaG;		//Gの彩度
-	float		chromaB;		//Bの彩度
-	float		alpha;			//透明度
 };
 
 //───────────────────────────────────────
@@ -43,14 +41,14 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	//スクリーン座標に変換し、ピクセルシェーダーへ
 	outData.pos = mul(pos, matWVP);
 	outData.uv = uv;
-
+	
 	//法線にワールド行列を掛けて回転
 	normal = mul(normal, matNormal);
 
-	float4 light = float4(-0.5f, 0.7f, 1.0f, 0.0f);
-	light = normalize(light);
-	outData.color = clamp(dot(normal, light), 0, 1);
-
+	float4 Light = light;
+	Light.a = 0;
+	Light = normalize(Light);
+	outData.color = clamp(dot(normal, Light), 0, 1);
 	//まとめて出力
 	return outData;
 }
@@ -63,18 +61,17 @@ float4 PS(VS_OUT inData) : SV_Target
 	float4 diffuse;
 
 	float Bright_ = (bright / 255.0f);
-	float Alpha = (alpha / 255.0f);
 	inData.color.a = 1.0f;
 
 	float4 ambient = g_texture.Sample(g_sampler, inData.uv) * float4(Bright_, Bright_, Bright_, 1);
 
 	if (isTexture)
 	{
-		diffuse = float4(chromaR, chromaG, chromaB, Alpha) * g_texture.Sample(g_sampler, inData.uv) * inData.color;
+		diffuse = chroma * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 	}
 	else
 	{
-		diffuse = float4(chromaR, chromaG, chromaB, Alpha) * diffuseColor * inData.color;
+		diffuse = chroma * diffuseColor * inData.color;
 	}
 	return (diffuse + ambient);
 }

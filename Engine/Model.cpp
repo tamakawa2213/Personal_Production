@@ -78,8 +78,6 @@ namespace Model
         pass = XMVector3TransformCoord(pass, matInv);
         XMStoreFloat3(&Raydata.dir, pass - start);
 
-        RayCastData data;
-
         FileSet[hModel]->pFbx->RayCast(Raydata);
     }
 }

@@ -33,7 +33,7 @@ namespace Camera {
 		position_ = position;
 	}
 
-	void SetPosition(XMFLOAT3 position)
+	void Camera::SetPosition(XMFLOAT3 position)
 	{
 		position_ = XMLoadFloat3(&position);
 	}
@@ -55,16 +55,24 @@ namespace Camera {
 	{
 		return projMatrix_;
 	}
-	XMFLOAT3 GetCameraPosition()
+	XMFLOAT3 Camera::GetCameraPosition()
 	{
 		XMFLOAT3 pos;
 		XMStoreFloat3(&pos, position_);
 		return pos;
 	}
-	XMFLOAT3 GetCameraTarget()
+	XMFLOAT3 Camera::GetCameraTarget()
 	{
 		XMFLOAT3 tar;
 		XMStoreFloat3(&tar, target_);
 		return tar;
+	}
+	XMVECTOR GetCameraVecPosition()
+	{
+		return position_;
+	}
+	XMVECTOR GetCameraVecTarget()
+	{
+		return target_;
 	}
 }

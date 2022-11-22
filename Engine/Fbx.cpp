@@ -232,7 +232,7 @@ void Fbx::RayCast(RayCastData& rayData)
 {
 	rayData.hit = false;
 	XMVECTOR normal = XMLoadFloat3(&rayData.dir);
-	XMVector4Normalize(normal);
+	normal = XMVector4Normalize(normal);
 	XMStoreFloat3(&rayData.dir, normal);
 
 	for (int material = 0; material < materialCount_; material++)
@@ -242,7 +242,6 @@ void Fbx::RayCast(RayCastData& rayData)
 			XMFLOAT3 v0; XMStoreFloat3(&v0, pVertices_[ppIndex_[material][poly * 3]].position);
 			XMFLOAT3 v1; XMStoreFloat3(&v1, pVertices_[ppIndex_[material][poly * 3 + 1]].position);
 			XMFLOAT3 v2; XMStoreFloat3(&v2, pVertices_[ppIndex_[material][poly * 3 + 2]].position);
-
 			rayData.hit = Math::Intersect(rayData.start, rayData.dir, v0, v1, v2, &rayData.dist);
 
 			if (rayData.hit)
@@ -267,16 +266,19 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 	CLAMP(Chroma.x, 0, 1);
 	CLAMP(Chroma.y, 0, 1);
 	CLAMP(Chroma.z, 0, 1);
+	CLAMP(Alpha, 0, 1);
 
 	CONSTANT_BUFFER cb;
 	transform.Calclation();
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//s—ñ‚È‚Ì‚Å‡”Ô‚ÍŒÅ’è
 	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
-	cb.chromaR = Chroma.x;
-	cb.chromaG = Chroma.y;
-	cb.chromaB = Chroma.z;
+	cb.chroma = XMFLOAT4(Chroma.x, Chroma.y, Chroma.z, Alpha);
 	cb.bright = Bright;
-	cb.alpha = Alpha;
+
+	//cb.light = XMFLOAT4(-0.5f, 0.7f, 1.0f, 0.0f);
+	XMFLOAT3 lgt;
+	XMStoreFloat3(&lgt, NormalDotLight(transform));
+	cb.light = XMFLOAT4(lgt.x, lgt.y, lgt.z, 0);
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -336,4 +338,40 @@ void Fbx::Release()
 	}
 	SAFE_DELETE_ARRAY(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
+}
+
+XMVECTOR Fbx::NormalDotLight(Transform tr)
+{
+	XMMATRIX matInv = XMMatrixInverse(nullptr, tr.GetWorldMatrix());
+	float dot = 0.0f;
+	XMVECTOR sight = XMVector3TransformCoord(Camera::GetCameraVecTarget(), matInv) - XMVector3TransformCoord(Camera::GetCameraVecPosition(), matInv);
+	sight = XMVector3Normalize(sight);
+	XMVECTOR ans = sight;
+	for (int material = 0; material < materialCount_; material++)
+	{
+		for (int poly = 0; poly < indexCount_[material] / 3; poly++)
+		{
+			XMVECTOR v[3], cross;
+			v[0] = pVertices_[ppIndex_[material][poly * 3]].position;
+			v[1] = pVertices_[ppIndex_[material][poly * 3 + 1]].position;
+			v[2] = pVertices_[ppIndex_[material][poly * 3 + 2]].position;
+			
+			cross = XMVector3Cross(v[2] - v[0], v[1] - v[0]);
+			cross = XMVector3Normalize(cross);
+			float sto = XMVectorGetX(XMVector3Dot(sight, cross));
+
+			if (sto < 0)
+			{
+				sto = -sto;
+			}
+
+			if (dot < sto)
+			{
+				dot = sto;
+				ans = -cross;
+			}
+		}
+
+	}
+	return ans;
 }

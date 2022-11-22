@@ -35,12 +35,10 @@ class Fbx
 		XMMATRIX	matWVP;
 		XMMATRIX	matNormal;
 		XMFLOAT4	diffuseColor;
+		XMFLOAT4	chroma;
+		XMFLOAT4	light;
 		int			isTexture;
 		float		bright;
-		float		chromaR;
-		float		chromaG;
-		float		chromaB;
-		float 		alpha;
 	};
 
 	struct VERTEX
@@ -72,4 +70,6 @@ public:
 	void Draw(Transform& transform);
 	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha);	//transform, RGBÇÃíl, ñæìx(0 Å`255)
 	void Release();
+
+	XMVECTOR NormalDotLight(Transform tr);
 };
