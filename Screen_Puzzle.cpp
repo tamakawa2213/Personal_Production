@@ -183,13 +183,21 @@ bool Screen_Puzzle::MakeMouseRay()
 {
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
-	mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / VpNum);
-	mousePosFront.z = NULL;
+	mousePosFront.z = 0;
 
 	XMVECTOR front = SetInvMat(mousePosFront);
 
 	XMFLOAT3 mousePosBack = Input::GetMousePosition();
-	mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / VpNum);
+
+	switch (Direct3D::SplitScrMode)
+	{
+	case SCREEN_SPLIT_2:
+		mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / 2);
+		mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / 2);
+		break;
+	default: break;
+	}
+	
 	mousePosBack.z = 1.0f;
 
 	XMVECTOR back = SetInvMat(mousePosBack);
@@ -232,7 +240,13 @@ bool Screen_Puzzle::MakeMouseRay()
 XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 {
 	//ビューポート行列
-	float w = (float)Direct3D::scrWidth / 4.0f;
+	float w = 0;
+	switch (Direct3D::SplitScrMode)
+	{
+	case SCREEN_FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
+	case SCREEN_SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
+	default: break;
+	}
 	float h = (float)Direct3D::scrHeight / 2.0f;
 	XMMATRIX vp =
 	{

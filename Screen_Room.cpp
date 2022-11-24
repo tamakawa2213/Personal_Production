@@ -37,10 +37,22 @@ void Screen_Room::Initialize()
 
 void Screen_Room::Update()
 {
-	//画面左にマウスがある場合にのみ呼び出す
-	if (Input::IsMouse(0) && Input::GetMousePosition().x < Direct3D::scrWidth / VpNum)
+	switch (Direct3D::SplitScrMode)
 	{
-		Look_Around();
+	case SCREEN_FULL:
+		if (Input::IsMouse(0))
+		{
+			Look_Around();
+		}
+		break;
+	case SCREEN_SPLIT_2:
+		//画面左にマウスがある場合にのみ呼び出す
+		if (Input::IsMouse(0) && Input::GetMousePosition().x < Direct3D::scrWidth / 2)
+		{
+			Look_Around();
+		}
+	default:
+		break;
 	}
 }
 

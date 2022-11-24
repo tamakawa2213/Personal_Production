@@ -101,7 +101,13 @@ float Door::MakeMouseRay()
 XMVECTOR Door::SetInvMat(XMFLOAT3 pos)
 {
 	//ビューポート行列
-	float w = (float)Direct3D::scrWidth / 4.0f;
+	float w = 0;
+	switch (Direct3D::SplitScrMode)
+	{
+	case SCREEN_FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
+	case SCREEN_SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
+	default: break;
+	}
 	float h = (float)Direct3D::scrHeight / 2.0f;
 	XMMATRIX vp =
 	{

@@ -20,11 +20,8 @@ namespace Camera {
 	//更新
 	void Camera::Update()
 	{
-		for (int i = NULL; i < VpNum; i++)
-		{
-			//ビュー行列の作成(カメラ固定のゲームならInitializeに書く)
-			viewMatrix_ = XMMatrixLookAtLH(position_, target_, XMVectorSet(0, 1, 0, 0));
-		}
+		//ビュー行列の作成(カメラ固定のゲームならInitializeに書く)
+		viewMatrix_ = XMMatrixLookAtLH(position_, target_, XMVectorSet(0, 1, 0, 0));
 	}
 
 	//位置を設定

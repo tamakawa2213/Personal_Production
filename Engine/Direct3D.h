@@ -19,12 +19,28 @@ enum SHADER_TYPE {
 	SHADER_MAX	//これは使わない
 };
 
+enum VP_TYPE
+{
+	VP_FULL,	//全画面描画
+	VP_LEFT,	//画面左描画
+	VP_RIGHT,	//画面右描画
+	VP_MAX
+};
+
+enum SPLIT_SCREEN
+{
+	SCREEN_FULL,		//画面分割なし
+	SCREEN_SPLIT_2,		//二画面
+	SCREEN_MAX
+};
+
 namespace Direct3D
 {
 //extern = どこかで生成されていて、複数回生成されないようにするためのもの
 	extern ID3D11Device* pDevice;			//デバイス
 	extern ID3D11DeviceContext* pContext;	//デバイスコンテキスト
 	extern int scrWidth, scrHeight;			//スクリーンの幅と高さ
+	extern char SplitScrMode;
 
 	//初期化
 	HRESULT Initialize(int winW, int winH, HWND hWnd);

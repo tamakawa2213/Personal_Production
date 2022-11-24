@@ -17,5 +17,3 @@
 
 //ˆê’è‚Ì”ÍˆÍ‚ÉŽû‚ß‚é‚à‚Ì
 #define CLAMP(i, Min, Max) i = min(max( i, Min), Max);
-
-#define VpNum 2

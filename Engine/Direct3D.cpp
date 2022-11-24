@@ -26,7 +26,9 @@ namespace Direct3D
 
 	int scrWidth, scrHeight;
 
-	D3D11_VIEWPORT vp[VpNum];
+	char SplitScrMode = SCREEN_FULL;
+
+	D3D11_VIEWPORT vp[VP_MAX];
 }
 
 //初期化
@@ -89,19 +91,26 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 	HR_FAILED_RELEASE(hr, L"レンダーターゲットビューの作成に失敗しました", pBackBuffer);
 	
 	//レンダリング結果を表示する範囲
-	vp[0].Width = (float)winW / 2;	//幅
-	vp[0].Height = (float)winH;//高さ
-	vp[0].MinDepth = 0.0f;		//手前
-	vp[0].MaxDepth = 1.0f;		//奥
-	vp[0].TopLeftX = 0;		//左
-	vp[0].TopLeftY = 0;		//上
+	vp[VP_FULL].Width = (float)winW;	//幅
+	vp[VP_FULL].Height = (float)winH;	//高さ
+	vp[VP_FULL].MinDepth = 0.0f;		//手前
+	vp[VP_FULL].MaxDepth = 1.0f;		//奥
+	vp[VP_FULL].TopLeftX = 0;			//左
+	vp[VP_FULL].TopLeftY = 0;			//上
 
-	vp[1].Width = (float)winW / 2;	//幅
-	vp[1].Height = (float)winH;//高さ
-	vp[1].MinDepth = 0.0f;		//手前
-	vp[1].MaxDepth = 1.0f;		//奥
-	vp[1].TopLeftX = (float)winW / 2;		//左
-	vp[1].TopLeftY = 0;		//上
+	vp[VP_LEFT].Width = (float)winW / 2;//幅
+	vp[VP_LEFT].Height = (float)winH;	//高さ
+	vp[VP_LEFT].MinDepth = 0.0f;		//手前
+	vp[VP_LEFT].MaxDepth = 1.0f;		//奥
+	vp[VP_LEFT].TopLeftX = 0;			//左
+	vp[VP_LEFT].TopLeftY = 0;			//上
+
+	vp[VP_RIGHT].Width = (float)winW / 2;	//幅
+	vp[VP_RIGHT].Height = (float)winH;		//高さ
+	vp[VP_RIGHT].MinDepth = 0.0f;			//手前
+	vp[VP_RIGHT].MaxDepth = 1.0f;			//奥
+	vp[VP_RIGHT].TopLeftX = (float)winW / 2;//左
+	vp[VP_RIGHT].TopLeftY = 0;				//上
 
 	//深度ステンシルビューの作成
 	D3D11_TEXTURE2D_DESC descDepth;
