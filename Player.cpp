@@ -13,8 +13,8 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	Instantiate<Screen_Puzzle>(this);
 	Instantiate<Screen_Room>(this);
+	Instantiate<Screen_Puzzle>(this);
 	UVPosition_ = { 0,0 };
 }
 

@@ -5,11 +5,13 @@
 #include "Engine/Model.h"
 #include "Player.h"
 #include "Storage.h"
+#include "Goal.h"
 
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL), MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0)
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL),
+	MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 }
@@ -30,6 +32,7 @@ void Screen_Puzzle::Initialize()
 		assert(hModel_ >= NULL);
 	}
 	Mode_ = Storage::GetDifficulty();
+	AssignGoal();
 }
 
 void Screen_Puzzle::Update()
@@ -65,12 +68,22 @@ void Screen_Puzzle::Draw()
 
 				Model::SetTransform(hModel_[Type], Tr);
 
-				//Playerの位置を可視化するためのもの　後で消す
+				//Easyモードならば現在位置を表示
 				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == 0)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
+
+#if _DEBUG		//デバッグモードでのみ表示
+				Goal* pGoal = (Goal*)FindObject("Goal");
+				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
+				{
+					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
+					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
+				}
+				SAFE_RELEASE(pGoal);
+#endif
 
 				if (PuzX_ == x && PuzZ_ == z)
 				{
@@ -134,6 +147,20 @@ void Screen_Puzzle::Shuffle()
 	Board_[0][BoardSize_ - 1] = Empty_;
 }
 
+void Screen_Puzzle::AssignGoal()
+{
+	char GoalPos = rand() % 16;
+	//生成された値がEmptyまたはPlayerの位置ではなくなるまで値が生成される
+	while (Board_[(char)(GoalPos / BoardSize_)][GoalPos % BoardSize_] == Empty_ ||
+		(pPlayer_->GetUVPos().x == (char)(GoalPos / BoardSize_) && pPlayer_->GetUVPos().y == GoalPos % BoardSize_))
+	{
+		GoalPos = rand() % 16;
+	}
+	Goal* pGoal = (Goal*)FindObject("Goal");
+	pGoal->InitialPosition(GoalPos);
+	SAFE_RELEASE(pGoal);
+}
+
 void Screen_Puzzle::Swap(int x, int z)
 {
 	//隣り合っている場所にEmptyが存在するか
@@ -171,6 +198,14 @@ void Screen_Puzzle::Swap(int x, int z)
 				//Playerごと移動させる
 				pPlayer_->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
+
+			Goal* pGoal = (Goal*)FindObject("Goal");
+			if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
+			{
+				pGoal->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
+			}
+			SAFE_RELEASE(pGoal);
+
 			MovingPanel_ = Board_[x][z];
 			std::swap(Board_[x][z], Board_[moveX][moveZ]);
 			pPlayer_->SetWait(Wait_);

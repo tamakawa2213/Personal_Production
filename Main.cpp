@@ -14,7 +14,7 @@
 #pragma comment(lib, "winmm.lib")
 
 //定数宣言
-LPCWSTR WIN_CLASS_NAME = L"SampleGame";	//ウィンドウクラス名
+LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
 const unsigned int WINDOW_WIDTH = 1200;	//ウィンドウの幅
 const unsigned int WINDOW_HEIGHT = 600;	//ウィンドウの高さ
 

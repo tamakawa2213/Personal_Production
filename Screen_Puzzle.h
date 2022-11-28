@@ -55,6 +55,7 @@ class Screen_Puzzle : public GameObject
 	char MoveDir_;		//移動する方向
 
 	void Shuffle();							//パズルをランダムに生成する
+	void AssignGoal();						//ゴールの位置を生成
 
 	Player* pPlayer_;
 

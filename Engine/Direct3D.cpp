@@ -26,7 +26,7 @@ namespace Direct3D
 
 	int scrWidth, scrHeight;
 
-	char SplitScrMode = SCREEN_FULL;
+	char SplitScrMode = SCREEN_SPLIT_2;
 
 	D3D11_VIEWPORT vp[VP_MAX];
 }

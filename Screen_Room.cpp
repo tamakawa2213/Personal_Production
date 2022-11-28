@@ -1,9 +1,9 @@
 #include "Screen_Room.h"
+#include "Door.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
-
-#include "Door.h"
+#include "Goal.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
 	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(0), pDoor()
@@ -31,6 +31,8 @@ void Screen_Room::Initialize()
 	//2‚Â‚ÌƒhƒA‚ğì¬
 	pDoor[0] = Instantiate<Door>(this);
 	pDoor[1] = Instantiate<Door>(this);
+
+	Instantiate<Goal>(this);
 
 	MoveOther(RoomType_);
 }
