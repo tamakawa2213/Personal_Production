@@ -170,6 +170,7 @@
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="IDObject.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Pin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
     <ClCompile Include="Screen_Puzzle.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="IDObject.h" />
+    <ClInclude Include="Pin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
     <ClInclude Include="Screen_Puzzle.h" />

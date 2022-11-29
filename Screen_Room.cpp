@@ -4,6 +4,7 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 #include "Goal.h"
+#include "Player.h"
 
 Screen_Room::Screen_Room(GameObject* parent)
 	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(NULL), PrevPosY_(NULL), RoomType_(0), pDoor()
@@ -34,7 +35,8 @@ void Screen_Room::Initialize()
 
 	Instantiate<Goal>(this);
 
-	MoveOther(RoomType_);
+	Player* pPlayer = (Player*)GetParent();
+	MoveOther(pPlayer->GetID());
 }
 
 void Screen_Room::Update()

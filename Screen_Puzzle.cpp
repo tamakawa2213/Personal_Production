@@ -3,9 +3,10 @@
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Goal.h"
+#include "Pin.h"
 #include "Player.h"
 #include "Storage.h"
-#include "Goal.h"
 
 #include <algorithm>
 
@@ -33,6 +34,7 @@ void Screen_Puzzle::Initialize()
 	}
 	Mode_ = Storage::GetDifficulty();
 	AssignGoal();
+	Instantiate<Pin>(this);
 }
 
 void Screen_Puzzle::Update()
@@ -50,6 +52,12 @@ void Screen_Puzzle::Update()
 		if (Input::IsMouseDown(0) && Ishit)
 		{
 			Swap(PuzX_, PuzZ_);
+		}
+
+		//右クリックでピン差し
+		if (Input::IsMouseDown(1) && Ishit)
+		{
+			PrickPin();
 		}
 	}
 }
@@ -76,13 +84,13 @@ void Screen_Puzzle::Draw()
 				}
 
 #if _DEBUG		//デバッグモードでのみ表示
-				Goal* pGoal = (Goal*)FindObject("Goal");
+				/*Goal* pGoal = (Goal*)FindObject("Goal");
 				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
-				SAFE_RELEASE(pGoal);
+				SAFE_RELEASE(pGoal);*/
 #endif
 
 				if (PuzX_ == x && PuzZ_ == z)
@@ -143,8 +151,17 @@ void Screen_Puzzle::Shuffle()
 			Board_[i][j] = rand() % Board_MAX;
 		}
 	}
-	Board_[0][0] = Board_HLt;
-	Board_[0][BoardSize_ - 1] = Empty_;
+
+	//Player側で初期位置のIDを指定
+	Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] = pPlayer_->GetID();
+
+	//空白のマスを生成
+	char Emp = rand() % 16;
+	while (pPlayer_->GetUVPos().x == (char)(Emp / BoardSize_) && pPlayer_->GetUVPos().y == (char)(Emp % BoardSize_))
+	{
+		Emp = rand() % 16;
+	}
+	Board_[(char)(Emp / BoardSize_)][(char)(Emp % BoardSize_)] = Empty_;
 }
 
 void Screen_Puzzle::AssignGoal()
@@ -199,6 +216,14 @@ void Screen_Puzzle::Swap(int x, int z)
 				pPlayer_->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
 
+			Pin* pPin = (Pin*)FindChildObject("Pin");
+			if (pPin->UVPosition_.x == x && pPin->UVPosition_.y == z)
+			{
+				pPin->UVPosition_.x += Dir.moveLtR;
+				pPin->UVPosition_.y += Dir.moveHLw;
+			}
+			SAFE_RELEASE(pPin);
+
 			Goal* pGoal = (Goal*)FindObject("Goal");
 			if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 			{
@@ -212,6 +237,21 @@ void Screen_Puzzle::Swap(int x, int z)
 			return;
 		}
 	}
+}
+
+void Screen_Puzzle::PrickPin()
+{
+	Pin* pPin = (Pin*)FindChildObject("Pin");
+	if (pPin->UVPosition_.x == PuzX_ && pPin->UVPosition_.y == PuzZ_)
+	{
+		pPin->Disp_ = !pPin->Disp_;
+	}
+	else
+	{
+		pPin->Disp_ = true;
+		pPin->UVPosition_ = { (float)PuzX_, (float)PuzZ_ };
+	}
+	SAFE_RELEASE(pPin);
 }
 
 bool Screen_Puzzle::MakeMouseRay()

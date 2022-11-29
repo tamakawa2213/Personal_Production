@@ -13,7 +13,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	Storage::SetDifficulty(HARD);
+	Storage::SetDifficulty(EASY);
 	Instantiate<Player>(this);
 }
 

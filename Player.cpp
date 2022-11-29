@@ -13,9 +13,13 @@ Player::~Player()
 
 void Player::Initialize()
 {
+	//‰ŠúˆÊ’u‚ÆID‚ğw’è
+	SetID(rand() % Board_MAX);
+	char pos = rand() % 16;
+	UVPosition_ = XMFLOAT2((char)(pos / BoardSize_), (char)(pos % BoardSize_));
+
 	Instantiate<Screen_Room>(this);
 	Instantiate<Screen_Puzzle>(this);
-	UVPosition_ = { 0,0 };
 }
 
 void Player::Update()

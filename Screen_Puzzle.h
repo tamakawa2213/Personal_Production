@@ -60,6 +60,7 @@ class Screen_Puzzle : public GameObject
 	Player* pPlayer_;
 
 	void Swap(int x, int z);				//空白に隣り合っていれば交換する
+	void PrickPin();						//ピン刺し
 
 	bool MakeMouseRay();
 	XMVECTOR SetInvMat(XMFLOAT3 pos);		//行列をかけてマウスカーソルのレイを作る

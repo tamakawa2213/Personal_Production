@@ -263,44 +263,41 @@ void Fbx::Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha)
 {
 	Direct3D::SetShader(SHADER_3D);
 
-	CLAMP(Chroma.x, 0, 1);
-	CLAMP(Chroma.y, 0, 1);
-	CLAMP(Chroma.z, 0, 1);
-	CLAMP(Alpha, 0, 1);
-
-	CONSTANT_BUFFER cb;
-	transform.Calclation();
-	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//行列なので順番は固定
-	cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
-	cb.chroma = XMFLOAT4(Chroma.x, Chroma.y, Chroma.z, Alpha);
-	cb.bright = Bright;
-
-	cb.light = XMFLOAT4(-0.5f, 0.7f, 1.0f, 0.0f);
-	/*XMFLOAT3 lgt;
-	XMStoreFloat3(&lgt, NormalDotLight(transform));
-	cb.light = XMFLOAT4(lgt.x, lgt.y, lgt.z, 0);*/
 
 	for (int i = 0; i < materialCount_; i++)
 	{
+		CLAMP(Chroma.x, 0, 1);
+		CLAMP(Chroma.y, 0, 1);
+		CLAMP(Chroma.z, 0, 1);
+		CLAMP(Alpha, 0, 1);
+
+		CONSTANT_BUFFER cb;
+		transform.Calclation();
+		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());	//行列なので順番は固定
+		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
+		cb.chroma = XMFLOAT4(Chroma.x, Chroma.y, Chroma.z, Alpha);
+		cb.bright = Bright;
+
+		cb.light = XMFLOAT4(-0.5f, 0.7f, 1.0f, 0.0f);
+		/*XMFLOAT3 lgt;
+		XMStoreFloat3(&lgt, NormalDotLight(transform));
+		cb.light = XMFLOAT4(lgt.x, lgt.y, lgt.z, 0);*/
+
 		if (pMaterialList_[i].pTexture == nullptr) {
-			cb.isTexture = 0;
+			cb.isTexture = FALSE;
 			cb.diffuseColor = pMaterialList_[i].diffuse;
 		}
 		else {
-			cb.isTexture = 1;
-		}
-
-		D3D11_MAPPED_SUBRESOURCE pdata;
-		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
-
-		if (cb.isTexture == 1)
-		{
+			cb.isTexture = TRUE;
 			ID3D11SamplerState* pSampler = pMaterialList_[i].pTexture->GetSampler();
 			Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
 
 			ID3D11ShaderResourceView* pSRV = pMaterialList_[i].pTexture->GetSRV();
 			Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 		}
+
+		D3D11_MAPPED_SUBRESOURCE pdata;
+		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 
 		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));		// データを値を送る
 

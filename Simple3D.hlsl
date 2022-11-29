@@ -73,6 +73,6 @@ float4 PS(VS_OUT inData) : SV_Target
 	{
 		diffuse = chroma * diffuseColor * inData.color;
 	}
-	return (diffuse + ambient);
+	return (diffuse + ambient) * 1.5;
 }
 //Illegal character in shader file のエラーが出たら使用不可の全角が使用されている
