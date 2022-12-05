@@ -1,5 +1,6 @@
 #pragma once
 namespace Procedural
 {
-	void SetSeed(char seed[256]);
+	void SetSeed(int seed);	//シード値を手動で入れる
+	int FormValue();		//与えられたシード値を基に値を生成する
 };

@@ -46,6 +46,10 @@ class Screen_Puzzle : public GameObject
 	int hModel_[Board_MAX];	//格納されたオブジェクト番号
 	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
 
+	const char UnderSide = 8;	//ボードの下半分
+	const char RightSide = 2;	//ボードの右半分
+	int SeedData_;		//この値を基にパズルの盤面を生成
+
 	bool Wait_;			//待機時間かどうか
 
 	char Mode_;			//難易度指定
@@ -54,6 +58,7 @@ class Screen_Puzzle : public GameObject
 	char MovingPanel_;	//移動中のマスの値が入る
 	char MoveDir_;		//移動する方向
 
+	void AssignPuzzle();					//完成系のパズル盤面を作成
 	void Shuffle();							//パズルをランダムに生成する
 	void AssignGoal();						//ゴールの位置を生成
 

@@ -2,17 +2,19 @@
 #include "Door.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
+#include "Engine/Math.h"
 #include "Engine/Model.h"
 #include "Goal.h"
 #include "Pin.h"
 #include "Player.h"
+#include "Procedural.h"
 #include "Storage.h"
 
 #include <algorithm>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL),
-	MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0)
+	MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0), SeedData_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 }
@@ -140,6 +142,32 @@ void Screen_Puzzle::Draw()
 void Screen_Puzzle::Release()
 {
 	SAFE_RELEASE(pPlayer_);
+}
+
+void Screen_Puzzle::AssignPuzzle()
+{
+	SeedData_ = Procedural::FormValue();	//とりあえず値を受け取る
+	char Goalpos = 0;						//ゴールの番号
+	
+	//ゴールの初期位置の判定
+	if (SeedData_ < 0)		//0未満ならば
+	{
+		Goalpos = UnderSide;		//下半分に置く
+	}
+	if (SeedData_ & 1)		//奇数ならば
+	{
+		Goalpos += RightSide;		//右半分に置く
+	}
+	if (Math::GetDigits(SeedData_, 1, 1) > Math::GetDigits(SeedData_, 2, 2))	//1桁目が2桁目より大きければ
+	{
+		Goalpos += UnderSide / 2;	//半分で区切った内の下段に置く
+	}
+	if (Math::GetDigits(SeedData_, 6, 6) > Math::GetDigits(SeedData_, 5, 5))	//6桁目が5桁目より大きければ
+	{
+		Goalpos += RightSide / 2;	//半分で区切った内の右側に置く
+	}
+
+
 }
 
 void Screen_Puzzle::Shuffle()

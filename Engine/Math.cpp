@@ -80,4 +80,16 @@ namespace Math
         return false;
     }
 
+    int Math::GetDigits(int value, int m, int n) {
+        int val = n + 1;
+        int result;
+
+        //nŒ…–ÚˆÈ‰º‚ÌŒ…‚ğæ“¾
+        val = value % (int)pow(10, val);
+
+        //mŒ…–ÚˆÈã‚ÌŒ…‚ğæ“¾
+        result = val / pow(10, m);
+
+        return result;
+    }
 }
