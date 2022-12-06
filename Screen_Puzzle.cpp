@@ -1,4 +1,4 @@
-#include "Screen_Puzzle.h"
+ï»¿#include "Screen_Puzzle.h"
 #include "Door.h"
 #include "Engine/Camera.h"
 #include "Engine/Input.h"
@@ -11,6 +11,7 @@
 #include "Storage.h"
 
 #include <algorithm>
+#include <random>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL),
@@ -26,6 +27,7 @@ Screen_Puzzle::~Screen_Puzzle()
 void Screen_Puzzle::Initialize()
 {
 	pPlayer_ = (Player*)GetParent();
+	AssignGoal();
 	Shuffle();
 	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
 	for (int i = NULL; i < Board_MAX; i++)
@@ -35,7 +37,6 @@ void Screen_Puzzle::Initialize()
 		assert(hModel_ >= NULL);
 	}
 	Mode_ = Storage::GetDifficulty();
-	AssignGoal();
 	Instantiate<Pin>(this);
 }
 
@@ -50,13 +51,13 @@ void Screen_Puzzle::Update()
 	{
 		bool Ishit = MakeMouseRay();
 
-		//‚¢‚¸‚ê‚©‚Ìƒpƒlƒ‹‚ÉƒJ[ƒ\ƒ‹‚ª“–‚½‚Á‚Ä‚¢‚Ä¶ƒNƒŠƒbƒN‚ğ‚µ‚½‚çŒÄ‚Ño‚·
+		//ã„ãšã‚Œã‹ã®ãƒ‘ãƒãƒ«ã«ã‚«ãƒ¼ã‚½ãƒ«ãŒå½“ãŸã£ã¦ã„ã¦å·¦ã‚¯ãƒªãƒƒã‚¯ã‚’ã—ãŸã‚‰å‘¼ã³å‡ºã™
 		if (Input::IsMouseDown(0) && Ishit)
 		{
 			Swap(PuzX_, PuzZ_);
 		}
 
-		//‰EƒNƒŠƒbƒN‚Åƒsƒ“·‚µ
+		//å³ã‚¯ãƒªãƒƒã‚¯ã§ãƒ”ãƒ³å·®ã—
 		if (Input::IsMouseDown(1) && Ishit)
 		{
 			PrickPin();
@@ -74,18 +75,18 @@ void Screen_Puzzle::Draw()
 			if (Type != Empty_)
 			{
 				Transform Tr = transform_;
-				Tr.position_ = XMFLOAT3(x, NULL, z);
+				Tr.position_ = XMFLOAT3(x, 0, z);
 
 				Model::SetTransform(hModel_[Type], Tr);
 
-				//Easyƒ‚[ƒh‚È‚ç‚ÎŒ»İˆÊ’u‚ğ•\¦
+				//Easyãƒ¢ãƒ¼ãƒ‰ãªã‚‰ã°ç¾åœ¨ä½ç½®ã‚’è¡¨ç¤º
 				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == 0)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
 
-#if _DEBUG		//ƒfƒoƒbƒOƒ‚[ƒh‚Å‚Ì‚İ•\¦
+#if _DEBUG		//ãƒ‡ãƒãƒƒã‚°ãƒ¢ãƒ¼ãƒ‰ã§ã®ã¿è¡¨ç¤º
 				/*Goal* pGoal = (Goal*)FindObject("Goal");
 				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 				{
@@ -110,11 +111,11 @@ void Screen_Puzzle::Draw()
 			}
 			else
 			{
-				//ˆÚ“®‚µ‚Ä‚¢‚éƒ}ƒX‚Ìˆ—
+				//ç§»å‹•ã—ã¦ã„ã‚‹ãƒã‚¹ã®å‡¦ç†
 				if (Moving_)
 				{
 					Transform Tr = transform_;
-					Tr.position_ = XMFLOAT3(x, NULL, z);
+					Tr.position_ = XMFLOAT3(x, 0, z);
 					float move = Moving_;
 					switch (MoveDir_)
 					{
@@ -146,76 +147,111 @@ void Screen_Puzzle::Release()
 
 void Screen_Puzzle::AssignPuzzle()
 {
-	SeedData_ = Procedural::FormValue();	//‚Æ‚è‚ ‚¦‚¸’l‚ğó‚¯æ‚é
-	char Goalpos = 0;						//ƒS[ƒ‹‚Ì”Ô†
-	
-	//ƒS[ƒ‹‚Ì‰ŠúˆÊ’u‚Ì”»’è
-	if (SeedData_ < 0)		//0–¢–‚È‚ç‚Î
-	{
-		Goalpos = UnderSide;		//‰º”¼•ª‚É’u‚­
-	}
-	if (SeedData_ & 1)		//Šï”‚È‚ç‚Î
-	{
-		Goalpos += RightSide;		//‰E”¼•ª‚É’u‚­
-	}
-	if (Math::GetDigits(SeedData_, 1, 1) > Math::GetDigits(SeedData_, 2, 2))	//1Œ…–Ú‚ª2Œ…–Ú‚æ‚è‘å‚«‚¯‚ê‚Î
-	{
-		Goalpos += UnderSide / 2;	//”¼•ª‚Å‹æØ‚Á‚½“à‚Ì‰º’i‚É’u‚­
-	}
-	if (Math::GetDigits(SeedData_, 6, 6) > Math::GetDigits(SeedData_, 5, 5))	//6Œ…–Ú‚ª5Œ…–Ú‚æ‚è‘å‚«‚¯‚ê‚Î
-	{
-		Goalpos += RightSide / 2;	//”¼•ª‚Å‹æØ‚Á‚½“à‚Ì‰E‘¤‚É’u‚­
-	}
+	AssignGoal();
 
 
 }
 
 void Screen_Puzzle::Shuffle()
 {
-	for (int i = NULL; i < BoardSize_; i++)
+	/*for (int i = NULL; i < BoardSize_; i++)
 	{
 		for (int j = NULL; j < BoardSize_; j++)
 		{
 			Board_[i][j] = rand() % Board_MAX;
 		}
+	}*/
+
+	//ã‚·ãƒ£ãƒƒãƒ•ãƒ«ã«ã¯ç–‘ä¼¼ä¹±æ•°ã‚’ä½¿ç”¨
+	//æ„å›³ : random_deviceã®æ–¹ãŒç²¾åº¦ã¯ã„ã„ãŒã€ç”Ÿæˆã•ã›ã‚‹å›æ•°ãŒå¤šãã€è² æ‹…è»½æ¸›ã®ãŸã‚ã«ã“ã¡ã‚‰ã‚’ä½¿ç”¨
+	srand((unsigned int)time(NULL));
+
+	//ã‚·ãƒ£ãƒƒãƒ•ãƒ«ã™ã‚‹å›æ•°ã¯80âˆ¼160ã®å¶æ•°å›ã®ã¿ã¨ã™ã‚‹
+	//æ„å›³ : 15ãƒ‘ã‚ºãƒ«ã®ä»•æ§˜ä¸Šã€å¥‡æ•°å›å…¥ã‚Œæ›¿ãˆãŸã‚‚ã®ã¯åˆæœŸã®é…ç½®ã«çµ¶å¯¾ã«æˆ»ã›ãªã„ãŸã‚
+	//15ãƒ‘ã‚ºãƒ«ã¯80æ‰‹ä»¥å†…ã§ä»»æ„ã®é…ç½®ã«æŒã£ã¦ã„ãã“ã¨ãŒã§ãã€ã†ã¾ãã°ã‚‰ã‘ã•ã›ã‚‹ã«ã¯ãã®æ•°ã‚’æœ€ä½ã¨ã—ã€2å€ä»¥ä¸‹ã«ã™ã‚Œã°ã‚ˆã„ã¨æ€ã£ãŸã‹ã‚‰
+	int ShuffleTimes = (rand() % 40) * 2 + 80;
+	for (int i = 0; i < ShuffleTimes; i++)
+	{
+		char Pannel1 = rand() % BOARDTOTAL_;
+		char Pannel2 = rand() % BOARDTOTAL_;
+		std::swap(Board_[(char)(Pannel1 / BoardSize_)][(char)(Pannel1 % BoardSize_)], Board_[(char)(Pannel2 / BoardSize_)][(char)(Pannel2 % BoardSize_)]);
 	}
 
-	//Player‘¤‚Å‰ŠúˆÊ’u‚ÌID‚ğw’è
+	//Playerå´ã«åˆæœŸä½ç½®ã®IDã‚’é€ã‚‹
 	Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] = pPlayer_->GetID();
 
-	//‹ó”’‚Ìƒ}ƒX‚ğ¶¬
-	char Emp = rand() % 16;
+	//ç©ºç™½ã®ãƒã‚¹ã‚’ç”Ÿæˆ
+	/*char Emp = rand() % 16;
 	while (pPlayer_->GetUVPos().x == (char)(Emp / BoardSize_) && pPlayer_->GetUVPos().y == (char)(Emp % BoardSize_))
 	{
 		Emp = rand() % 16;
 	}
-	Board_[(char)(Emp / BoardSize_)][(char)(Emp % BoardSize_)] = Empty_;
+	Board_[(char)(Emp / BoardSize_)][(char)(Emp % BoardSize_)] = Empty_;*/
 }
 
 void Screen_Puzzle::AssignGoal()
 {
-	char GoalPos = rand() % 16;
-	//¶¬‚³‚ê‚½’l‚ªEmpty‚Ü‚½‚ÍPlayer‚ÌˆÊ’u‚Å‚Í‚È‚­‚È‚é‚Ü‚Å’l‚ª¶¬‚³‚ê‚é
-	while (Board_[(char)(GoalPos / BoardSize_)][GoalPos % BoardSize_] == Empty_ ||
-		(pPlayer_->GetUVPos().x == (char)(GoalPos / BoardSize_) && pPlayer_->GetUVPos().y == GoalPos % BoardSize_))
+	//char GoalPos = rand() % 16;
+	////ç”Ÿæˆã•ã‚ŒãŸå€¤ãŒEmptyã¾ãŸã¯Playerã®ä½ç½®ã§ã¯ãªããªã‚‹ã¾ã§å€¤ãŒç”Ÿæˆã•ã‚Œã‚‹
+	//while (Board_[(char)(GoalPos / BoardSize_)][GoalPos % BoardSize_] == Empty_ ||
+	//	(pPlayer_->GetUVPos().x == (char)(GoalPos / BoardSize_) && pPlayer_->GetUVPos().y == GoalPos % BoardSize_))
+	//{
+	//	GoalPos = rand() % 16;
+	//}
+	//Goal* pGoal = (Goal*)FindObject("Goal");
+	//pGoal->InitialPosition(GoalPos);
+	//SAFE_RELEASE(pGoal);
+
+	SeedData_ = Procedural::FormValue();	//ã¨ã‚Šã‚ãˆãšå€¤ã‚’å—ã‘å–ã‚‹
+	char Goalpos = 0;						//ã‚´ãƒ¼ãƒ«ã®ç•ªå·
+
+	//ã‚´ãƒ¼ãƒ«ã®åˆæœŸä½ç½®ã®åˆ¤å®š
+	if (SeedData_ < 0)				//0æœªæº€ãªã‚‰ã°
 	{
-		GoalPos = rand() % 16;
+		Goalpos = UnderSide;		//ä¸‹åŠåˆ†ã«ç½®ã
 	}
+	if (SeedData_ & 1)				//å¥‡æ•°ãªã‚‰ã°
+	{
+		Goalpos += RightSide;		//å³åŠåˆ†ã«ç½®ã
+	}
+	if (Math::GetDigits(SeedData_, 0, 0) > Math::GetDigits(SeedData_, 1, 1))	//1æ¡ç›®ãŒ2æ¡ç›®ã‚ˆã‚Šå¤§ãã‘ã‚Œã°
+	{
+		Goalpos += UnderSide / 2;	//åŠåˆ†ã§åŒºåˆ‡ã£ãŸå†…ã®ä¸‹æ®µã«ç½®ã
+	}
+	if (Math::GetDigits(SeedData_, 5, 5) > Math::GetDigits(SeedData_, 4, 4))	//6æ¡ç›®ãŒ5æ¡ç›®ã‚ˆã‚Šå¤§ãã‘ã‚Œã°
+	{
+		Goalpos += RightSide / 2;	//åŠåˆ†ã§åŒºåˆ‡ã£ãŸå†…ã®å³å´ã«ç½®ã
+	}
+
+	//æ±ºå®šã—ãŸå€¤ã«ã‚´ãƒ¼ãƒ«ã‚’é…ç½®
 	Goal* pGoal = (Goal*)FindObject("Goal");
-	pGoal->InitialPosition(GoalPos);
+	pGoal->InitialPosition(Goalpos);
 	SAFE_RELEASE(pGoal);
+
+	//ã‚´ãƒ¼ãƒ«ãŒã‚ã‚‹ãƒã‚¹ã®éƒ¨å±‹ã‚¿ã‚¤ãƒ—ã®ã¿ã“ã“ã§æ±ºå®šã•ã›ã‚‹
+	//æ„å›³ : åˆ°é”ä¸å¯ã®ãƒã‚¹ãŒç”Ÿæˆã•ã‚Œã‚‹ã“ã¨ã‚’é˜²ããŸã‚
+
+	//Emptyãƒã‚¹ã®ä½ç½®ã‚’æ±ºå®š
+	if (Goalpos & 1)	//å¥‡æ•°ãªã‚‰ã°
+	{
+		Board_[0][0] = Empty_;	//0,0ã‚’ç©ºç™½ã«
+	}
+	else				//å¶æ•°ãªã‚‰ã°
+	{
+		Board_[(char)(Goalpos / BoardSize_)][Goalpos % BoardSize_] = Empty_;	//3,3ã‚’ç©ºç™½ã«
+	}
 }
 
 void Screen_Puzzle::Swap(int x, int z)
 {
-	//—×‚è‡‚Á‚Ä‚¢‚éêŠ‚ÉEmpty‚ª‘¶İ‚·‚é‚©
+	//éš£ã‚Šåˆã£ã¦ã„ã‚‹å ´æ‰€ã«EmptyãŒå­˜åœ¨ã™ã‚‹ã‹
 	for (Move Dir : Direction)
 	{		
 		int moveX, moveZ;
 		moveX = x + Dir.moveLtR;
 		moveZ = z + Dir.moveHLw;
 		if(moveX >= 0 && moveX < BoardSize_ && moveZ >= 0 && moveZ < BoardSize_)
-		//‚ ‚Á‚½‚çˆÚ“®‚³‚¹‚é
+		//ã‚ã£ãŸã‚‰ç§»å‹•ã•ã›ã‚‹
 		if (Board_[moveX][moveZ] == Empty_)
 		{
 			Wait_ = true;
@@ -237,10 +273,10 @@ void Screen_Puzzle::Swap(int x, int z)
 				case -1: MoveDir_ = 0x02; break;
 				}
 			}
-			//‰Ÿ‚µ‚½ƒ}ƒX‚ªPlayer‚Ì‚¢‚éƒ}ƒX‚¾‚Á‚½ê‡
+			//æŠ¼ã—ãŸãƒã‚¹ãŒPlayerã®ã„ã‚‹ãƒã‚¹ã ã£ãŸå ´åˆ
 			if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z)
 			{
-				//Player‚²‚ÆˆÚ“®‚³‚¹‚é
+				//Playerã”ã¨ç§»å‹•ã•ã›ã‚‹
 				pPlayer_->SetUVPos(XMFLOAT2((float)Dir.moveLtR, (float)Dir.moveHLw));
 			}
 
@@ -270,21 +306,21 @@ void Screen_Puzzle::Swap(int x, int z)
 void Screen_Puzzle::PrickPin()
 {
 	Pin* pPin = (Pin*)FindChildObject("Pin");
-	if (pPin->UVPosition_.x == PuzX_ && pPin->UVPosition_.y == PuzZ_)
+	if (pPin->UVPosition_.x == PuzX_ && pPin->UVPosition_.y == PuzZ_)	//ãƒ”ãƒ³ãŒåˆºã—ã¦ã‚ã‚‹ãƒã‚¹ã¨åŒã˜å ´æ‰€ã‚’æŠ¼ã—ãŸå ´åˆ
 	{
-		pPin->Disp_ = !pPin->Disp_;
+		pPin->Disp_ = !pPin->Disp_;	//ãƒ”ãƒ³ã®è¡¨ç¤ºçŠ¶æ…‹ã‚’åè»¢
 	}
-	else
+	else	//é•ã†ãƒã‚¹ãªã‚‰
 	{
-		pPin->Disp_ = true;
-		pPin->UVPosition_ = { (float)PuzX_, (float)PuzZ_ };
+		pPin->Disp_ = true;	//è¡¨ç¤ºã‚’trueã«ã—ã¦
+		pPin->UVPosition_ = { (float)PuzX_, (float)PuzZ_ };	//æŠ¼ã—ãŸãƒã‚¹ã«ãƒ”ãƒ³ã‚’æ‰“ã¤
 	}
 	SAFE_RELEASE(pPin);
 }
 
 bool Screen_Puzzle::MakeMouseRay()
 {
-	//ƒ}ƒEƒXˆÊ’u
+	//ãƒã‚¦ã‚¹ä½ç½®
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
 	mousePosFront.z = 0;
 
@@ -342,7 +378,7 @@ bool Screen_Puzzle::MakeMouseRay()
 
 XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 {
-	//ƒrƒ…[ƒ|[ƒgs—ñ
+	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆè¡Œåˆ—
 	float w = 0;
 	switch (Direct3D::SplitScrMode)
 	{
@@ -359,7 +395,7 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 		w, h, 0, 1
 	};
 
-	//Šes—ñ‚Ì‹ts—ñ
+	//å„è¡Œåˆ—ã®é€†è¡Œåˆ—
 	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
 	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
 	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
@@ -375,10 +411,10 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 
 bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 {
-	char ans = NULL;
+	char ans = 0;
 	DoorPath data;
 	bool path = false;
-	switch (BoardType)	//“n‚³‚ê‚½ID‚©‚ç’Ê‚ê‚éƒhƒA‚ğo‚·
+	switch (BoardType)	//æ¸¡ã•ã‚ŒãŸIDã‹ã‚‰é€šã‚Œã‚‹ãƒ‰ã‚¢ã‚’å‡ºã™
 	{
 	case Board_HLt: ans = data.DoorH + data.DoorLt; break;
 	case Board_HR: ans = data.DoorH + data.DoorR; break;
@@ -388,7 +424,7 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 	default: break;
 	}
 
-	switch (DoorID)		//ƒrƒbƒg‰‰Z‚Å’Ê‚ê‚é‚©‚Ç‚¤‚©‚ğ•Ô‚·
+	switch (DoorID)		//ãƒ“ãƒƒãƒˆæ¼”ç®—ã§é€šã‚Œã‚‹ã‹ã©ã†ã‹ã‚’è¿”ã™
 	{
 	case DOOR_ID_H: path = ans & data.DoorLw; break;
 	case DOOR_ID_LW: path = ans & data.DoorH; break;
@@ -403,10 +439,10 @@ void Screen_Puzzle::Moving()
 {
 	Moving_++;
 
-	//Moving_‚ªİ’è‚µ‚½ŠÔ‚É’B‚µ‚½‚çI—¹‚·‚é
+	//Moving_ãŒè¨­å®šã—ãŸæ™‚é–“ã«é”ã—ãŸã‚‰çµ‚äº†ã™ã‚‹
 	if (Moving_ > TIMETOMOVE)
 	{
-		Moving_ = NULL;
+		Moving_ = 0;
 		Wait_ = false;
 		pPlayer_->SetWait(Wait_);
 	}
@@ -421,15 +457,15 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 	moveX = (int)pPos.x + Direction[DoorID].moveLtR;
 	moveZ = (int)pPos.y - Direction[DoorID].moveHLw;
 
-	//ˆÚ“®æ‚ª‹ó”’‚Ìƒ}ƒX‚©‚Ç‚¤‚©
+	//ç§»å‹•å…ˆãŒç©ºç™½ã®ãƒã‚¹ã‹ã©ã†ã‹
 	if (Board_[moveX][moveZ] != Empty_)
 	{
-		//”ÍˆÍŠO‚É‚¢‚©‚È‚¢‚©
-		if (moveX >= NULL && moveX < BoardSize_ && moveZ >= NULL && moveZ < BoardSize_)
+		//ç¯„å›²å¤–ã«ã„ã‹ãªã„ã‹
+		if (moveX >= 0 && moveX < BoardSize_ && moveZ >= 0 && moveZ < BoardSize_)
 		{
 			if (DoorConfig(Board_[moveX][moveZ], DoorID))
 			{
-				//Player‚Ì“ñŸŒ³À•W‚ğXV
+				//Playerã®äºŒæ¬¡å…ƒåº§æ¨™ã‚’æ›´æ–°
 				pPlayer_->SetUVPos(XMFLOAT2((float)Direction[DoorID].moveLtR, (float)-Direction[DoorID].moveHLw));
 
 				return Board_[moveX][moveZ];

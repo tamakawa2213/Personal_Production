@@ -1,6 +1,7 @@
 #pragma once
 #include "Fbx.h"
 #include <DirectXMath.h>
+#include <vector>
 
 using namespace DirectX;
 
@@ -23,5 +24,13 @@ namespace Math
 
 	//整数を取得する関数
 	//第一引数 : 対象の値 第二引数 : 求める最小の桁 第三引数 : 求める最大の桁
+	//注意 : 一桁目は0, 二桁目は1というように指定しなければならない
+	//戻り値 : 切り抜いた値
 	int GetDigits(int value, int m, int n);
+
+	//素数を生成させる関数
+	//引数 : 生成させる個数
+	//注意 : 引数に指定する値は1以上にする
+	//戻り値 : 生成された素数の動的配列
+	std::vector<int> MakePrime(int article);
 };

@@ -3,13 +3,20 @@
 #include <climits>
 #include <stdlib.h>
 #include <random>
+#include <vector>
 
 namespace Procedural
 {
 	std::random_device ran;
 	//変数
-	int SEED = ran();		//シード値
+	long SEED = ran();		//シード値
 	int DesidedValue;		//最終的に生成される値
+	std::vector<int> Prime;	//素数群でかき混ぜることにした
+
+	void SetSeed()
+	{
+		SEED = ran();
+	}
 
 	void SetSeed(int seed)
 	{
@@ -18,26 +25,25 @@ namespace Procedural
 
 	int FormValue()
 	{
-		//やりたいようにやってみる
+		Prime.clear();
+		Prime.reserve(10);
+		Prime = Math::MakePrime(10);
+		for(int i = 0; i < 10; i++)
 		{
-			SEED *= 3;
-			SEED += 50085;
-			if (SEED & 1)
+			SEED += Prime.at(i);
+			SEED *= Prime.at(i);
+			if (SEED >= INT_MAX)	//intの最大値を超えた場合
 			{
-				SEED *= 100003;
+				SEED -= UINT_MAX;	//uintの最大値を引く
 			}
-			SEED = ~SEED;
-			SEED -= 97;
-			SEED *= 199;
-			if (Math::GetDigits(SEED, 1, 1) != 0)
+			if (SEED <= INT_MIN)	//intの最小値を下回った場合
 			{
-				SEED *= Math::GetDigits(SEED, 1, 1);
-				SEED = ~SEED;
+				SEED += UINT_MAX;	//uintの最大値を足す
 			}
-			SEED *= 503;
+			SEED -= Prime.at(i);
 		}
-
-		DesidedValue = SEED;
+		SEED -= Math::GetDigits(SEED, 1, 1);	//このまま流すと偶数しか発生しないので2桁目の値で引く
+		DesidedValue = (int)SEED;
 		return DesidedValue;
 	}
 }

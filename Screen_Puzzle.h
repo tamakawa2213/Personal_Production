@@ -1,9 +1,10 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-#define BoardSize_  4			//横・縦それぞれの大きさ
-#define Empty_ -1				//空白のマス
-#define TIMETOMOVE 60			//移動にかける時間
+#define BoardSize_  4		//横・縦それぞれの大きさ
+#define Empty_ -1			//空白のマス
+#define TIMETOMOVE 60		//移動にかける時間
+#define BOARDTOTAL_ 16		//盤面のマスの総数
 
 class Player;
 
