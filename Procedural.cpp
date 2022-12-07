@@ -11,7 +11,7 @@ namespace Procedural
 	//変数
 	long SEED = ran();		//シード値
 	int DesidedValue;		//最終的に生成される値
-	std::vector<int> Prime;	//素数群でかき混ぜることにした
+	std::vector<int> Prime;	//素数群でかき混ぜる
 
 	void SetSeed()
 	{

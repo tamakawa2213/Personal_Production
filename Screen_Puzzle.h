@@ -42,13 +42,20 @@ enum
 
 class Screen_Puzzle : public GameObject
 {
+	const char UnderSide = 8;	//ボードの下半分
+	const char RightSide = 2;	//ボードの右半分
+
+	//各方向のドアを持っている番号のタグ付け
+	const char DoorHi[2] = { Board_HLt, Board_HR };
+	const char DoorLw[2] = { Board_LwLt, Board_LwR };
+	const char DoorR[3] = { Board_HR, Board_LwR, Board_LwR };
+	const char DoorLt[3] = { Board_HLt, Board_LwLt, Board_LwR };
+
 	char PuzX_;
 	char PuzZ_;
 	int hModel_[Board_MAX];	//格納されたオブジェクト番号
 	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
 
-	const char UnderSide = 8;	//ボードの下半分
-	const char RightSide = 2;	//ボードの右半分
 	int SeedData_;		//この値を基にパズルの盤面を生成
 
 	bool Wait_;			//待機時間かどうか
