@@ -18,17 +18,19 @@ Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0), SeedData_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
+	DecidedData_.clear();
 }
 
 Screen_Puzzle::~Screen_Puzzle()
 {
+	DecidedData_.clear();
 }
 
 void Screen_Puzzle::Initialize()
 {
 	pPlayer_ = (Player*)GetParent();
-	AssignGoal();
-	Shuffle();
+	AssignPuzzle();
+	//Shuffle();
 	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
 	for (int i = NULL; i < Board_MAX; i++)
 	{
@@ -147,9 +149,30 @@ void Screen_Puzzle::Release()
 
 void Screen_Puzzle::AssignPuzzle()
 {
+	//ゴールと空白の位置の決定
 	AssignGoal();
 
+	//ゴールに繋がる部屋を隣に生成する
+	switch (DecidedData_.at(0) % 2)
+	{
+	case 0: //偶数の場合
+		//右側にドアを持つパネルのみで判断
+		Board_[(char)(DecidedData_.at(0) / BoardSize_)][(char)((DecidedData_.at(0) + 1) % BoardSize_)] = DoorLt[SeedData_ % 3];
+		DecidedData_.push_back(DecidedData_.at(0) + 1);
+		break;
+	case 1: //奇数の場合
+		//左側にドアを持つパネルのみで判断
+		Board_[(char)(DecidedData_.at(0) / BoardSize_)][(char)((DecidedData_.at(0) - 1) % BoardSize_)] = DoorR[SeedData_ % 3];
+		DecidedData_.push_back(DecidedData_.at(0) - 1);
+		break;
+	}
 
+	//その他のパズルを作成
+	//空白は考えないので総数から1減らしている
+	/*while (DecidedData_.size() < BOARDTOTAL_ - 1)
+	{
+
+	}*/
 }
 
 void Screen_Puzzle::Shuffle()
@@ -225,25 +248,34 @@ void Screen_Puzzle::AssignGoal()
 	pGoal->InitialPosition(Goalpos);
 	SAFE_RELEASE(pGoal);
 
+	//Emptyの位置を決める
+	char EmpX, EmpZ;
+	EmpX = ((char)(Goalpos / UnderSide) + 1) % 2;	//ゴールが置かれている場所が上半分ならEmptyを下にする
+	EmpZ = Goalpos % 2;
+
+	if (EmpX == 1)
+		EmpX = 3;
+
+	if (EmpZ == 1)
+		EmpZ = 3;
+
+	Board_[EmpX][EmpZ] = Empty_;
+
 	//ゴールがあるマスの部屋タイプのみここで決定させる
 	//意図 : 到達不可のマスが生成されることを防ぐため
 	//同時にEmptyマスの位置を決定
-	switch (Goalpos & 1)
+	switch (Goalpos % 2)
 	{
 	case 0: //偶数の場合
 		//右側にドアを持つパネルのみで判断
 		Board_[(char)(Goalpos / BoardSize_)][(char)(Goalpos % BoardSize_)] = DoorR[SeedData_ % 3];
-		//3,3を空白に
-		Board_[3][3] = Empty_;
 		break;
 	case 1: //奇数の場合
 		//左側にドアを持つパネルのみで判断
 		Board_[(char)(Goalpos / BoardSize_)][(char)(Goalpos % BoardSize_)] = DoorLt[SeedData_ % 3];
-		//0,0を空白に
-		Board_[0][0] = Empty_;
 		break;
 	}
-	int i = 0;
+	DecidedData_.push_back(Goalpos);
 }
 
 void Screen_Puzzle::Swap(int x, int z)

@@ -156,6 +156,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Input::Update();
 			pRootJob->UpdateSub();
 
+			XMVECTOR campos[2] = { {-10.0f, 5.5f, 1.2f, 0}, {1.6f, 6, 1.5f, 0} };
+			XMVECTOR camtar[2] = { {-10, 0, 1.3f, 0}, {1.5f, 0, 1.5f, 0} };
+
 			//描画処理
 			switch (Direct3D::SplitScrMode)
 			{
@@ -164,12 +167,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				switch (DrawRange)
 				{
 				case VP_LEFT:
-					Camera::SetPosition(XMVectorSet(-10.0f, 5.5f, 1.2f, 0));
-					Camera::SetTarget(XMVectorSet(-10, 0, 1.3f, 0));
+					Camera::SetPosition(campos[0]);
+					Camera::SetTarget(camtar[0]);
 					break;
 				case VP_RIGHT:
-					Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, 0));
-					Camera::SetTarget(XMVectorSet(1.5f, 0, 1.5f, 0));
+					Camera::SetPosition(campos[1]);
+					Camera::SetTarget(camtar[1]);
 					break;
 				default: break;
 				}
@@ -184,8 +187,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 					//右画面描画
 					{
 						Direct3D::SetViewPort(VP_RIGHT);
-						Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, 0));
-						Camera::SetTarget(XMVectorSet(1.5f, 0, 1.5f, 0));
+						Camera::SetPosition(campos[1]);
+						Camera::SetTarget(camtar[1]);
 
 						Camera::Update();
 						//全オブジェクトを描画
@@ -196,8 +199,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 					//左画面描画
 					{
 						Direct3D::SetViewPort(VP_LEFT);
-						Camera::SetPosition(XMVectorSet(-10.0f, 5.5f, 1.2f, 0));
-						Camera::SetTarget(XMVectorSet(-10, 0, 1.3f, 0));
+						Camera::SetPosition(campos[0]);
+						Camera::SetTarget(camtar[0]);
 
 						Camera::Update();
 						//全オブジェクトを描画
@@ -210,8 +213,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 					//左画面描画
 					{
 						Direct3D::SetViewPort(VP_LEFT);
-						Camera::SetPosition(XMVectorSet(-10.0f, 5.5f, 1.2f, 0));
-						Camera::SetTarget(XMVectorSet(-10, 0, 1.3f, 0));
+						Camera::SetPosition(campos[0]);
+						Camera::SetTarget(camtar[0]);
 
 						Camera::Update();
 						//全オブジェクトを描画
@@ -221,8 +224,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 					//右画面描画
 					{
 						Direct3D::SetViewPort(VP_RIGHT);
-						Camera::SetPosition(XMVectorSet(1.5f, 6, 1.4f, 0));
-						Camera::SetTarget(XMVectorSet(1.5f, 0, 1.5f, 0));
+						Camera::SetPosition(campos[1]);
+						Camera::SetTarget(camtar[1]);
 
 						Camera::Update();
 						//全オブジェクトを描画

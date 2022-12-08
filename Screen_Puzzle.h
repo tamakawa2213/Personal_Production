@@ -1,5 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
+#include <vector>
 
 #define BoardSize_  4		//横・縦それぞれの大きさ
 #define Empty_ -1			//空白のマス
@@ -48,8 +49,8 @@ class Screen_Puzzle : public GameObject
 	//各方向のドアを持っている番号のタグ付け
 	const char DoorHi[2] = { Board_HLt, Board_HR };
 	const char DoorLw[2] = { Board_LwLt, Board_LwR };
-	const char DoorR[3] = { Board_HR, Board_LwR, Board_LwR };
-	const char DoorLt[3] = { Board_HLt, Board_LwLt, Board_LwR };
+	const char DoorR[3] = { Board_HR, Board_LwR, Board_LtR };
+	const char DoorLt[3] = { Board_HLt, Board_LwLt, Board_LtR };
 
 	char PuzX_;
 	char PuzZ_;
@@ -57,6 +58,7 @@ class Screen_Puzzle : public GameObject
 	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
 
 	int SeedData_;		//この値を基にパズルの盤面を生成
+	std::vector<char> DecidedData_;		//決定済みデータ
 
 	bool Wait_;			//待機時間かどうか
 
