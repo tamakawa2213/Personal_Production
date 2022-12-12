@@ -30,7 +30,7 @@ void Screen_Puzzle::Initialize()
 {
 	pPlayer_ = (Player*)GetParent();
 	AssignPuzzle();
-	//Shuffle();
+	Shuffle();
 	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
 	for (int i = NULL; i < Board_MAX; i++)
 	{
@@ -153,26 +153,33 @@ void Screen_Puzzle::AssignPuzzle()
 	AssignGoal();
 
 	//ゴールに繋がる部屋を隣に生成する
-	switch (DecidedData_.at(0) % 2)
+	switch (DecidedData_.at(1) % 2)
 	{
 	case 0: //偶数の場合
 		//右側にドアを持つパネルのみで判断
-		Board_[(char)(DecidedData_.at(0) / BoardSize_)][(char)((DecidedData_.at(0) + 1) % BoardSize_)] = DoorLt[SeedData_ % 3];
-		DecidedData_.push_back(DecidedData_.at(0) + 1);
+		Board_[(char)(DecidedData_.at(1) / BoardSize_)][(char)((DecidedData_.at(1) + 1) % BoardSize_)] = DoorLt[SeedData_ % 3];
+		DecidedData_.push_back(DecidedData_.at(1) + 1);
 		break;
 	case 1: //奇数の場合
 		//左側にドアを持つパネルのみで判断
-		Board_[(char)(DecidedData_.at(0) / BoardSize_)][(char)((DecidedData_.at(0) - 1) % BoardSize_)] = DoorR[SeedData_ % 3];
-		DecidedData_.push_back(DecidedData_.at(0) - 1);
+		Board_[(char)(DecidedData_.at(1) / BoardSize_)][(char)((DecidedData_.at(1) - 1) % BoardSize_)] = DoorR[SeedData_ % 3];
+		DecidedData_.push_back(DecidedData_.at(1) - 1);
 		break;
 	}
 
+	char BoardDecide = 0;	//生成するパネルの番号
 	//その他のパズルを作成
-	//空白は考えないので総数から1減らしている
-	/*while (DecidedData_.size() < BOARDTOTAL_ - 1)
+	while (DecidedData_.size() < BOARDTOTAL_)
 	{
-
-	}*/
+		auto Find = std::find(DecidedData_.begin(), DecidedData_.end(), BoardDecide);
+		//決定済みデータにBoardDecideの値が存在しなければ
+		if (Find == DecidedData_.end())
+		{	//負の値になることを防ぐためにUINT型にキャストする
+			Board_[(char)(BoardDecide / BoardSize_)][(char)(BoardDecide % BoardSize_)] = (UINT)((SeedData_ + BoardDecide) / (BoardDecide + 1)) % Board_MAX;
+			DecidedData_.push_back(BoardDecide);
+		}
+		BoardDecide++;
+	}
 }
 
 void Screen_Puzzle::Shuffle()
@@ -195,7 +202,7 @@ void Screen_Puzzle::Shuffle()
 	Goal* pGoal = (Goal*)FindObject("Goal");
 	//Playerの位置 = Emptyにならないようにする
 	int roop = 0;
-	while (roop % 2 != 0 && Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] == Empty_ &&
+	while (roop % 2 != 0 && Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] == Empty_ ||
 		((char)pPlayer_->GetUVPos().x == (char)pGoal->GetUVPos().x && (char)pPlayer_->GetUVPos().y == (char)pGoal->GetUVPos().y))
 	{
 		char Pannel1 = rand() % BOARDTOTAL_;
@@ -210,17 +217,6 @@ void Screen_Puzzle::Shuffle()
 
 void Screen_Puzzle::AssignGoal()
 {
-	//char GoalPos = rand() % 16;
-	////生成された値がEmptyまたはPlayerの位置ではなくなるまで値が生成される
-	//while (Board_[(char)(GoalPos / BoardSize_)][GoalPos % BoardSize_] == Empty_ ||
-	//	(pPlayer_->GetUVPos().x == (char)(GoalPos / BoardSize_) && pPlayer_->GetUVPos().y == GoalPos % BoardSize_))
-	//{
-	//	GoalPos = rand() % 16;
-	//}
-	//Goal* pGoal = (Goal*)FindObject("Goal");
-	//pGoal->InitialPosition(GoalPos);
-	//SAFE_RELEASE(pGoal);
-
 	Procedural::SetSeed();
 	SeedData_ = Procedural::FormValue();	//とりあえず値を受け取る
 	char Goalpos = 0;						//ゴールの番号
@@ -260,6 +256,7 @@ void Screen_Puzzle::AssignGoal()
 		EmpZ = 3;
 
 	Board_[EmpX][EmpZ] = Empty_;
+	DecidedData_.push_back(EmpX * BoardSize_ + EmpZ);
 
 	//ゴールがあるマスの部屋タイプのみここで決定させる
 	//意図 : 到達不可のマスが生成されることを防ぐため
