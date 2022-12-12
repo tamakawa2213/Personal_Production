@@ -14,8 +14,8 @@
 #include <random>
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(NULL), MoveDir_(NULL),
-	MovingPanel_(NULL), pPlayer_(nullptr), Mode_(0), SeedData_(0)
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(0), MoveDir_(NULL),
+	MovingPanel_(0), pPlayer_(nullptr), Mode_(0), SeedData_(0), GoalPos_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 	DecidedData_.clear();
@@ -188,28 +188,57 @@ void Screen_Puzzle::Shuffle()
 	//意図 : random_deviceの方が精度はいいが、生成させる回数が多く、負担軽減のためにこちらを使用
 	srand((unsigned int)time(NULL));
 
+	Goal* pGoal = (Goal*)FindObject("Goal");
+
 	//シャッフルする回数は80∼160の偶数回のみとする
 	//意図 : 15パズルの仕様上、奇数回入れ替えたものは初期の配置に絶対に戻せないため
 	int ShuffleTimes = (rand() % 40) * 2 + 80;
+	std::vector<char> Pannel;
+	Pannel.clear();
 	//生成された回数だけループ
 	for (int i = 0; i < ShuffleTimes; i++)
 	{
-		char Pannel1 = rand() % BOARDTOTAL_;
-		char Pannel2 = rand() % BOARDTOTAL_;
-		std::swap(Board_[(char)(Pannel1 / BoardSize_)][(char)(Pannel1 % BoardSize_)], Board_[(char)(Pannel2 / BoardSize_)][(char)(Pannel2 % BoardSize_)]);
+		while (Pannel.size() < 2)
+		{
+			Pannel.push_back((UCHAR)(rand() % BOARDTOTAL_));
+		}
+
+		if (Pannel.at(0) != Pannel.at(1))
+		{
+			std::swap(Board_[(char)(Pannel.at(0) / BoardSize_)][(char)(Pannel.at(0) % BoardSize_)], Board_[(char)(Pannel.at(1) / BoardSize_)][(char)(Pannel.at(1) % BoardSize_)]);
+			if (std::any_of(Pannel.begin(), Pannel.end(), [=](char data) {return data == GoalPos_; }))	//GoalPos_と一致する要素があれば
+			{
+				//GoalPos_と一致しないほうの要素を取り出す
+				auto change = std::find_if_not(Pannel.begin(), Pannel.end(), [=](char data) {return data == GoalPos_; });
+				GoalPos_ = *change;
+			}
+		}
+		Pannel.clear();
 	}
 
-	Goal* pGoal = (Goal*)FindObject("Goal");
 	//Playerの位置 = Emptyにならないようにする
 	int roop = 0;
-	while (roop % 2 != 0 && Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] == Empty_ ||
-		((char)pPlayer_->GetUVPos().x == (char)pGoal->GetUVPos().x && (char)pPlayer_->GetUVPos().y == (char)pGoal->GetUVPos().y))
+	while (roop % 2 != 0 || Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] == Empty_ ||
+		GoalPos_ == pPlayer_->GetUVPos().x * BoardSize_ + pPlayer_->GetUVPos().y)
 	{
-		char Pannel1 = rand() % BOARDTOTAL_;
-		char Pannel2 = rand() % BOARDTOTAL_;
-		std::swap(Board_[(char)(Pannel1 / BoardSize_)][(char)(Pannel1 % BoardSize_)], Board_[(char)(Pannel2 / BoardSize_)][(char)(Pannel2 % BoardSize_)]);
+		while (Pannel.size() < 2)
+		{
+			Pannel.push_back(rand() % BOARDTOTAL_);
+		}
+
+		std::swap(Board_[(char)(Pannel.at(0) / BoardSize_)][(char)(Pannel.at(0) % BoardSize_)], Board_[(char)(Pannel.at(1) / BoardSize_)][(char)(Pannel.at(1) % BoardSize_)]);
+		if (std::any_of(Pannel.begin(), Pannel.end(), [=](char data) {return data == GoalPos_; }))	//GoalPos_と一致する要素があれば
+		{
+			//GoalPos_と一致しないほうの要素を取り出す
+			auto change = std::find_if_not(Pannel.begin(), Pannel.end(), [=](char data) {return data == GoalPos_; });
+			GoalPos_ = *change;
+		}
+		Pannel.clear();
 		roop++;
 	}
+
+	//シャッフル後の位置を送信
+	pGoal->InitialPosition(GoalPos_);
 
 	//Player側に初期位置のIDを送る
 	Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] = pPlayer_->GetID();
@@ -219,35 +248,34 @@ void Screen_Puzzle::AssignGoal()
 {
 	Procedural::SetSeed();
 	SeedData_ = Procedural::FormValue();	//とりあえず値を受け取る
-	char Goalpos = 0;						//ゴールの番号
 
 	//ゴールの初期位置の判定
 	if (SeedData_ < 0)				//0未満ならば
 	{
-		Goalpos = UnderSide;		//下半分に置く
+		GoalPos_ = UnderSide;		//下半分に置く
 	}
 	if (SeedData_ & 1)				//奇数ならば
 	{
-		Goalpos += RightSide;		//右半分に置く
+		GoalPos_ += RightSide;		//右半分に置く
 	}
 	if (Math::GetDigits(SeedData_, 0, 0) > Math::GetDigits(SeedData_, 1, 1))	//1桁目が2桁目より大きければ
 	{
-		Goalpos += UnderSide / 2;	//半分で区切った内の下段に置く
+		GoalPos_ += UnderSide / 2;	//半分で区切った内の下段に置く
 	}
 	if (Math::GetDigits(SeedData_, 5, 5) > Math::GetDigits(SeedData_, 4, 4))	//6桁目が5桁目より大きければ
 	{
-		Goalpos += RightSide / 2;	//半分で区切った内の右側に置く
+		GoalPos_ += RightSide / 2;	//半分で区切った内の右側に置く
 	}
 
 	//決定した値にゴールを配置
 	Goal* pGoal = (Goal*)FindObject("Goal");
-	pGoal->InitialPosition(Goalpos);
+	pGoal->InitialPosition(GoalPos_);
 	SAFE_RELEASE(pGoal);
 
 	//Emptyの位置を決める
 	char EmpX, EmpZ;
-	EmpX = ((char)(Goalpos / UnderSide) + 1) % 2;	//ゴールが置かれている場所が上半分ならEmptyを下にする
-	EmpZ = Goalpos % 2;
+	EmpX = ((char)(GoalPos_ / UnderSide) + 1) % 2;	//ゴールが置かれている場所が上半分ならEmptyを下にする
+	EmpZ = GoalPos_ % 2;
 
 	if (EmpX == 1)
 		EmpX = 3;
@@ -261,18 +289,18 @@ void Screen_Puzzle::AssignGoal()
 	//ゴールがあるマスの部屋タイプのみここで決定させる
 	//意図 : 到達不可のマスが生成されることを防ぐため
 	//同時にEmptyマスの位置を決定
-	switch (Goalpos % 2)
+	switch (GoalPos_ % 2)
 	{
 	case 0: //偶数の場合
 		//右側にドアを持つパネルのみで判断
-		Board_[(char)(Goalpos / BoardSize_)][(char)(Goalpos % BoardSize_)] = DoorR[SeedData_ % 3];
+		Board_[(char)(GoalPos_ / BoardSize_)][(char)(GoalPos_ % BoardSize_)] = DoorR[SeedData_ % 3];
 		break;
 	case 1: //奇数の場合
 		//左側にドアを持つパネルのみで判断
-		Board_[(char)(Goalpos / BoardSize_)][(char)(Goalpos % BoardSize_)] = DoorLt[SeedData_ % 3];
+		Board_[(char)(GoalPos_ / BoardSize_)][(char)(GoalPos_ % BoardSize_)] = DoorLt[SeedData_ % 3];
 		break;
 	}
-	DecidedData_.push_back(Goalpos);
+	DecidedData_.push_back(GoalPos_);
 }
 
 void Screen_Puzzle::Swap(int x, int z)

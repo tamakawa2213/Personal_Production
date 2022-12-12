@@ -23,14 +23,6 @@ struct Move
 	int moveLtR;
 };
 
-//const Move Direction[4]
-//{
-//	{1,0},		//上
-//	{-1,0},		//下
-//	{0,-1},		//左
-//	{0,1}		//右
-//};
-
 const Move Direction[4]
 {
 	{0,-1},		//上
@@ -64,6 +56,7 @@ class Screen_Puzzle : public GameObject
 	char PuzZ_;
 	int hModel_[Board_MAX];	//格納されたオブジェクト番号
 	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
+	char GoalPos_;
 
 	int SeedData_;		//この値を基にパズルの盤面を生成
 	std::vector<char> DecidedData_;		//決定済みデータ
