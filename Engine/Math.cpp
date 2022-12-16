@@ -147,4 +147,10 @@ namespace Math
         }
         return ans;
     }
+    int xorshift32(int v) {
+        v = v ^ (v << 13);
+        v = v ^ (v >> 17);
+        v = v ^ (v << 15);
+        return v;
+    }
 }

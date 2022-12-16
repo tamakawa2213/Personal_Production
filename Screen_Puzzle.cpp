@@ -89,15 +89,15 @@ void Screen_Puzzle::Draw()
 				}
 
 #if _DEBUG		//デバッグモードでのみ表示
-				/*Goal* pGoal = (Goal*)FindObject("Goal");
+				Goal* pGoal = (Goal*)FindObject("Goal");
 				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
-				SAFE_RELEASE(pGoal);*/
+				SAFE_RELEASE(pGoal);
 #endif
-
+				
 				if (PuzX_ == x && PuzZ_ == z)
 				{
 					if (!Wait_)

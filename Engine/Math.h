@@ -33,4 +33,9 @@ namespace Math
 	//注意 : 引数に指定する値は1以上にする
 	//戻り値 : 生成された素数の動的配列
 	std::vector<int> MakePrime(int article);
+
+	//ビットシフトを利用した疑似乱数生成器
+	//引数 : シード値
+	//戻り値 : 生成された乱数
+	int xorshift32(int v);
 };
