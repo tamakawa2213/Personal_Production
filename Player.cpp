@@ -14,7 +14,7 @@ Player::~Player()
 void Player::Initialize()
 {
 	//‰ŠúˆÊ’u‚ÆID‚ðŽw’è
-	SetID(rand() % Board_MAX);
+	SetID(rand() % (char)Board::MAX);
 	char pos = rand() % 16;
 	UVPosition_ = XMFLOAT2((char)(pos / BoardSize_), (char)(pos % BoardSize_));
 
@@ -35,7 +35,7 @@ void Player::ReceiveFromDoor()
 	Screen_Puzzle* pSP = (Screen_Puzzle*)FindChildObject("Screen_Puzzle");
 	char path = pSP->SendToken(UVPosition_, this->GetID());
 
-	if (path != Board_MAX)
+	if (path != (char)Board::MAX)
 	{
 		Screen_Room* pSR = (Screen_Room*)FindChildObject("Screen_Room");
 		pSR->MoveOther(path);

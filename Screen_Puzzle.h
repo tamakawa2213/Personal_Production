@@ -2,59 +2,25 @@
 #include "Engine/GameObject.h"
 #include <vector>
 
-#define BoardSize_  4		//横・縦それぞれの大きさ
-#define Empty_ -1			//空白のマス
-#define TIMETOMOVE 60		//移動にかける時間
-#define BOARDTOTAL_ 16		//盤面のマスの総数
+static const int BoardSize_ = 4;		//横・縦それぞれの大きさ
 
 class Player;
 
-struct DoorPath	//通れるドアをビットで示す(上、下、右、左の順)
+enum class Board
 {
-	const char DoorH = 0x08;
-	const char DoorLw = 0x04;
-	const char DoorLt = 0x02;
-	const char DoorR = 0x01;
-};
-
-struct Move
-{
-	int moveHLw;
-	int moveLtR;
-};
-
-const Move Direction[4]
-{
-	{0,-1},		//上
-	{0,1},		//下
-	{1,0},		//左
-	{-1,0}		//右
-};
-
-enum
-{
-	Board_HLt,
-	Board_HR,
-	Board_LwLt,
-	Board_LwR,
-	Board_LtR,
-	Board_MAX		//ボードの種類の最大値
+	HLt,
+	HR,
+	LwLt,
+	LwR,
+	LtR,
+	MAX		//ボードの種類の最大値
 };
 
 class Screen_Puzzle : public GameObject
 {
-	const char UnderSide = 8;	//ボードの下半分
-	const char RightSide = 2;	//ボードの右半分
-
-	//各方向のドアを持っている番号のタグ付け
-	const char DoorHi[2] = { Board_HLt, Board_HR };
-	const char DoorLw[2] = { Board_LwLt, Board_LwR };
-	const char DoorR[3] = { Board_HR, Board_LwR, Board_LtR };
-	const char DoorLt[3] = { Board_HLt, Board_LwLt, Board_LtR };
-
 	char PuzX_;
 	char PuzZ_;
-	int hModel_[Board_MAX];	//格納されたオブジェクト番号
+	int hModel_[(char)Board::MAX];	//格納されたオブジェクト番号
 	int Board_[BoardSize_][BoardSize_];	//ボードのデータ
 	char GoalPos_;
 

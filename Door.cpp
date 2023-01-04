@@ -16,7 +16,7 @@ Door::~Door()
 void Door::Initialize()
 {
 	hModel_ = Model::Load("Assets\\Door.fbx");
-	assert(hModel_ >= NULL);
+	assert(hModel_ >= 0);
 }
 
 void Door::Update()
@@ -72,7 +72,7 @@ float Door::MakeMouseRay()
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
 	mousePosFront.x = mousePosFront.x;
-	mousePosFront.z = NULL;
+	mousePosFront.z = 0;
 
 	XMVECTOR front = SetInvMat(mousePosFront);
 

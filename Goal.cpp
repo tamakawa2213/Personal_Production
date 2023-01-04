@@ -16,7 +16,7 @@ Goal::~Goal()
 void Goal::Initialize()
 {
 	hModel_ = Model::Load("Assets\\Key.fbx");
-	assert(hModel_ >= NULL);
+	assert(hModel_ >= 0);
 }
 
 void Goal::Update()
@@ -79,7 +79,7 @@ float Goal::MakeMouseRay()
 	//マウス位置
 	XMFLOAT3 mousePosFront = Input::GetMousePosition();
 	mousePosFront.x = mousePosFront.x;
-	mousePosFront.z = NULL;
+	mousePosFront.z = 0;
 
 	XMVECTOR front = SetInvMat(mousePosFront);
 

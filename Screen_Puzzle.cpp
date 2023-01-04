@@ -9,12 +9,55 @@
 #include "Player.h"
 #include "Procedural.h"
 #include "Storage.h"
-
-#include <algorithm>
 #include <random>
 
+namespace
+{
+	static const char UnderSide = 8;	//ボードの下半分
+	static const char RightSide = 2;	//ボードの右半分
+	static const int Empty_ = -1;			//空白のマス
+	static const int TIMETOMOVE = 60;		//移動にかける時間
+	static const int BOARDTOTAL_ = 16;		//盤面のマスの総数
+
+	//各方向のドアを持っている番号のタグ付け
+	const char DoorHi[2] = { (char)Board::HLt, (char)Board::HR };
+	const char DoorLw[2] = { (char)Board::LwLt, (char)Board::LwR };
+	const char DoorR[3] = { (char)Board::HR, (char)Board::LwR, (char)Board::LtR };
+	const char DoorLt[3] = { (char)Board::HLt, (char)Board::LwLt, (char)Board::LtR };
+
+	enum class DOOR_ID
+	{
+		H = 0,
+		LW,
+		LT,
+		R
+	};
+
+	struct DoorPath	//通れるドアをビットで示す(上、下、右、左の順)
+	{
+		const char DoorH = 0x01 << 3;
+		const char DoorLw = 0x01 << 2;
+		const char DoorLt = 0x01 << 1;
+		const char DoorR = 0x01 << 0;
+	};
+
+	struct Move
+	{
+		int moveHLw;
+		int moveLtR;
+	};
+
+	const Move Direction[4]
+	{
+		{0,-1},		//上
+		{0,1},		//下
+		{1,0},		//左
+		{-1,0}		//右
+	};
+}
+
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
-	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(0), MoveDir_(NULL),
+	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(0), MoveDir_(0),
 	MovingPanel_(0), pPlayer_(nullptr), Mode_(0), SeedData_(0), GoalPos_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
@@ -31,12 +74,12 @@ void Screen_Puzzle::Initialize()
 	pPlayer_ = (Player*)GetParent();
 	AssignPuzzle();
 	Shuffle();
-	std::string Filename[Board_MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
-	for (int i = NULL; i < Board_MAX; i++)
+	std::string Filename[(char)Board::MAX] = { "Board_HLt" ,"Board_HR" , "Board_LwLt" , "Board_LwR" , "Board_LtR" };
+	for (int i = 0; i < (char)Board::MAX; i++)
 	{
 		std::string Name = "Assets\\" + Filename[i] + ".fbx";
 		hModel_[i] = Model::Load(Name);
-		assert(hModel_ >= NULL);
+		assert(hModel_ >= 0);
 	}
 	Mode_ = Storage::GetDifficulty();
 	Instantiate<Pin>(this);
@@ -175,7 +218,7 @@ void Screen_Puzzle::AssignPuzzle()
 		//決定済みデータにBoardDecideの値が存在しなければ
 		if (Find == DecidedData_.end())
 		{	//負の値になることを防ぐためにUINT型にキャストする
-			Board_[(char)(BoardDecide / BoardSize_)][(char)(BoardDecide % BoardSize_)] = (UINT)((SeedData_ + BoardDecide) / (BoardDecide + 1)) % Board_MAX;
+			Board_[(char)(BoardDecide / BoardSize_)][(char)(BoardDecide % BoardSize_)] = (UINT)((SeedData_ + BoardDecide) / (BoardDecide + 1)) % (char)Board::MAX;
 			DecidedData_.push_back(BoardDecide);
 		}
 		BoardDecide++;
@@ -283,6 +326,9 @@ void Screen_Puzzle::AssignGoal()
 	if (EmpZ == 1)
 		EmpZ = 3;
 
+	CLAMP(EmpX, 0, 3);
+	CLAMP(EmpZ, 0, 3);
+
 	Board_[EmpX][EmpZ] = Empty_;
 	DecidedData_.push_back(EmpX * BoardSize_ + EmpZ);
 
@@ -315,23 +361,24 @@ void Screen_Puzzle::Swap(int x, int z)
 		//あったら移動させる
 		if (Board_[moveX][moveZ] == Empty_)
 		{
+			DoorPath path;
 			Wait_ = true;
-			if (Dir.moveHLw != NULL)
+			if (Dir.moveHLw != 0)
 			{
 				PuzZ_ += Dir.moveHLw;
 				switch (Dir.moveHLw)
 				{
-				case 1: MoveDir_ = 0x08; break;
-				case -1: MoveDir_ = 0x04; break;
+				case 1: MoveDir_ = path.DoorH; break;
+				case -1: MoveDir_ = path.DoorLw; break;
 				}
 			}
-			if (Dir.moveLtR != NULL)
+			if (Dir.moveLtR != 0)
 			{
 				PuzX_ += Dir.moveLtR;
 				switch (Dir.moveLtR)
 				{
-				case 1: MoveDir_ = 0x01; break;
-				case -1: MoveDir_ = 0x02; break;
+				case 1: MoveDir_ = path.DoorR; break;
+				case -1: MoveDir_ = path.DoorLt; break;
 				}
 			}
 			//押したマスがPlayerのいるマスだった場合
@@ -412,7 +459,7 @@ bool Screen_Puzzle::MakeMouseRay()
 	{
 		for (int z = 0; z < BoardSize_; z++)
 		{
-			for (int type = 0; type < Board_MAX; type++)
+			for (int type = 0; type < (char)Board::MAX; type++)
 			{
 				RayCastData data;
 				XMStoreFloat3(&data.start, front);
@@ -477,20 +524,20 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 	bool path = false;
 	switch (BoardType)	//渡されたIDから通れるドアを出す
 	{
-	case Board_HLt: ans = data.DoorH + data.DoorLt; break;
-	case Board_HR: ans = data.DoorH + data.DoorR; break;
-	case Board_LwLt: ans = data.DoorLw + data.DoorLt; break;
-	case Board_LwR: ans = data.DoorLw + data.DoorR; break;
-	case Board_LtR: ans = data.DoorLt + data.DoorR; break;
+	case (char)Board::HLt: ans = data.DoorH + data.DoorLt; break;
+	case (char)Board::HR: ans = data.DoorH + data.DoorR; break;
+	case (char)Board::LwLt: ans = data.DoorLw + data.DoorLt; break;
+	case (char)Board::LwR: ans = data.DoorLw + data.DoorR; break;
+	case (char)Board::LtR: ans = data.DoorLt + data.DoorR; break;
 	default: break;
 	}
 
 	switch (DoorID)		//ビット演算で通れるかどうかを返す
 	{
-	case DOOR_ID_H: path = ans & data.DoorLw; break;
-	case DOOR_ID_LW: path = ans & data.DoorH; break;
-	case DOOR_ID_LT: path = ans & data.DoorR; break;
-	case DOOR_ID_R: path = ans & data.DoorLt; break;
+	case (char)DOOR_ID::H: path = ans & data.DoorLw; break;
+	case (char)DOOR_ID::LW: path = ans & data.DoorH; break;
+	case (char)DOOR_ID::LT: path = ans & data.DoorR; break;
+	case (char)DOOR_ID::R: path = ans & data.DoorLt; break;
 	default: break;
 	}
 	return path;
@@ -533,5 +580,5 @@ char Screen_Puzzle::SendToken(XMFLOAT2 pPos, char DoorID)
 			}
 		}
 	}
-	return Board_MAX;
+	return (char)Board::MAX;
 }

@@ -12,8 +12,8 @@ namespace Camera {
 //初期化
 	void Camera::Initialize(int winW, int winH)
 	{
-		position_ = XMVectorSet(NULL, 5, 1.4f, NULL);	//カメラの位置
-		target_ = XMVectorSet(NULL, NULL, 1.5f, NULL);		//カメラの焦点
+		position_ = XMVectorSet(0, 5, 1.4f, 0);	//カメラの位置
+		target_ = XMVectorSet(0, 0, 1.5f, 0);		//カメラの焦点
 		projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)winW / (FLOAT)winH / 2.0f, 0.1f, 1000.0f);
 	}
 

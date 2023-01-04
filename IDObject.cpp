@@ -6,7 +6,7 @@ IDObject::IDObject(GameObject* parent)
 }
 
 IDObject::IDObject(GameObject* parent, std::string name)
-	: GameObject(parent, name), IDData_(NULL)
+	: GameObject(parent, name), IDData_(0)
 {
 }
 
