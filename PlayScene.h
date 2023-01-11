@@ -1,12 +1,6 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-enum
-{
-	EASY,
-	HARD
-};
-
 class PlayScene : public GameObject
 {
 public:

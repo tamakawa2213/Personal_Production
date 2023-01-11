@@ -2,15 +2,15 @@
 
 namespace Storage
 {
-	char Difficulty;
+	Difficulty Dif;
 
 
-	void SetDifficulty(char dif)
+	void SetDifficulty(Difficulty dif)
 	{
-		Difficulty = dif;
+		Dif = dif;
 	}
-	char GetDifficulty()
+	Difficulty GetDifficulty()
 	{
-		return Difficulty;
+		return Dif;
 	}
 }

@@ -1,7 +1,13 @@
 #pragma once
 
+enum class Difficulty
+{
+	EASY = 0,
+	HARD
+};
+
 namespace Storage
 {
-	void SetDifficulty(char dif);
-	char GetDifficulty();
+	void SetDifficulty(Difficulty dif);
+	Difficulty GetDifficulty();
 };

@@ -5,6 +5,7 @@
 #include "Engine/Math.h"
 #include "Engine/Model.h"
 #include "Goal.h"
+#include "Judge.h"
 #include "Pin.h"
 #include "Player.h"
 #include "Procedural.h"
@@ -81,7 +82,7 @@ void Screen_Puzzle::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= 0);
 	}
-	Mode_ = Storage::GetDifficulty();
+	Mode_ = (char)Storage::GetDifficulty();
 	Instantiate<Pin>(this);
 }
 
@@ -405,7 +406,8 @@ void Screen_Puzzle::Swap(int x, int z)
 
 			MovingPanel_ = Board_[x][z];
 			std::swap(Board_[x][z], Board_[moveX][moveZ]);
-			pPlayer_->SetWait(Wait_);
+			pPlayer_->SetWait(Wait_);	//Playerをwait状態にする
+			Judge::AddNom();			//手数を1加算させる
 			return;
 		}
 	}

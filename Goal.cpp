@@ -2,10 +2,13 @@
 #include "Engine/Camera.h"
 #include "Engine/Direct3D.h"
 #include "Engine/Input.h"
+#include "Engine/Model.h"
+#include "Judge.h"
 #include "Player.h"
+#include "Screen_Puzzle.h"
 
 Goal::Goal(GameObject* parent)
-	: GameObject(parent, "Goal"), hModel_(-1), RayHit_(false), IsMouse_(), UVPosition_()
+	: GameObject(parent, "Goal"), hModel_(-1), RayHit_(false), IsMouse_(), UVPosition_(), pPlayer_(nullptr)
 {
 }
 
@@ -17,43 +20,47 @@ void Goal::Initialize()
 {
 	hModel_ = Model::Load("Assets\\Key.fbx");
 	assert(hModel_ >= 0);
+	pPlayer_ = (Player*)GetParent()->GetParent();
 }
 
 void Goal::Update()
 {
-	float dist = MakeMouseRay();
+	if (pPlayer_->GetUVPos().x == UVPosition_.x && pPlayer_->GetUVPos().y == UVPosition_.y)
+	{
+		float dist = MakeMouseRay();
 
-	//カメラより手前にあるドアには当たらないようにする
-	//マウスを押したタイミングで対象を指しているか
-	if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0f)
-	{
-		IsMouse_[0] = true;
-	}
-	//マウスを離したタイミングで対象を指しているか
-	if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0f)
-	{
-		IsMouse_[1] = true;
-	}
+		//カメラより手前にあるドアには当たらないようにする
+		//マウスを押したタイミングで対象を指しているか
+		if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0f)
+		{
+			IsMouse_[0] = true;
+		}
+		//マウスを離したタイミングで対象を指しているか
+		if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0f)
+		{
+			IsMouse_[1] = true;
+		}
 
-	//両方trueならば呼び出す
-	if (IsMouse_[0] && IsMouse_[1])
-	{
-		IsMouse_[0] = false;
-		IsMouse_[1] = false;
-	}
+		//両方trueならば呼び出す
+		if (IsMouse_[0] && IsMouse_[1])
+		{
+			IsMouse_[0] = false;
+			IsMouse_[1] = false;
+			Judge::calculation();
+		}
 
-	//押していなければfalseになる
-	if (!Input::IsMouse(0))
-	{
-		IsMouse_[0] = false;
-		IsMouse_[1] = false;
+		//押していなければfalseになる
+		if (!Input::IsMouse(0))
+		{
+			IsMouse_[0] = false;
+			IsMouse_[1] = false;
+		}
 	}
 }
 
 void Goal::Draw()
 {
-	Player* pPlayer = (Player*)GetParent()->GetParent();
-	if (pPlayer->GetUVPos().x == UVPosition_.x && pPlayer->GetUVPos().y == UVPosition_.y)
+	if (pPlayer_->GetUVPos().x == UVPosition_.x && pPlayer_->GetUVPos().y == UVPosition_.y)
 	{
 		Model::SetTransform(hModel_, transform_);
 

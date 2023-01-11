@@ -6,10 +6,13 @@
 #include "Engine/Texture.h"
 #include "Engine/Camera.h"
 #include "Engine/CallDef.h"
+#include "Engine/Time.h"
 #include "Engine/Transform.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 #include "Engine/RootJob.h"
+#include "Graphics/imgui_impl_dx11.h"
+#include "Graphics/imgui_impl_win32.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -17,6 +20,7 @@
 LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
 const unsigned int WINDOW_WIDTH = 1200;	//ウィンドウの幅
 const unsigned int WINDOW_HEIGHT = 600;	//ウィンドウの高さ
+const int MAX_FPS = 60;
 
 RootJob* pRootJob;
 
@@ -85,6 +89,22 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 		PostQuitMessage(0);
 	}
 
+	{//GUI初期化
+#if _DEBUG
+		//IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO();
+		ImFontConfig config;
+		config.MergeMode = true;
+		io.Fonts->AddFontDefault();
+		io.Fonts->AddFontFromFileTTF("c:\\Windows\\Fonts\\meiryo.ttc", 18.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+		ImGui::StyleColorsDark();
+		ImGui_ImplWin32_Init(hWnd);
+		ImGui_ImplDX11_Init(Direct3D::pDevice, Direct3D::pContext);
+		ImGui::SetNextWindowSize(ImVec2(320, 100));
+#endif
+	}
+
 	//RootJob初期化
 	pRootJob = nullptr;
 	pRootJob = new RootJob(nullptr);
@@ -95,6 +115,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	//カメラの初期化
 	Camera::Initialize(winW, winH);
+
+	Time::Initialize(MAX_FPS);
 
 	//メッセージループ(何か起きるのを待つ)
 	MSG msg;
@@ -115,10 +137,45 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			DWORD nowTime = timeGetTime();
 			static DWORD lastUpdateTime = nowTime;
 
-			if ((nowTime - lastUpdateTime) * 60 <= 1000.0f)
+			if ((nowTime - lastUpdateTime) * MAX_FPS <= 1000.0f)
 			{
 				continue;
 			}
+
+#if _DEBUG
+			ImGui_ImplDX11_NewFrame();
+			ImGui_ImplWin32_NewFrame();
+			ImGui::NewFrame();
+
+			//{
+			//	static float f = 0.0f;
+			//	static int counter = 0;
+
+			//	ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+			//	ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+			//	ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
+
+			//	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+
+			//	if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			//		counter++;
+			//	ImGui::SameLine();
+			//	ImGui::Text("counter = %d", counter);
+
+			//	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+			//	ImGui::End();
+			//}
+			//if (show_another_window)
+			//{
+			//	ImGui::Begin("Another Window", &show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+			//	ImGui::Text("Hello from another window!");
+			//	if (ImGui::Button("Close Me"))
+			//		show_another_window = false;
+			//	ImGui::End();
+			//}
+#endif
+
 			lastUpdateTime = nowTime;
 
 			static char DrawRange = VP_LEFT;
@@ -147,6 +204,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				}
 			}
 
+			Time::Update();
+
 			//ゲームの処理
 			pRootJob->Update();
 			Camera::Update();
@@ -158,6 +217,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			XMVECTOR campos[2] = { {-10.0f, 5.5f, 1.2f, 0}, {1.6f, 6, 1.5f, 0} };
 			XMVECTOR camtar[2] = { {-10, 0, 1.3f, 0}, {1.5f, 0, 1.5f, 0} };
+
 
 			//描画処理
 			switch (Direct3D::SplitScrMode)
@@ -238,11 +298,16 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				break;
 			}
 
+			ImGui::Render();
+			ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
 			Direct3D::EndDraw();
 
 			timeEndPeriod(1);
 		}
 	}
+	ImGui_ImplDX11_Shutdown();
+	ImGui::DestroyContext();
 	pRootJob->ReleaseSub();
 	SAFE_DELETE(pRootJob);
 	Input::Release();
@@ -251,6 +316,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	CoUninitialize();	//COMのRelease
 	return 0;
 }
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 //ウィンドウプロシージャ(何かあった時に呼び出される関数)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -264,5 +331,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 	}
+
+	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
+		return true;
+
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

@@ -1,7 +1,8 @@
 #pragma once
-#include "Engine/Model.h"
 #include "Engine/GameObject.h"
-#include "Screen_Puzzle.h"
+
+class Player;
+class Screen_Puzzle;
 
 class Goal : public GameObject
 {
@@ -11,6 +12,8 @@ class Goal : public GameObject
 	bool IsMouse_[2];					//マウスを押した瞬間と離した瞬間
 
 	XMFLOAT2 UVPosition_;				//パズル画面上の位置
+
+	Player* pPlayer_;
 
 	void InitialPosition(char pos);		//初期位置を生成する
 	float MakeMouseRay();

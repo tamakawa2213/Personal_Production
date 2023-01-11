@@ -4,6 +4,7 @@
 #include "Engine/Input.h"
 #include "Engine/Model.h"
 #include "Goal.h"
+#include "Judge.h"
 #include "Player.h"
 
 //’è”éŒ¾
@@ -111,7 +112,7 @@ void Screen_Room::MoveOther(char Type)
 	int Num = 0;
 	char PosNum = (char)Position::MAX;
 
-	while (Num < DoorNum || PosNum >= 0)
+	while (Num < DoorNum && PosNum >= 0)
 	{
 		PosNum--;
 
@@ -123,6 +124,7 @@ void Screen_Room::MoveOther(char Type)
 			Num++;
 		}
 	}
+	Judge::AddNom();	//è”‚ğ1‰ÁZ
 }
 
 void Screen_Room::Look_Around()
