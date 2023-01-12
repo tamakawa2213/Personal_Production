@@ -98,7 +98,7 @@ void Screen_Room::Update()
 void Screen_Room::Draw()
 {
 	Model::SetTransform(hModel_[RoomType_], transform_);
-	Model::Draw(hModel_[RoomType_]);
+	Model::Draw(hModel_[RoomType_], 2);
 }
 
 void Screen_Room::Release()

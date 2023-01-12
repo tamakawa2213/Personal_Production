@@ -14,8 +14,9 @@ using namespace DirectX;
 #pragma comment(lib, "d3dcompiler.lib")
 
 enum SHADER_TYPE {
-	SHADER_2D,	//2D用シェーダー
-	SHADER_3D,	//3D用シェーダー
+	SHADER_2D = 0,	//2D用シェーダー
+	SHADER_3D,		//3D用シェーダー
+	SHADER_POINT,
 	SHADER_MAX	//これは使わない
 };
 
@@ -49,6 +50,7 @@ namespace Direct3D
 	HRESULT InitShader();
 	HRESULT InitShader2D();
 	HRESULT InitShader3D();
+	HRESULT InitShaderPoint();
 
 	void SetShader(int type);
 

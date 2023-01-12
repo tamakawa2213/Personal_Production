@@ -16,8 +16,8 @@ namespace Model
 {
 	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
-	void Draw(int hModel);
-	void Draw(int hModel, XMFLOAT3 Chroma, float Bright, float Alpha);
+	void Draw(int hModel, char SHADER_TYPE = 1);
+	void Draw(int hModel, XMFLOAT3 Chroma, float Bright, float Alpha, char SHADER_TYPE = 1);
 
 	void Release();
 

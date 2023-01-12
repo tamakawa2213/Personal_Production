@@ -63,7 +63,7 @@ void Door::Draw()
 	}
 	else
 	{
-		Model::Draw(hModel_);
+		Model::Draw(hModel_, 2);
 	}
 }
 

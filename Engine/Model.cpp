@@ -41,14 +41,14 @@ namespace Model
         FileSet[hModel]->transform = transform;
     }
 
-    void Model::Draw(int hModel)
+    void Model::Draw(int hModel, char SHADER_TYPE)
     {
-        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform);
+        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, SHADER_TYPE);
     }
 
-    void Draw(int hModel, XMFLOAT3 Chroma, float Bright, float Alpha)
+    void Draw(int hModel, XMFLOAT3 Chroma, float Bright, float Alpha, char SHADER_TYPE)
     {
-        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, Chroma, Bright, Alpha);
+        FileSet[hModel]->pFbx->Draw(FileSet[hModel]->transform, Chroma, Bright, Alpha, SHADER_TYPE);
     }
 
     void Release()

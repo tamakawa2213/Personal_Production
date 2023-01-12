@@ -67,8 +67,8 @@ public:
 	HRESULT IntConstantBuffer();
 	void InitMaterial(fbxsdk::FbxNode* pNode);
 	void RayCast(RayCastData& rayData);
-	void Draw(Transform& transform);
-	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha);	//transform, RGBの値, 明度(0 ～255)
+	void Draw(Transform& transform, char SHADER_TYPE = 1);
+	void Draw(Transform& transform, XMFLOAT3 Chroma, float Bright, float Alpha, char SHADER_TYPE = 1);	//transform, RGBの値, 明度(0 ～255)
 	void Release();
 
 	XMVECTOR NormalDotLight(Transform tr);
