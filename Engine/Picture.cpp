@@ -36,6 +36,14 @@ namespace Picture
         return (int)FileSet.size() - 1;
     }
 
+    int Load(std::string filename)
+    {
+        wchar_t file[CHAR_MAX];
+        size_t ret;
+        mbstowcs_s(&ret, file, filename.c_str(), filename.length());
+        return Load(file);
+    }
+
     void Picture::SetTransform(int hPicture, Transform transform)
     {
         FileSet[hPicture]->transform = transform;

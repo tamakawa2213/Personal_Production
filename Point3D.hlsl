@@ -75,11 +75,11 @@ float4 PS(VS_OUT inData) : SV_Target
 	if (isTexture)
 	{
 		diffuse = chroma * g_texture.Sample(g_sampler, inData.uv) * Color;
+		return chroma * (diffuse + ambient);
 	}
 	else
 	{
-		diffuse = chroma * diffuseColor * Color;
+		return chroma * diffuseColor * Color;
 	}
-	return (diffuse + ambient) * 1.5f;
 }
 //Illegal character in shader file のエラーが出たら使用不可の全角が使用されている

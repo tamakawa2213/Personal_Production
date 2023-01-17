@@ -15,6 +15,7 @@ struct PictureSet
 namespace Picture
 {
 	int Load(LPCWSTR filename);
+	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
 

@@ -178,6 +178,8 @@
     <ClCompile Include="IDObject.cpp" />
     <ClCompile Include="Judge.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ModeScene.cpp" />
+    <ClCompile Include="ModeScene_UI.cpp" />
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
@@ -226,6 +228,8 @@
     <ClInclude Include="Graphics\imstb_truetype.h" />
     <ClInclude Include="IDObject.h" />
     <ClInclude Include="Judge.h" />
+    <ClInclude Include="ModeScene.h" />
+    <ClInclude Include="ModeScene_UI.h" />
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />

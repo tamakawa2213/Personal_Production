@@ -1,10 +1,11 @@
 #include "SceneManager.h"
 #include "Model.h"
+#include "../ModeScene.h"
 #include "../PlayScene.h"
 
 SceneManager::SceneManager(GameObject* parent) : GameObject(parent, "SceneManager")
 {
-	CurrentSceneID_ = SCENE_ID_PLAY;
+	CurrentSceneID_ = SCENE_ID_MODE;
 	NextSceneID_ = CurrentSceneID_;
 }
 
@@ -14,7 +15,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Initialize()
 {
-	Instantiate<PlayScene>(this);
+	Instantiate<ModeScene>(this);
 }
 
 void SceneManager::Update()
@@ -26,6 +27,7 @@ void SceneManager::Update()
 
 		switch (NextSceneID_)
 		{
+		case SCENE_ID_MODE: Instantiate<ModeScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
 		}
 
