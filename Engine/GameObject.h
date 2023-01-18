@@ -28,8 +28,12 @@ public:
 	virtual void Initialize() {}	//初期化
 	virtual void Update() {}		//更新
 	void UpdateSub();				//子オブジェクトの更新
+	virtual void FixedUpdate() {}
+	void FixedUpdateSub();
 	virtual void Draw() {}			//描画
 	void DrawSub();					//子オブジェクトの描画
+	virtual void DrawUnique(){}
+	void DrawUniqueSub();
 	virtual void Release() {}		//解放
 	void ReleaseSub();
 

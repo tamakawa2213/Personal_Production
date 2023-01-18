@@ -157,6 +157,7 @@
     <ClCompile Include="Engine\Direct3D.cpp" />
     <ClCompile Include="Engine\Fbx.cpp" />
     <ClCompile Include="Engine\GameObject.cpp" />
+    <ClCompile Include="Engine\GameTime.cpp" />
     <ClCompile Include="Engine\Input.cpp" />
     <ClCompile Include="Engine\Math.cpp" />
     <ClCompile Include="Engine\Model.cpp" />
@@ -184,6 +185,7 @@
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PlayScene_UI.cpp" />
     <ClCompile Include="Procedural.cpp" />
     <ClCompile Include="Screen_Puzzle.cpp" />
     <ClCompile Include="Screen_Room.cpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="Engine\Direct3D.h" />
     <ClInclude Include="Engine\Fbx.h" />
     <ClInclude Include="Engine\GameObject.h" />
+    <ClInclude Include="Engine\GameTime.h" />
     <ClInclude Include="Engine\Input.h" />
     <ClInclude Include="Engine\Math.h" />
     <ClInclude Include="Engine\Model.h" />
@@ -235,6 +238,7 @@
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlayScene_UI.h" />
     <ClInclude Include="Procedural.h" />
     <ClInclude Include="Screen_Puzzle.h" />
     <ClInclude Include="Screen_Room.h" />

@@ -39,12 +39,42 @@ void GameObject::UpdateSub()
 	}
 }
 
+void GameObject::FixedUpdateSub()
+{
+	FixedUpdate();
+
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
+		(*itr)->FixedUpdateSub();
+	}
+
+	for (auto itr = childList_.begin(); itr != childList_.end();) {
+		if ((*itr)->KILL) {
+			(*itr)->ReleaseSub();
+			SAFE_DELETE(*itr);
+			itr = childList_.erase(itr);
+		}
+		else {
+			(*itr)->Collision(GetRootJob());
+			itr++;
+		}
+	}
+}
+
 void GameObject::DrawSub()
 {
 	Draw();
 
 	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
 		(*itr)->DrawSub();
+	}
+}
+
+void GameObject::DrawUniqueSub()
+{
+	DrawUnique();
+
+	for (auto itr = childList_.begin(); itr != childList_.end(); itr++) {
+		(*itr)->DrawUniqueSub();
 	}
 }
 

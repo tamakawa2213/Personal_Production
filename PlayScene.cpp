@@ -4,6 +4,7 @@
 #include "Graphics/imgui.h"
 #include "Judge.h"
 #include "Player.h"
+#include "PlayScene_UI.h"
 #include "Storage.h"
 
 PlayScene::PlayScene(GameObject* parent)
@@ -20,6 +21,7 @@ void PlayScene::Initialize()
 	Direct3D::SplitScrMode = SCREEN_SPLIT_2;
 	Instantiate<Player>(this);
 	Judge::Initialize();
+	Instantiate<PlayScene_UI>(this);
 }
 
 void PlayScene::Update()

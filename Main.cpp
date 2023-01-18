@@ -6,6 +6,7 @@
 #include "Engine/Texture.h"
 #include "Engine/Camera.h"
 #include "Engine/CallDef.h"
+#include "Engine/GameTime.h"
 #include "Engine/Time.h"
 #include "Engine/Transform.h"
 #include "Engine/Input.h"
@@ -206,14 +207,30 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			Time::Update();
 
-			//ゲームの処理
-			pRootJob->Update();
-			Camera::Update();
-			Direct3D::BeginDraw();
+			GameTime::Update();
 
-			//入力情報の更新
-			Input::Update();
-			pRootJob->UpdateSub();
+
+			//ゲームの処理
+			if (GameTime::IsStop())
+			{
+				Input::Update();
+			}
+			else
+			{
+				while (GameTime::RemainingTimes() >= 0)
+				{
+					//入力情報の更新
+					Input::Update();
+
+					pRootJob->Update();
+					pRootJob->UpdateSub();
+					GameTime::UpDated();
+				}
+			}
+			pRootJob->FixedUpdate();
+			pRootJob->FixedUpdateSub();
+
+			Direct3D::BeginDraw();
 
 			XMVECTOR campos[2] = { {-10.0f, 5.5f, 1.2f, 0}, {1.6f, 6, 1.5f, 0} };
 			XMVECTOR camtar[2] = { {-10, 0, 1.3f, 0}, {1.5f, 0, 1.5f, 0} };
@@ -297,6 +314,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			default:
 				break;
 			}
+			Direct3D::SetViewPort(VP_FULL);
+			pRootJob->DrawUniqueSub();
 
 			ImGui::Render();
 			ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
