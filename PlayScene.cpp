@@ -1,4 +1,5 @@
 #include "PlayScene.h"
+#include "Engine/Direct3D.h"
 #include "Engine/Time.h"
 #include "Graphics/imgui.h"
 #include "Judge.h"
@@ -16,7 +17,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	Storage::SetDifficulty(Difficulty::EASY);
+	Direct3D::SplitScrMode = SCREEN_SPLIT_2;
 	Instantiate<Player>(this);
 	Judge::Initialize();
 }

@@ -1,6 +1,10 @@
 #include "ModeScene_UI.h"
 #include "Engine/Picture.h"
+#include "Engine/SceneManager.h"
 #include "Storage.h"
+
+#include "Graphics/imgui.h"
+#include "Engine/Input.h"
 
 ModeScene_UI::ModeScene_UI(GameObject* parent)
 	: GameObject(parent, "ModeScene_UI")
@@ -33,6 +37,19 @@ void ModeScene_UI::Initialize()
 
 void ModeScene_UI::Update()
 {
+	if (Input::IsMouseDown(0))
+	{
+		if (Picture::IsHitCursor(hPict_.at((int)Difficulty::EASY)))
+		{
+			Storage::SetDifficulty(Difficulty::EASY);
+			SCENE_CHANGE(SCENE_ID_PLAY);
+		}
+		if (Picture::IsHitCursor(hPict_.at((int)Difficulty::HARD)))
+		{
+			Storage::SetDifficulty(Difficulty::HARD);
+			SCENE_CHANGE(SCENE_ID_PLAY);
+		}
+	}
 }
 
 void ModeScene_UI::Draw()

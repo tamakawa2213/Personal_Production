@@ -18,6 +18,7 @@ namespace Picture
 	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
+	bool IsHitCursor(int hModel);
 
 	void Release();
 }

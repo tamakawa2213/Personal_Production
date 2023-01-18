@@ -34,4 +34,6 @@ public:
 	//Transform‚ğˆø”‚É‚Æ‚é
 	void Draw(Transform& transform);	//•`‰æ
 	void Release();						//‰ğ•ú
+	UINT GetImgWidth();
+	UINT GetImgHeight();
 };

@@ -1,10 +1,14 @@
 #include "Picture.h"
 #include "CallDef.h"
+#include "Input.h"
+
+namespace
+{
+    std::vector<PictureSet*> FileSet;      //Fbxの構造体の動的配列
+}
 
 namespace Picture
 {
-    std::vector<PictureSet*> FileSet;      //Fbxの構造体の動的配列
-
     int Picture::Load(LPCWSTR filename)
     {
         HRESULT hr;
@@ -16,20 +20,16 @@ namespace Picture
             if (File->FileName == (*itr)->FileName)
             {
                 File->pSprite = (*itr)->pSprite;
-                File->FindFbx = true;
                 break;
             }
         }
         //見つからなかった場合、新しくロードする
-        if (!File->FindFbx)
+        File->pSprite = new Sprite;
+        hr = File->pSprite->Initialize(filename);
+        if (FAILED(hr)) //ロードに失敗した場合
         {
-            File->pSprite = new Sprite;
-            hr = File->pSprite->Initialize(filename);
-            if (FAILED(hr)) //ロードに失敗した場合
-            {
-                SAFE_DELETE(File->pSprite);
-                SAFE_DELETE(File);
-            }
+            SAFE_DELETE(File->pSprite);
+            SAFE_DELETE(File);
         }
 
         FileSet.push_back(File);
@@ -52,6 +52,22 @@ namespace Picture
     void Picture::Draw(int hModel)
     {
         FileSet[hModel]->pSprite->Draw(FileSet[hModel]->transform);
+    }
+
+    bool IsHitCursor(int hModel)
+    {
+        UINT wid = FileSet[hModel]->pSprite->GetImgWidth() * FileSet[hModel]->transform.scale_.x * (75.0f / 32.0f);
+        UINT hgt = FileSet[hModel]->pSprite->GetImgHeight() * FileSet[hModel]->transform.scale_.y * (75.0f / 32.0f);
+        float Left = (FileSet[hModel]->transform.position_.x + 1) * (Direct3D::scrWidth / 2) - wid;
+        float Right = (FileSet[hModel]->transform.position_.x + 1) * (Direct3D::scrWidth / 2) + wid;
+        float Top = (-FileSet[hModel]->transform.position_.y + 1) * (Direct3D::scrHeight / 2) - hgt;
+        float Bottom = (-FileSet[hModel]->transform.position_.y + 1) * (Direct3D::scrHeight / 2) + hgt;
+        if (Left <= Input::GetMousePosition().x && Input::GetMousePosition().x <= Right &&
+            Top <= Input::GetMousePosition().y && Input::GetMousePosition().y <= Bottom)
+        {
+            return true;
+        }
+        return false;
     }
 
     void Release()

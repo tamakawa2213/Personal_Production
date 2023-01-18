@@ -93,8 +93,6 @@ HRESULT Sprite::Load(LPCWSTR filename) {
 void Sprite::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_2D);
-
-	//XMMATRIX Size = ((float)pTexture_->GetFileSize()->FileWidth,pTexture_->GetFileSize()->FileHeight,0.0f,0.0f);
 	CONSTANT_BUFFER cb;
 
 	//行列の計算をして、ワールド行列を返す
@@ -136,4 +134,14 @@ void Sprite::Release()
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
+}
+
+UINT Sprite::GetImgWidth()
+{
+	return pTexture_->GetImgWidth();
+}
+
+UINT Sprite::GetImgHeight()
+{
+	return pTexture_->GetImgHeight();
 }

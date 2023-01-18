@@ -5,7 +5,7 @@
 
 #pragma comment( lib, "WindowsCodecs.lib" )
 
-Texture::Texture() : pSampler_(nullptr), pSRV_(nullptr)
+Texture::Texture() : pSampler_(nullptr), pSRV_(nullptr), imgWidth_(0), imgHeight_(0)
 {
 }
 
@@ -65,9 +65,7 @@ HRESULT Texture::Load(LPCWSTR fileName)
 	}
 
 	//画像サイズを取得
-	UINT imgWidth;
-	UINT imgHeight;
-	hr = pFormatConverter->GetSize(&imgWidth, &imgHeight);
+	hr = pFormatConverter->GetSize(&imgWidth_, &imgHeight_);
 	if (FAILED(hr)) {
 		SAFE_RELEASE(pFormatConverter);
 		SAFE_RELEASE(pFrame);
@@ -79,8 +77,8 @@ HRESULT Texture::Load(LPCWSTR fileName)
 	//テクスチャを作成
 	ID3D11Texture2D* pTexture = nullptr;
 	D3D11_TEXTURE2D_DESC texdec;
-	texdec.Width = imgWidth;
-	texdec.Height = imgHeight;
+	texdec.Width = imgWidth_;
+	texdec.Height = imgHeight_;
 	texdec.MipLevels = 1;
 	texdec.ArraySize = 1;
 	texdec.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -111,7 +109,7 @@ HRESULT Texture::Load(LPCWSTR fileName)
 		SAFE_RELEASE(pFactory);
 		return hr;
 	}
-	hr = pFormatConverter->CopyPixels(nullptr, imgWidth * 4, imgWidth * imgHeight * 4, (BYTE*)hMappedres.pData);
+	hr = pFormatConverter->CopyPixels(nullptr, imgWidth_ * 4, imgWidth_ * imgHeight_ * 4, (BYTE*)hMappedres.pData);
 	if (FAILED(hr)) {
 		SAFE_RELEASE(pTexture);
 		SAFE_RELEASE(pFormatConverter);
