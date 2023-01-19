@@ -1,6 +1,8 @@
 #pragma once
 #include <d3d11.h>
-#include "string"
+#include <DirectXMath.h>
+
+using namespace DirectX;
 
 class Texture
 {
@@ -8,6 +10,7 @@ class Texture
 	ID3D11ShaderResourceView* pSRV_;
 	UINT imgWidth_;
 	UINT imgHeight_;
+	XMMATRIX size_;
 public:
 	Texture();
 	~Texture();
@@ -18,4 +21,5 @@ public:
 	ID3D11ShaderResourceView* GetSRV() { return pSRV_; }
 	UINT GetImgWidth() { return imgWidth_; }
 	UINT GetImgHeight() { return imgHeight_; }
+	XMMATRIX GetSize() { return size_; }
 };

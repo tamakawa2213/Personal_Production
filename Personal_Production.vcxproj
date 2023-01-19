@@ -185,6 +185,7 @@
     <ClCompile Include="Pin.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayScene.cpp" />
+    <ClCompile Include="PlayScene_Menu.cpp" />
     <ClCompile Include="PlayScene_UI.cpp" />
     <ClCompile Include="Procedural.cpp" />
     <ClCompile Include="Screen_Puzzle.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="Pin.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayScene.h" />
+    <ClInclude Include="PlayScene_Menu.h" />
     <ClInclude Include="PlayScene_UI.h" />
     <ClInclude Include="Procedural.h" />
     <ClInclude Include="Screen_Puzzle.h" />

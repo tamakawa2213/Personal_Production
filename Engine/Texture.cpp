@@ -2,10 +2,11 @@
 #include "Texture.h"
 #include "CallDef.h"
 #include "Direct3D.h"
+#include <string>
 
 #pragma comment( lib, "WindowsCodecs.lib" )
 
-Texture::Texture() : pSampler_(nullptr), pSRV_(nullptr), imgWidth_(0), imgHeight_(0)
+Texture::Texture() : pSampler_(nullptr), pSRV_(nullptr), imgWidth_(0), imgHeight_(0), size_()
 {
 }
 
@@ -73,6 +74,7 @@ HRESULT Texture::Load(LPCWSTR fileName)
 		SAFE_RELEASE(pFactory);
 		return hr;
 	}
+	size_ = XMMatrixScaling((float)imgWidth_, (float)imgHeight_, 0);
 
 	//テクスチャを作成
 	ID3D11Texture2D* pTexture = nullptr;

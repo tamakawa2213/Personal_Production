@@ -28,7 +28,6 @@ void ModeScene_UI::Initialize()
 
 	hPict_.push_back(pict);
 
-	transform_.scale_ = { 0.25f, 0.25f,0.25f };
 	transform_.position_.y = 0.25f;
 	Picture::SetTransform(hPict_.at((int)Difficulty::EASY), transform_);
 	transform_.position_.y = -0.5f;
@@ -48,6 +47,7 @@ void ModeScene_UI::Update()
 		{
 			Storage::SetDifficulty(Difficulty::HARD);
 			SCENE_CHANGE(SCENE_ID_PLAY);
+			KillMe();
 		}
 	}
 }

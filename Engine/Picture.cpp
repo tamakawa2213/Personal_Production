@@ -56,8 +56,8 @@ namespace Picture
 
     bool IsHitCursor(int hModel)
     {
-        UINT wid = FileSet[hModel]->pSprite->GetImgWidth() * FileSet[hModel]->transform.scale_.x * (75.0f / 32.0f);
-        UINT hgt = FileSet[hModel]->pSprite->GetImgHeight() * FileSet[hModel]->transform.scale_.y * (75.0f / 32.0f);
+        UINT wid = (UINT)(FileSet[hModel]->pSprite->GetImgWidth() * FileSet[hModel]->transform.scale_.x / 2);
+        UINT hgt = (UINT)(FileSet[hModel]->pSprite->GetImgHeight() * FileSet[hModel]->transform.scale_.y / 2);
         float Left = (FileSet[hModel]->transform.position_.x + 1) * (Direct3D::scrWidth / 2) - wid;
         float Right = (FileSet[hModel]->transform.position_.x + 1) * (Direct3D::scrWidth / 2) + wid;
         float Top = (-FileSet[hModel]->transform.position_.y + 1) * (Direct3D::scrHeight / 2) - hgt;

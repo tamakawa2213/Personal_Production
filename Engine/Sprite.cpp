@@ -80,7 +80,7 @@ HRESULT Sprite::ConBuf(LPCWSTR filename) {
 	pTexture_ = new Texture;
 	hr = Load(filename);
 
-	return S_OK;
+	return hr;
 }
 
 HRESULT Sprite::Load(LPCWSTR filename) {
@@ -97,7 +97,8 @@ void Sprite::Draw(Transform& transform)
 
 	//行列の計算をして、ワールド行列を返す
 	transform.Calclation();
-	cb.matW = XMMatrixTranspose(transform.GetWorldMatrix());
+	XMMATRIX mat = XMMatrixScaling(1.0f / Direct3D::scrWidth, 1.0f / Direct3D::scrHeight, 1.0f);
+	cb.matW = XMMatrixTranspose(pTexture_->GetSize() * mat * transform.GetWorldMatrix());
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める

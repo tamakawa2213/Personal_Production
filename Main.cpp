@@ -84,7 +84,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	}
 
 	//Direct3Dèâä˙âª
-	hr = Direct3D::Initialize(WINDOW_WIDTH, WINDOW_HEIGHT, hWnd);
+	hr = Direct3D::Initialize(WINDOW_WIDTH, (winH + WINDOW_HEIGHT * 2) / 3, hWnd);
 	if (FAILED(hr)) {
 		Direct3D::Release();
 		PostQuitMessage(0);
