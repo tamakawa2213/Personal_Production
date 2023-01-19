@@ -45,9 +45,6 @@
     <ClCompile Include="Engine\Picture.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Quad.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\RootJob.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -173,9 +170,6 @@
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Picture.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Quad.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RootJob.h">
