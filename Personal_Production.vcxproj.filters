@@ -102,9 +102,6 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Picture.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -136,6 +133,9 @@
       <Filter>ソース ファイル\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RootJob.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
@@ -223,9 +223,6 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Picture.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
@@ -266,6 +263,9 @@
       <Filter>ソース ファイル\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RootJob.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>

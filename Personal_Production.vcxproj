@@ -156,10 +156,10 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
-    <ClCompile Include="..\IntegratedEngine\Engine\Picture.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Texture.cpp" />
@@ -208,10 +208,10 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Image.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Input.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
-    <ClInclude Include="..\IntegratedEngine\Engine\Picture.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Texture.h" />
