@@ -12,8 +12,8 @@
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
 #include "Engine/RootJob.h"
-#include "Graphics/imgui_impl_dx11.h"
-#include "Graphics/imgui_impl_win32.h"
+#include "../IntegratedEngine/Graphics/imgui_impl_dx11.h"
+#include "../IntegratedEngine/Graphics/imgui_impl_win32.h"
 
 #pragma comment(lib, "winmm.lib")
 
