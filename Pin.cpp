@@ -1,5 +1,5 @@
 #include "Pin.h"
-#include "Engine/Model.h"
+#include "../IntegratedEngine/Engine/Model.h"
 
 Pin::Pin(GameObject* parent)
 	: GameObject(parent, "Pin"), UVPosition_(), hModel_(-1), Disp_(false)

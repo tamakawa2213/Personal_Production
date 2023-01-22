@@ -1,9 +1,9 @@
 #include "PlayScene_Menu.h"
-#include "Engine/Input.h"
-#include "Engine/GameTime.h"
-#include "Engine/Picture.h"
+#include "../IntegratedEngine/Engine/Input.h"
+#include "../IntegratedEngine/Engine/GameTime.h"
+#include "../IntegratedEngine/Engine/Picture.h"
 #include "Engine/SceneManager.h"
-#include "Engine/Time.h"
+#include "../IntegratedEngine/Engine/Time.h"
 
 PlayScene_Menu::PlayScene_Menu(GameObject* parent)
 	: GameObject(parent, "PlayScene_Menu")

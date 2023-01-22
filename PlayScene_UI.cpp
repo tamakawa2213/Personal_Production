@@ -1,6 +1,6 @@
 #include "PlayScene_UI.h"
-#include "Engine/Picture.h"
-#include "Engine/Input.h"
+#include "../IntegratedEngine/Engine/Picture.h"
+#include "../IntegratedEngine/Engine/Input.h"
 #include "PlayScene_Menu.h"
 
 PlayScene_UI::PlayScene_UI(GameObject* parent)

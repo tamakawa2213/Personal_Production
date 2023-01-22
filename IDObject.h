@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/GameObject.h"
 
 //GameObjectクラスを拡張したIDObjectクラス
 class IDObject : public GameObject

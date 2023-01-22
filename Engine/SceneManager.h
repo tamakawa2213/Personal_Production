@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "../../IntegratedEngine/Engine/GameObject.h"
 
 enum SCENE_ID
 {

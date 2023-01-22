@@ -1,5 +1,5 @@
 #include "SceneManager.h"
-#include "Model.h"
+#include "../../IntegratedEngine/Engine/Model.h"
 #include "../ModeScene.h"
 #include "../PlayScene.h"
 

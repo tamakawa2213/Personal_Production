@@ -1,5 +1,5 @@
 #include "ClearScene.h"
-#include "Engine/Direct3D.h"
+#include "../IntegratedEngine/Engine/Direct3D.h"
 
 ClearScene::ClearScene(GameObject* parent)
 	: GameObject(parent, "ClearScene")

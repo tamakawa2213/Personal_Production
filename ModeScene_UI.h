@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/GameObject.h"
 #include <vector>
 
 class ModeScene_UI : public GameObject

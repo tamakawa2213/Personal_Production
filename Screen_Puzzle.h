@@ -1,5 +1,5 @@
 #pragma once
-#include "Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/GameObject.h"
 #include <vector>
 
 static const int BoardSize_ = 4;		//‰¡Ec‚»‚ê‚¼‚ê‚Ì‘å‚«‚³

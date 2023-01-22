@@ -151,31 +151,31 @@
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Direct3D.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Picture.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Texture.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Time.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp" />
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="Door.cpp" />
-    <ClCompile Include="Engine\Camera.cpp" />
-    <ClCompile Include="Engine\Direct3D.cpp" />
-    <ClCompile Include="Engine\Fbx.cpp" />
-    <ClCompile Include="Engine\GameObject.cpp" />
-    <ClCompile Include="Engine\GameTime.cpp" />
-    <ClCompile Include="Engine\Input.cpp" />
-    <ClCompile Include="Engine\Math.cpp" />
-    <ClCompile Include="Engine\Model.cpp" />
-    <ClCompile Include="Engine\Picture.cpp" />
     <ClCompile Include="Engine\RootJob.cpp" />
     <ClCompile Include="Engine\SceneManager.cpp" />
-    <ClCompile Include="Engine\SphereCollider.cpp" />
-    <ClCompile Include="Engine\Sprite.cpp" />
-    <ClCompile Include="Engine\Texture.cpp" />
-    <ClCompile Include="Engine\Time.cpp" />
-    <ClCompile Include="Engine\Transform.cpp" />
     <ClCompile Include="Goal.cpp" />
-    <ClCompile Include="Graphics\imgui.cpp" />
-    <ClCompile Include="Graphics\imgui_draw.cpp" />
-    <ClCompile Include="Graphics\imgui_impl_dx11.cpp" />
-    <ClCompile Include="Graphics\imgui_impl_win32.cpp" />
-    <ClCompile Include="Graphics\imgui_tables.cpp" />
-    <ClCompile Include="Graphics\imgui_widgets.cpp" />
     <ClCompile Include="IDObject.cpp" />
     <ClCompile Include="Judge.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -192,44 +192,44 @@
     <ClCompile Include="Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="..\IntegratedEngine\Shader\Simple2D.hlsl" />
+    <FxCompile Include="..\IntegratedEngine\Shader\Simple3D.hlsl" />
     <FxCompile Include="Point3D.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
-    <FxCompile Include="Simple2D.hlsl" />
-    <FxCompile Include="Simple3D.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Camera.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Direct3D.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Input.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Picture.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Texture.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Time.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Transform.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imconfig.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imgui.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_impl_win32.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_internal.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_rectpack.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_textedit.h" />
+    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_truetype.h" />
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="Door.h" />
-    <ClInclude Include="Engine\CallDef.h" />
-    <ClInclude Include="Engine\Camera.h" />
-    <ClInclude Include="Engine\Direct3D.h" />
-    <ClInclude Include="Engine\Fbx.h" />
-    <ClInclude Include="Engine\GameObject.h" />
-    <ClInclude Include="Engine\GameTime.h" />
-    <ClInclude Include="Engine\Input.h" />
-    <ClInclude Include="Engine\Math.h" />
-    <ClInclude Include="Engine\Model.h" />
-    <ClInclude Include="Engine\Picture.h" />
     <ClInclude Include="Engine\RootJob.h" />
     <ClInclude Include="Engine\SceneManager.h" />
-    <ClInclude Include="Engine\SphereCollider.h" />
-    <ClInclude Include="Engine\Sprite.h" />
-    <ClInclude Include="Engine\Texture.h" />
-    <ClInclude Include="Engine\Time.h" />
-    <ClInclude Include="Engine\Transform.h" />
     <ClInclude Include="Goal.h" />
-    <ClInclude Include="Graphics\imconfig.h" />
-    <ClInclude Include="Graphics\imgui.h" />
-    <ClInclude Include="Graphics\imgui_impl_dx11.h" />
-    <ClInclude Include="Graphics\imgui_impl_win32.h" />
-    <ClInclude Include="Graphics\imgui_internal.h" />
-    <ClInclude Include="Graphics\imstb_rectpack.h" />
-    <ClInclude Include="Graphics\imstb_textedit.h" />
-    <ClInclude Include="Graphics\imstb_truetype.h" />
     <ClInclude Include="IDObject.h" />
     <ClInclude Include="Judge.h" />
     <ClInclude Include="ModeScene.h" />

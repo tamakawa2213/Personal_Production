@@ -1,10 +1,10 @@
 #include "ModeScene_UI.h"
-#include "Engine/Picture.h"
+#include "../IntegratedEngine/Engine/Picture.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
 
-#include "Graphics/imgui.h"
-#include "Engine/Input.h"
+#include "../IntegratedEngine/Graphics/imgui.h"
+#include "../IntegratedEngine/Engine/Input.h"
 
 ModeScene_UI::ModeScene_UI(GameObject* parent)
 	: GameObject(parent, "ModeScene_UI")

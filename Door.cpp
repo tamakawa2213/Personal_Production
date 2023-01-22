@@ -1,7 +1,7 @@
 #include "Door.h"
-#include "Engine/Camera.h"
-#include "Engine/Direct3D.h"
-#include "Engine/Input.h"
+#include "../IntegratedEngine/Engine/Camera.h"
+#include "../IntegratedEngine/Engine/Direct3D.h"
+#include "../IntegratedEngine/Engine/Input.h"
 #include "Player.h"
 
 Door::Door(GameObject* parent)
