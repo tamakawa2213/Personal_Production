@@ -13,8 +13,10 @@ ModeScene::~ModeScene()
 
 void ModeScene::Initialize()
 {
+	pText_ = new Text;
+	pText_->Initialize("test");
 	Direct3D::SplitScrMode = SCREEN_FULL;
-	Instantiate<ModeScene_UI>(this);
+	//Instantiate<ModeScene_UI>(this);
 }
 
 void ModeScene::Update()
@@ -23,4 +25,9 @@ void ModeScene::Update()
 
 void ModeScene::Release()
 {
+}
+
+void ModeScene::Draw()
+{
+	pText_->Draw();
 }

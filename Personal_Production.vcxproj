@@ -163,6 +163,7 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Text.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Texture.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Time.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Text.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Texture.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Time.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Transform.h" />
