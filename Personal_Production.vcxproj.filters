@@ -142,7 +142,7 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Text.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -278,7 +278,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Text.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
