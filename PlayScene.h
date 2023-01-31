@@ -12,5 +12,7 @@ public:
 
 	void Update() override;
 
+	void ShowGraphical() override;
+
 	void Release() override;
 };

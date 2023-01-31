@@ -26,6 +26,10 @@ void PlayScene::Initialize()
 
 void PlayScene::Update()
 {
+}
+
+void PlayScene::ShowGraphical()
+{
 	ImGui::Begin("Test");
 	ImGui::Text("Time = %g", Time::GetTimef());
 	ImGui::Text("NoM = %d", Judge::GetNom());

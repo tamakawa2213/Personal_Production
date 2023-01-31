@@ -317,16 +317,21 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			Direct3D::SetViewPort(VP_FULL);
 			pRootJob->DrawUniqueSub();
 
+#if _DEBUG
 			ImGui::Render();
 			ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+#endif
 
 			Direct3D::EndDraw();
 
 			timeEndPeriod(1);
 		}
 	}
+#if _DEBUG
 	ImGui_ImplDX11_Shutdown();
 	ImGui::DestroyContext();
+#endif
+
 	pRootJob->ReleaseSub();
 	SAFE_DELETE(pRootJob);
 	Input::Release();
@@ -336,7 +341,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	return 0;
 }
 
+#if _DEBUG
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+#endif
 
 //ウィンドウプロシージャ(何かあった時に呼び出される関数)
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -351,8 +358,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		return 0;
 	}
 
+#if _DEBUG
 	if (ImGui_ImplWin32_WndProcHandler(hWnd, msg, wParam, lParam))
 		return true;
+#endif
 
 	return DefWindowProc(hWnd, msg, wParam, lParam);
 }

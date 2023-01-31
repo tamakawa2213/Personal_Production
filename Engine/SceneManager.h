@@ -4,7 +4,8 @@
 enum SCENE_ID
 {
 	SCENE_ID_MODE = 0,
-	SCENE_ID_PLAY
+	SCENE_ID_PLAY,
+	SCENE_ID_CLEAR
 };
 
 class SceneManager : public GameObject

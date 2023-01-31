@@ -4,7 +4,7 @@
 
 class ModeScene : public GameObject
 {
-	Text* pText_;
+	//Text* pText_;
 public:
 	ModeScene(GameObject* parent);
 

@@ -2,8 +2,6 @@
 #include "../IntegratedEngine/Engine/Image.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
-
-#include "../IntegratedEngine/Graphics/imgui.h"
 #include "../IntegratedEngine/Engine/Input.h"
 
 ModeScene_UI::ModeScene_UI(GameObject* parent)
@@ -47,7 +45,6 @@ void ModeScene_UI::Update()
 		{
 			Storage::SetDifficulty(Difficulty::HARD);
 			SCENE_CHANGE(SCENE_ID_PLAY);
-			KillMe();
 		}
 	}
 }

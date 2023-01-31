@@ -62,10 +62,9 @@ float4 PS(VS_OUT inData) : SV_Target
 	Light.a = 0;
 	float len = length(Light);
 	Light = normalize(Light);
-
-	float Attenuation = saturate(1.0f / (0.3f + 0.05f * len * len));
-	float4 Color = saturate(dot(normalize(inData.normal), Light)) * Attenuation;
-
+	float trans = abs(saturate((len - 30) / 50) - 1);
+	float4 Color = saturate(dot(normalize(inData.normal), Light));
+	float4 backGround = saturate(float4(0.0f, 0.5f, 0.5f, 1.0f));
 	float Bright_ = (bright / 255.0f);
 	Color.a = 1.0f;
 
@@ -74,11 +73,11 @@ float4 PS(VS_OUT inData) : SV_Target
 	if (isTexture)
 	{
 		diffuse = chroma * g_texture.Sample(g_sampler, inData.uv) * Color;
-		return chroma * (diffuse + ambient);
+		return (chroma * (diffuse + ambient) * trans) + (backGround * (1 - trans));
 	}
 	else
 	{
-		return chroma * diffuseColor * Color;
+		return (chroma * diffuseColor * Color * trans) + (backGround * (1 - trans));
 	}
 }
 //Illegal character in shader file のエラーが出たら使用不可の全角が使用されている

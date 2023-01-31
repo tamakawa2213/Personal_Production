@@ -3,6 +3,7 @@
 #include "../IntegratedEngine/Engine/Direct3D.h"
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
+#include "Engine/SceneManager.h"
 #include "Judge.h"
 #include "Player.h"
 #include "Screen_Puzzle.h"
@@ -47,6 +48,7 @@ void Goal::Update()
 			IsMouse_[0] = false;
 			IsMouse_[1] = false;
 			Judge::calculation();
+			SCENE_CHANGE(SCENE_ID_CLEAR);
 		}
 
 		//‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Îfalse‚É‚È‚é
