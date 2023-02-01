@@ -1,10 +1,8 @@
 #pragma once
 #include "../IntegratedEngine/Engine/GameObject.h"
-#include "../IntegratedEngine/Engine/Text.h"
 
 class ModeScene : public GameObject
 {
-	//Text* pText_;
 public:
 	ModeScene(GameObject* parent);
 
