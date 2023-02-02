@@ -1,6 +1,7 @@
 #include "ModeScene.h"
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Direct3D.h"
+#include "../IntegratedEngine/Engine/Debug.h"
 
 ModeScene::ModeScene(GameObject* parent)
 	: GameObject(parent, "ModeScene")
@@ -27,4 +28,9 @@ void ModeScene::Release()
 
 void ModeScene::Draw()
 {
+}
+
+void ModeScene::DebugMode()
+{
+	Debug::ImagePositioning();
 }

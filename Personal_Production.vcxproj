@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Debug.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Direct3D.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp" />
@@ -206,6 +207,7 @@
   <ItemGroup>
     <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Camera.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Debug.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Direct3D.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h" />
