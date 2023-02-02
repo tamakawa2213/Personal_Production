@@ -1,8 +1,9 @@
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
+#include "../IntegratedEngine/Engine/Input.h"
+#include "../IntegratedEngine/Engine/Math.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
-#include "../IntegratedEngine/Engine/Input.h"
 
 ModeScene_UI::ModeScene_UI(GameObject* parent)
 	: GameObject(parent, "ModeScene_UI")
@@ -26,9 +27,14 @@ void ModeScene_UI::Initialize()
 
 	hPict_.push_back(pict);
 
-	transform_.position_.y = 0.25f;
+	const wchar_t* filename = L"Assets\\Setting.ini";
+	transform_.position_ = Math::PixelToTransform({
+		(float)GetPrivateProfileInt(L"IMAGE", L"Easy_x", 0, filename),
+		(float)GetPrivateProfileInt(L"IMAGE", L"Easy_y", 0, filename), 0 });
 	Image::SetTransform(hPict_.at((int)Difficulty::EASY), transform_);
-	transform_.position_.y = -0.5f;
+	transform_.position_ = Math::PixelToTransform({
+		(float)GetPrivateProfileInt(L"IMAGE", L"Hard_x", 0, filename),
+		(float)GetPrivateProfileInt(L"IMAGE", L"Hard_y", 0, filename), 0 });
 	Image::SetTransform(hPict_.at((int)Difficulty::HARD), transform_);
 }
 
