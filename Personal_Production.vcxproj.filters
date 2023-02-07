@@ -19,6 +19,9 @@
     <Filter Include="ソース ファイル\Graphics">
       <UniqueIdentifier>{bfd4df27-0d24-4e84-ab68-98b03c725395}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Reader">
+      <UniqueIdentifier>{070ac6f0-c770-4c06-a8de-cea3db71d10a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SceneManager.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Debug.cpp">
       <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\IniOperator.cpp">
+      <Filter>ソース ファイル\Reader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,6 +291,9 @@
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Debug.h">
       <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h">
+      <Filter>ソース ファイル\Reader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

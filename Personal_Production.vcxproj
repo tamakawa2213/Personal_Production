@@ -158,6 +158,7 @@
     <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\IniOperator.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Image.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Input.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Light.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
