@@ -28,17 +28,16 @@ void ModeScene_UI::Initialize()
 
 	hPict_.push_back(pict);
 
-	int e = IniOperator::AddList("Assets\\ImageStatus.ini", "EASY");
-	int h = IniOperator::AddList("Assets\\ImageStatus.ini", "HARD");
+	int e = IniOperator::AddList("Assets\\ImageStatus.ini", "Button_Easy.png");
+	int h = IniOperator::AddList("Assets\\ImageStatus.ini", "Button_Hard.png");
 
-	const wchar_t* filename = L"Assets\\Setting.ini";
 	transform_.position_ = Math::PixelToTransform({
 		(float)IniOperator::GetValue(e, "x", 0),
 		(float)IniOperator::GetValue(e, "y", 0), 0 });
 	Image::SetTransform(hPict_.at((int)Difficulty::EASY), transform_);
 	transform_.position_ = Math::PixelToTransform({
-		(float)IniOperator::GetValue(h, "Hard_x", 0),
-		(float)IniOperator::GetValue(h, "Hard_y", 0), 0 });
+		(float)IniOperator::GetValue(h, "x", 0),
+		(float)IniOperator::GetValue(h, "y", 0), 0 });
 	Image::SetTransform(hPict_.at((int)Difficulty::HARD), transform_);
 }
 
