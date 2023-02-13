@@ -16,8 +16,8 @@ ModeScene::~ModeScene()
 void ModeScene::Initialize()
 {
 	Direct3D::SplitScrMode = SCREEN_FULL;
-	//Instantiate<ModeScene_UI>(this);
-	hPict = Image::Load("Assets\\FreeSizeSample.png");
+	Instantiate<ModeScene_UI>(this);
+	//hPict = Image::Load("Assets\\FreeSizeSample.png");
 }
 
 void ModeScene::Update()
@@ -30,7 +30,7 @@ void ModeScene::Release()
 
 void ModeScene::Draw()
 {
-	Image::Draw(hPict);
+	//Image::Draw(hPict);
 }
 
 void ModeScene::DebugMode()
