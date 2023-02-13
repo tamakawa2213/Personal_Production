@@ -3,6 +3,7 @@
 
 class ModeScene : public GameObject
 {
+	int hPict;
 public:
 	ModeScene(GameObject* parent);
 
