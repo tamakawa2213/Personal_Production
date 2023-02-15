@@ -20,8 +20,8 @@ void PlayScene_UI::Initialize()
 
 	hPict_.push_back(pict);
 
-	transform_.position_ = { -0.7f, 0.8f, 0 };
-	Image::SetTransform(hPict_.at(0), transform_);
+	/*transform_.position_ = { -0.7f, 0.8f, 0 };
+	Image::SetTransform(hPict_.at(0), transform_);*/
 }
 
 void PlayScene_UI::Update()
