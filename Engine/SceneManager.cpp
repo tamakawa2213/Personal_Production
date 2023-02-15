@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "../../IntegratedEngine/Engine/Model.h"
+#include "../../IntegratedEngine/Engine/Debug.h"
 #include "../ModeScene.h"
 #include "../PlayScene.h"
 #include "../ClearScene.h"
@@ -36,4 +37,9 @@ void SceneManager::Update()
 		CurrentSceneID_ = NextSceneID_;
 	}
 	
+}
+
+void SceneManager::DebugMode()
+{
+	Debug::BranchMode();
 }

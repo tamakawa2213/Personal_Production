@@ -32,8 +32,3 @@ void ModeScene::Draw()
 {
 	//Image::Draw(hPict);
 }
-
-void ModeScene::DebugMode()
-{
-	Debug::ImagePositioning();
-}

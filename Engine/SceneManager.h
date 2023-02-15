@@ -19,5 +19,7 @@ public:
 	void Initialize() override;
 	void Update() override;
 
+	void DebugMode() override;
+
 	void ChangeScene(unsigned int SCENE_ID) { NextSceneID_ = SCENE_ID; }
 };

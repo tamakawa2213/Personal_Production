@@ -16,6 +16,4 @@ public:
 	void Release() override;
 
 	void Draw() override;
-
-	void DebugMode() override;
 };
