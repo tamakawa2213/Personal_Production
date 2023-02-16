@@ -1,7 +1,6 @@
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
-#include "../IntegratedEngine/Engine/IniOperator.h"
 #include "../IntegratedEngine/Engine/Math.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
@@ -27,18 +26,6 @@ void ModeScene_UI::Initialize()
 	assert(pict >= 0);
 
 	hPict_.push_back(pict);
-
-	int e = IniOperator::AddList("Assets\\ImageStatus.ini", "Button_Easy.png");
-	int h = IniOperator::AddList("Assets\\ImageStatus.ini", "Button_Hard.png");
-
-	/*transform_.position_ = Math::PixelToTransform({
-		(float)IniOperator::GetValue(e, "x", 0),
-		(float)IniOperator::GetValue(e, "y", 0), 0 });
-	Image::SetTransform(hPict_.at((int)Difficulty::EASY), transform_);
-	transform_.position_ = Math::PixelToTransform({
-		(float)IniOperator::GetValue(h, "x", 0),
-		(float)IniOperator::GetValue(h, "y", 0), 0 });
-	Image::SetTransform(hPict_.at((int)Difficulty::HARD), transform_);*/
 }
 
 void ModeScene_UI::Update()
