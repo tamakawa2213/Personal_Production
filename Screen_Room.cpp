@@ -42,7 +42,7 @@ namespace
 }
 
 Screen_Room::Screen_Room(GameObject* parent)
-	: IDObject(parent, "Screen_Room"), hModel_(), PrevPosX_(0), PrevPosY_(0), RoomType_(0), pDoor()
+	: IDObject(parent, "Screen_Room"), hModel_(-1), PrevPosX_(0), PrevPosY_(0), RoomType_(0), pDoor()
 {
 	transform_.position_ = XMFLOAT3(-10.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
@@ -56,13 +56,15 @@ Screen_Room::~Screen_Room()
 
 void Screen_Room::Initialize()
 {
-	std::string Filename[(char)Room::MAX] = { "Room_HLt" ,"Room_HR" , "Room_LwLt" , "Room_LwR" , "Room_LtR" };
+	/*std::string Filename[(char)Room::MAX] = { "Room_HLt" ,"Room_HR" , "Room_LwLt" , "Room_LwR" , "Room_LtR" };
 	for (int i = 0; i < (char)Room::MAX; i++)
 	{
 		std::string Name = "Assets\\" + Filename[i] + ".fbx";
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_ >= 0);
-	}
+	}*/
+
+	MLoad(hModel_, "Assets\\Room.fbx");
 
 	//2Ç¬ÇÃÉhÉAÇçÏê¨
 	pDoor[0] = Instantiate<Door>(this);
@@ -97,8 +99,8 @@ void Screen_Room::Update()
 
 void Screen_Room::Draw()
 {
-	Model::SetTransform(hModel_[RoomType_], transform_);
-	Model::Draw(hModel_[RoomType_]);
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 void Screen_Room::Release()

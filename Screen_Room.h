@@ -18,7 +18,7 @@ class Screen_Room : public IDObject
 {
 	static const char DoorNum = 2;
 
-	int hModel_[(char)Room::MAX];
+	int hModel_;
 
 	char RoomType_;		//•”‰®‚Ìƒ^ƒCƒv
 
