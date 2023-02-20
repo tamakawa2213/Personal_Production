@@ -23,7 +23,7 @@ namespace
 
 	//H = 8, Lw = 4, Lt = 2, R = 1
 	//ドアの配置
-	const char DoorConfig[(char)Room::MAX] =
+	const char DoorConfig[] =
 	{ POSITION[(char)Position::HIGH] | POSITION[(char)Position::LEFT] ,
 	  POSITION[(char)Position::HIGH] | POSITION[(char)Position::RIGHT] ,
 	  POSITION[(char)Position::LOW] | POSITION[(char)Position::LEFT] ,
@@ -34,10 +34,10 @@ namespace
 	//ドアの位置
 	const XMFLOAT3 DoorPos[(char)Position::MAX] =
 	{
-		XMFLOAT3(0, 0, -4.0f),
-		XMFLOAT3(0, 0, 4.0f),
-		XMFLOAT3(-4.0f, 0, 0),
-		XMFLOAT3(4.0f, 0, 0)
+		XMFLOAT3(0, 0, 12.5f),
+		XMFLOAT3(0, 0, -12.5f),
+		XMFLOAT3(-12.5f, 0, 0),
+		XMFLOAT3(12.5f, 0, 0)
 	};
 }
 
@@ -56,14 +56,6 @@ Screen_Room::~Screen_Room()
 
 void Screen_Room::Initialize()
 {
-	/*std::string Filename[(char)Room::MAX] = { "Room_HLt" ,"Room_HR" , "Room_LwLt" , "Room_LwR" , "Room_LtR" };
-	for (int i = 0; i < (char)Room::MAX; i++)
-	{
-		std::string Name = "Assets\\" + Filename[i] + ".fbx";
-		hModel_[i] = Model::Load(Name);
-		assert(hModel_ >= 0);
-	}*/
-
 	MLoad(hModel_, "Assets\\Room.fbx");
 
 	//2つのドアを作成
@@ -74,6 +66,7 @@ void Screen_Room::Initialize()
 
 	Player* pPlayer = (Player*)GetParent();
 	MoveOther(pPlayer->GetID());
+	SAFE_RELEASE(pPlayer);
 }
 
 void Screen_Room::Update()

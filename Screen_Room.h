@@ -4,16 +4,6 @@
 
 class Door;
 
-enum class Room
-{
-	HLt = 0,
-	HR,
-	LwLt,
-	LwR,
-	LtR,
-	MAX		//•”‰®‚Ìí—Ş‚ÌÅ‘å’l
-};
-
 class Screen_Room : public IDObject
 {
 	static const char DoorNum = 2;

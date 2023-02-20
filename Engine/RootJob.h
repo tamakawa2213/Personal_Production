@@ -8,4 +8,6 @@ public:
 	~RootJob();
 
 	void Initialize();	//‰Šú‰»
+
+	void DebugMode() override;
 };
