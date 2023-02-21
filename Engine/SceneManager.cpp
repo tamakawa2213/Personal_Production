@@ -1,5 +1,6 @@
 #include "SceneManager.h"
 #include "../../IntegratedEngine/Engine/Model.h"
+#include "../../IntegratedEngine/Engine/Image.h"
 #include "../ModeScene.h"
 #include "../PlayScene.h"
 #include "../ClearScene.h"
@@ -25,6 +26,7 @@ void SceneManager::Update()
 	{
 		KillAllChildren();
 		Model::Release();
+		Image::Release();
 
 		switch (NextSceneID_)
 		{

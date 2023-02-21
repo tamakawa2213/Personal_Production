@@ -16,11 +16,11 @@
     <Filter Include="ソース ファイル\Engine">
       <UniqueIdentifier>{bccd658a-cb07-4b6e-bcd0-4f207796aa53}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Graphics">
+      <UniqueIdentifier>{bfd4df27-0d24-4e84-ab68-98b03c725395}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ソース ファイル\Reader">
       <UniqueIdentifier>{070ac6f0-c770-4c06-a8de-cea3db71d10a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Graphics">
-      <UniqueIdentifier>{61ce1df8-9fe0-4d75-9663-edaeefc80726}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +117,24 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\RootJob.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -135,23 +153,8 @@
     <ClCompile Include="..\IntegratedEngine\Engine\IniOperator.cpp">
       <Filter>ソース ファイル\Reader</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+    <ClCompile Include="..\IntegratedEngine\Engine\AssignmentFunction.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,24 +256,6 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Transform.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\RootJob.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Light.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Text.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Debug.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h">
-      <Filter>ソース ファイル\Reader</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Graphics\imconfig.h">
       <Filter>ソース ファイル\Graphics</Filter>
     </ClInclude>
@@ -294,6 +279,27 @@
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Graphics\imstb_truetype.h">
       <Filter>ソース ファイル\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\RootJob.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Light.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Text.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Debug.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h">
+      <Filter>ソース ファイル\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\AssignmentFunction.h">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
