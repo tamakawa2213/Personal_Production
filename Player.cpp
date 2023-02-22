@@ -1,9 +1,10 @@
 #include "Player.h"
 #include "Screen_Puzzle.h"
 #include "Screen_Room.h"
+#include "../IntegratedEngine/Engine/Direct3D.h"
 
 Player::Player(GameObject* parent)
-	: IDObject(parent, "Player"), UVPosition_(), Wait_(false)
+	: IDObject(parent, "Player"), UVPosition_(), Wait_(false), MoveRoom_(false), DoorPath_(-1), pSR(nullptr), pSP(nullptr)
 {
 }
 
@@ -18,27 +19,40 @@ void Player::Initialize()
 	char pos = rand() % 16;
 	UVPosition_ = XMFLOAT2((char)(pos / BoardSize_), (char)(pos % BoardSize_));
 
-	Instantiate<Screen_Room>(this);
-	Instantiate<Screen_Puzzle>(this);
+	pSR = Instantiate<Screen_Room>(this);
+	pSP = Instantiate<Screen_Puzzle>(this);
 }
 
 void Player::Update()
 {
+	if (MoveRoom_)
+	{
+		assFunc_.SetFadeout(150);
+		MoveRoom_ = false;
+	}
+
+	if (Wait_ && Direct3D::BackGroundColor[1] < 0.1f)
+	{
+		pSR->MoveOther(DoorPath_);
+		Wait_ = false;
+	}
 }
 
 void Player::Release()
 {
+	SAFE_RELEASE(pSP);
+	SAFE_RELEASE(pSR);
 }
 
 void Player::ReceiveFromDoor()
 {
-	Screen_Puzzle* pSP = (Screen_Puzzle*)FindChildObject("Screen_Puzzle");
-	char path = pSP->SendToken(UVPosition_, this->GetID());
+	//ドアが繋がっているか確認
+	DoorPath_ = pSP->SendToken(UVPosition_, this->GetID());
 
-	if (path != (char)Board::MAX)
+	if (DoorPath_ != (char)Board::MAX)
 	{
-		Screen_Room* pSR = (Screen_Room*)FindChildObject("Screen_Room");
-		pSR->MoveOther(path);
+		Wait_ = true;
+		MoveRoom_ = true;
 	}
 }
 

@@ -69,7 +69,7 @@ void Goal::Draw()
 		if (RayHit_)
 		{
 			const XMFLOAT3 Chroma{ 1.0f, 1.0f, 1.0f };
-			Model::Draw(hModel_, Chroma, UCHAR_MAX, UCHAR_MAX);
+			Model::Draw(hModel_, Chroma, UCHAR_MAX);
 		}
 		else
 		{

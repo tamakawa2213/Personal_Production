@@ -129,17 +129,17 @@ void Screen_Puzzle::Draw()
 				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == 0)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
+					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX);
 				}
 
 #if _DEBUG		//デバッグモードでのみ表示
-				Goal* pGoal = (Goal*)FindObject("Goal");
+				/*Goal* pGoal = (Goal*)FindObject("Goal");
 				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 				{
 					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
 					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX, UCHAR_MAX);
 				}
-				SAFE_RELEASE(pGoal);
+				SAFE_RELEASE(pGoal);*/
 #endif
 				
 				if (PuzX_ == x && PuzZ_ == z)
@@ -147,7 +147,7 @@ void Screen_Puzzle::Draw()
 					if (!Wait_)
 					{
 						const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
-						Model::Draw(hModel_[Type], Chroma, 200, UCHAR_MAX);
+						Model::Draw(hModel_[Type], Chroma, UCHAR_MAX);
 					}
 				}
 				else
@@ -174,7 +174,7 @@ void Screen_Puzzle::Draw()
 					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == 0)
 					{
 						const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-						Model::Draw(hModel_[MovingPanel_], Chroma, UCHAR_MAX, UCHAR_MAX);
+						Model::Draw(hModel_[MovingPanel_], Chroma, UCHAR_MAX);
 					}
 					else
 					{
@@ -188,7 +188,7 @@ void Screen_Puzzle::Draw()
 
 void Screen_Puzzle::Release()
 {
-	SAFE_RELEASE(pPlayer_);
+	//SAFE_RELEASE(pPlayer_);
 }
 
 void Screen_Puzzle::AssignPuzzle()
