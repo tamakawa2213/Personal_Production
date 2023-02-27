@@ -1,4 +1,5 @@
 #pragma once
+#include <map>
 
 enum class Difficulty
 {
@@ -10,4 +11,7 @@ namespace Storage
 {
 	void SetDifficulty(Difficulty dif);
 	Difficulty GetDifficulty();
+
+	void SetFadeoutMode(int mode);
+	int GetFadeoutSpeed();
 };

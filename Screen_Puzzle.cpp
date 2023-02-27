@@ -84,6 +84,9 @@ void Screen_Puzzle::Initialize()
 	}
 	Mode_ = (char)Storage::GetDifficulty();
 	Instantiate<Pin>(this);
+
+	//初期位置にゴールは来ないので
+	pPlayer_->SetGoal(false);
 }
 
 void Screen_Puzzle::Update()

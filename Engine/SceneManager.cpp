@@ -29,6 +29,9 @@ void SceneManager::Update()
 		Model::Release();
 		Image::Release();
 
+		//‰æ–Ê‚Ì–¾‚é‚³‚ðŒ³‚É–ß‚·
+		assFunc_.SetFadeout(1);
+
 		switch (NextSceneID_)
 		{
 		case SCENE_ID_MODE: Instantiate<ModeScene>(this); break;

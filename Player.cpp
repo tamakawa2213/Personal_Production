@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Screen_Puzzle.h"
 #include "Screen_Room.h"
+#include "Storage.h"
 #include "../IntegratedEngine/Engine/Direct3D.h"
 
 Player::Player(GameObject* parent)
@@ -27,7 +28,7 @@ void Player::Update()
 {
 	if (MoveRoom_)
 	{
-		assFunc_.SetFadeout(150);
+		assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
 		MoveRoom_ = false;
 	}
 

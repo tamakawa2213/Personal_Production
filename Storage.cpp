@@ -1,5 +1,16 @@
 #include "Storage.h"
 
+namespace
+{
+	std::map<int, int> Fadeout = {
+		{0,150},
+		{1,100},
+		{2,50}
+	};
+
+	int FoMode = 0;	//フェードアウトのモード
+}
+
 namespace Storage
 {
 	Difficulty Dif;
@@ -12,5 +23,15 @@ namespace Storage
 	Difficulty GetDifficulty()
 	{
 		return Dif;
+	}
+
+	void SetFadeoutMode(int mode)
+	{
+		FoMode = mode;
+	}
+
+	int GetFadeoutSpeed()
+	{
+		return Fadeout[FoMode];
 	}
 }

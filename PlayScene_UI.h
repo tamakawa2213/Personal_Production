@@ -5,6 +5,7 @@
 class PlayScene_UI : public GameObject
 {
 	std::vector<int> hPict_;
+	bool OpenMenu_;				//ƒƒjƒ…[‚ğŠJ‚¢‚Ä‚¢‚é‚©
 public:
 	PlayScene_UI(GameObject* parent);
 

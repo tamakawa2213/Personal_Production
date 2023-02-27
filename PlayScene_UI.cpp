@@ -4,7 +4,7 @@
 #include "PlayScene_Menu.h"
 
 PlayScene_UI::PlayScene_UI(GameObject* parent)
-	: GameObject(parent, "PlayScene_UI")
+	: GameObject(parent, "PlayScene_UI"), OpenMenu_(false)
 {
 	hPict_.clear();
 }
@@ -24,6 +24,17 @@ void PlayScene_UI::Initialize()
 void PlayScene_UI::Update()
 {
 	if (Input::IsMouseDown(0) && Image::IsHitCursor(hPict_.at(0)))
+	{
+		if (OpenMenu_)
+		{
+			OpenMenu_ = false;
+			KillAllChildren();
+		}
+		else
+			OpenMenu_ = true;
+	}
+
+	if (OpenMenu_ && !HasChild())
 	{
 		Instantiate<PlayScene_Menu>(GetParent());
 	}
