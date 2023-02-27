@@ -16,6 +16,7 @@ class Player : public IDObject
 
 	char DoorPath_;
 
+	bool SameGoal_;			//ƒS[ƒ‹‚Æ“¯ˆÊ’u‚©‚Ç‚¤‚©
 public:
 	Player(GameObject* parent);
 
@@ -34,4 +35,7 @@ public:
 
 	bool GetWait() { return Wait_; }
 	void SetWait(bool wait);
+
+	void SetGoal(bool Goal) { SameGoal_ = Goal; }
+	bool GetGoal() { return SameGoal_; }
 };

@@ -3,13 +3,14 @@
 
 class Text;
 
-class ClearScene : public GameObject
+class SettingsScene_UI : public GameObject
 {
 	Text* pText_;
-public:
-	ClearScene(GameObject* parent);
 
-	~ClearScene();
+	std::vector<int> hPict_;
+public:
+	SettingsScene_UI(GameObject* parent);
+	~SettingsScene_UI();
 
 	void Initialize() override;
 

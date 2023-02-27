@@ -4,6 +4,7 @@
 #include "../ModeScene.h"
 #include "../PlayScene.h"
 #include "../ClearScene.h"
+#include "../SettingScene.h"
 
 SceneManager::SceneManager(GameObject* parent) : GameObject(parent, "SceneManager")
 {
@@ -31,6 +32,7 @@ void SceneManager::Update()
 		switch (NextSceneID_)
 		{
 		case SCENE_ID_MODE: Instantiate<ModeScene>(this); break;
+		case SCENE_ID_SETTINGS: Instantiate<SettingScene>(this); break;
 		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
 		case SCENE_ID_CLEAR: Instantiate<ClearScene>(this); break;
 		}

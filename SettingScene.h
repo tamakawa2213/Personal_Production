@@ -1,21 +1,16 @@
 #pragma once
 #include "../IntegratedEngine/Engine/GameObject.h"
 
-class Text;
-
-class ClearScene : public GameObject
+class SettingScene : public GameObject
 {
-	Text* pText_;
 public:
-	ClearScene(GameObject* parent);
-
-	~ClearScene();
+	SettingScene(GameObject* parent);
+	~SettingScene();
 
 	void Initialize() override;
 
 	void Update() override;
 
-	void Draw() override;
-
 	void Release() override;
 };
+

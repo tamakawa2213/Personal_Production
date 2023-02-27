@@ -196,6 +196,8 @@
     <ClCompile Include="Procedural.cpp" />
     <ClCompile Include="Screen_Puzzle.cpp" />
     <ClCompile Include="Screen_Room.cpp" />
+    <ClCompile Include="SettingScene_UI.cpp" />
+    <ClCompile Include="SettingScene.cpp" />
     <ClCompile Include="Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +256,8 @@
     <ClInclude Include="Procedural.h" />
     <ClInclude Include="Screen_Puzzle.h" />
     <ClInclude Include="Screen_Room.h" />
+    <ClInclude Include="SettingScene_UI.h" />
+    <ClInclude Include="SettingScene.h" />
     <ClInclude Include="Storage.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

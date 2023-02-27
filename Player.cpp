@@ -4,7 +4,7 @@
 #include "../IntegratedEngine/Engine/Direct3D.h"
 
 Player::Player(GameObject* parent)
-	: IDObject(parent, "Player"), UVPosition_(), Wait_(false), MoveRoom_(false), DoorPath_(-1), pSR(nullptr), pSP(nullptr)
+	: IDObject(parent, "Player"), UVPosition_(), Wait_(false), MoveRoom_(false), DoorPath_(-1), pSR(nullptr), pSP(nullptr), SameGoal_(false)
 {
 }
 
@@ -40,8 +40,6 @@ void Player::Update()
 
 void Player::Release()
 {
-	SAFE_RELEASE(pSP);
-	SAFE_RELEASE(pSR);
 }
 
 void Player::ReceiveFromDoor()

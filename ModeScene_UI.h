@@ -4,6 +4,13 @@
 
 class ModeScene_UI : public GameObject
 {
+	enum class Pictlist
+	{
+		EASY = 0,
+		HARD,
+		SETTINGS
+	};
+
 	std::vector<int> hPict_;
 public:
 	ModeScene_UI(GameObject* parent);

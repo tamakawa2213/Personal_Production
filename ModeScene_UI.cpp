@@ -26,6 +26,11 @@ void ModeScene_UI::Initialize()
 	assert(pict >= 0);
 
 	hPict_.push_back(pict);
+
+	pict = Image::Load("Assets\\Settings.png");
+	assert(pict >= 0);
+
+	hPict_.push_back(pict);
 }
 
 void ModeScene_UI::Update()
@@ -41,6 +46,10 @@ void ModeScene_UI::Update()
 		{
 			Storage::SetDifficulty(Difficulty::HARD);
 			SCENE_CHANGE(SCENE_ID_PLAY);
+		}
+		if (Image::IsHitCursor(hPict_.at((int)Pictlist::SETTINGS)))
+		{
+			SCENE_CHANGE(SCENE_ID_SETTINGS);
 		}
 	}
 }

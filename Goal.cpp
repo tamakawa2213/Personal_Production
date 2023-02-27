@@ -26,7 +26,7 @@ void Goal::Initialize()
 
 void Goal::Update()
 {
-	if (pPlayer_->GetUVPos().x == UVPosition_.x && pPlayer_->GetUVPos().y == UVPosition_.y)
+	if (pPlayer_->GetGoal())
 	{
 		float dist = MakeMouseRay();
 
@@ -62,7 +62,7 @@ void Goal::Update()
 
 void Goal::Draw()
 {
-	if (pPlayer_->GetUVPos().x == UVPosition_.x && pPlayer_->GetUVPos().y == UVPosition_.y)
+	if (pPlayer_->GetGoal())
 	{
 		Model::SetTransform(hModel_, transform_);
 

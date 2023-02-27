@@ -119,6 +119,13 @@ void Screen_Room::MoveOther(char Type)
 			Num++;
 		}
 	}
+
+	Player* pPlayer = (Player*)GetParent();
+	Goal* pGoal = (Goal*)FindChildObject("Goal");
+	pPlayer->SetGoal((pPlayer->GetUVPos().x == pGoal->GetUVPos().x) && (pPlayer->GetUVPos().x == pGoal->GetUVPos().x));
+	SAFE_RELEASE(pGoal);
+	SAFE_RELEASE(pPlayer);
+
 	Judge::AddNom();	//è”‚ğ1‰ÁZ
 }
 
