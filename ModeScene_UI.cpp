@@ -54,9 +54,9 @@ void ModeScene_UI::Update()
 
 void ModeScene_UI::Draw()
 {
-	for (int i = 0; i < hPict_.size(); i++)
+	for (auto i : hPict_)
 	{
-		Image::Draw(hPict_.at(i));
+		Image::Draw(i);
 	}
 }
 

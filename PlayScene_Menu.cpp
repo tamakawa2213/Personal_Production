@@ -18,17 +18,12 @@ PlayScene_Menu::~PlayScene_Menu()
 
 void PlayScene_Menu::Initialize()
 {
-	int pict = Image::Load("Assets\\ToDifficulty.png");
-	assert(pict >= 0);
-	hPict_.push_back(pict);
-	pict = Image::Load("Assets\\Return.png");
+	int pict;
+	ILoad(pict, "Assets\\ToDifficulty.png");
 	hPict_.push_back(pict);
 
-	transform_.position_ = { -0.4f, -0.3f,0 };
-	Image::SetTransform(hPict_.at(0), transform_);
-
-	transform_.position_.x = 0.4f;
-	Image::SetTransform(hPict_.at(1), transform_);
+	ILoad(pict, "Assets\\Return.png");
+	hPict_.push_back(pict);
 
 	GameTime::TimeStop();
 	Time::Lock();

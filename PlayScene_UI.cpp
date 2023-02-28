@@ -6,7 +6,7 @@
 #include "PlayScene_Menu.h"
 
 PlayScene_UI::PlayScene_UI(GameObject* parent)
-	: GameObject(parent, "PlayScene_UI"), OpenMenu_(false)
+	: GameObject(parent, "PlayScene_UI")
 {
 	hPict_.clear();
 }
@@ -27,21 +27,25 @@ void PlayScene_UI::FixedUpdate()
 {
 	if (Input::IsMouseDown(0) && Image::IsHitCursor(hPict_.at(0)))
 	{
-		if (OpenMenu_)
-		{//メニューが表示されている時に再度メニューボタンを押下した時
-			OpenMenu_ = false;
-			FindObject("PlayScene_Menu")->KillMe();
+		//メニューオブジェクトを捜索
+		auto pMenu = FindObject("PlayScene_Menu");
+
+		//オブジェクトがある = メニューを開いている
+		if (pMenu)
+		{
+			//メニューを閉じる
+			pMenu->KillMe();
 
 			GameTime::TimeStart();
 			Time::UnLock();
 		}
 		else
-			OpenMenu_ = true;
-	}
+		{
+			//メニューを開く
+			Instantiate<PlayScene_Menu>(GetParent());
+		}
 
-	if (OpenMenu_ && !FindObject("PlayScene_Menu"))
-	{
-		Instantiate<PlayScene_Menu>(GetParent());
+		SAFE_RELEASE(pMenu);
 	}
 }
 
