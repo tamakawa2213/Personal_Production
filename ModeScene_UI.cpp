@@ -9,48 +9,46 @@ ModeScene_UI::ModeScene_UI(GameObject* parent)
 	: GameObject(parent, "ModeScene_UI")
 {
 	hPict_.clear();
+	Func_.clear();
 }
 
 ModeScene_UI::~ModeScene_UI()
 {
+	hPict_.clear();
+	Func_.clear();
 }
 
 void ModeScene_UI::Initialize()
 {
-	int pict = Image::Load("Assets\\Button_Easy.png");
-	assert(pict >= 0);
-
+	int pict;
+	ILoad(pict, "Assets\\Button_Easy.png");
 	hPict_.push_back(pict);
+	Func_.insert({ pict, &ModeScene_UI::SelectEasy });
 
-	pict = Image::Load("Assets\\Button_Hard.png");
-	assert(pict >= 0);
-
+	ILoad(pict, "Assets\\Button_Hard.png");
 	hPict_.push_back(pict);
+	Func_.insert({ pict, &ModeScene_UI::SelectHard });
 
-	pict = Image::Load("Assets\\Settings.png");
-	assert(pict >= 0);
-
+	ILoad(pict, "Assets\\Settings.png");
 	hPict_.push_back(pict);
+	Func_.insert({ pict, &ModeScene_UI::SelectSettings });
 }
 
 void ModeScene_UI::Update()
 {
+	//マウスの左クリックをした時
 	if (Input::IsMouseDown(0))
 	{
-		if (Image::IsHitCursor(hPict_.at((int)Difficulty::EASY)))
-		{
-			Storage::SetDifficulty(Difficulty::EASY);
-			SCENE_CHANGE(SCENE_ID_PLAY);
+		//どの画像にマウスカーソルが当たっているか取得
+		auto found = Func_.find(Image::IsHitCursorAny());
+
+		//いずれにも当たっていない場合
+		if (found == end(Func_)) {
+			return;
 		}
-		if (Image::IsHitCursor(hPict_.at((int)Difficulty::HARD)))
-		{
-			Storage::SetDifficulty(Difficulty::HARD);
-			SCENE_CHANGE(SCENE_ID_PLAY);
-		}
-		if (Image::IsHitCursor(hPict_.at((int)Pictlist::SETTINGS)))
-		{
-			SCENE_CHANGE(SCENE_ID_SETTINGS);
-		}
+
+		//当たっていれば該当処理を実行
+		(this->*found->second)();
 	}
 }
 
@@ -64,4 +62,21 @@ void ModeScene_UI::Draw()
 
 void ModeScene_UI::Release()
 {
+}
+
+void ModeScene_UI::SelectEasy()
+{
+	Storage::SetDifficulty(Difficulty::EASY);
+	SCENE_CHANGE(SCENE_ID_PLAY);
+}
+
+void ModeScene_UI::SelectHard()
+{
+	Storage::SetDifficulty(Difficulty::HARD);
+	SCENE_CHANGE(SCENE_ID_PLAY);
+}
+
+void ModeScene_UI::SelectSettings()
+{
+	SCENE_CHANGE(SCENE_ID_SETTINGS);
 }

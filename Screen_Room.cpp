@@ -122,7 +122,7 @@ void Screen_Room::MoveOther(char Type)
 
 	Player* pPlayer = (Player*)GetParent();
 	Goal* pGoal = (Goal*)FindChildObject("Goal");
-	pPlayer->SetGoal((pPlayer->GetUVPos().x == pGoal->GetUVPos().x) && (pPlayer->GetUVPos().x == pGoal->GetUVPos().x));
+	pPlayer->SetGoal((pPlayer->GetUVPos().x == pGoal->GetUVPos().x) && (pPlayer->GetUVPos().y == pGoal->GetUVPos().y));
 	SAFE_RELEASE(pGoal);
 	SAFE_RELEASE(pPlayer);
 

@@ -1,17 +1,15 @@
 #pragma once
 #include "../IntegratedEngine/Engine/GameObject.h"
-#include <vector>
+#include <map>
 
 class ModeScene_UI : public GameObject
 {
-	enum class Pictlist
-	{
-		EASY = 0,
-		HARD,
-		SETTINGS
-	};
+	std::vector<int> hPict_;						//ロードした画像の配列
+	std::map<int, void(ModeScene_UI::*)()> Func_;	//画像と関数の連想配列
 
-	std::vector<int> hPict_;
+	void SelectEasy();		//easyボタンを押下した時の処理
+	void SelectHard();		//hard			〃
+	void SelectSettings();	//設定			〃
 public:
 	ModeScene_UI(GameObject* parent);
 

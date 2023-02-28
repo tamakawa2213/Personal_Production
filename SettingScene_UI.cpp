@@ -12,6 +12,7 @@ SettingsScene_UI::SettingsScene_UI(GameObject* parent)
 
 SettingsScene_UI::~SettingsScene_UI()
 {
+	hPict_.clear();
 }
 
 void SettingsScene_UI::Initialize()
