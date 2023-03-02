@@ -1,8 +1,7 @@
 #include "ClearScene.h"
 #include "../IntegratedEngine/Engine/Direct3D.h"
-#include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Text.h"
-#include "Engine/SceneManager.h"
+#include "ClearScene_UI.h"
 #include "Judge.h"
 
 ClearScene::ClearScene(GameObject* parent)
@@ -22,15 +21,14 @@ void ClearScene::Initialize()
 	pText_->Initialize();
 	SAFE_DELETE(data);
 
+	//‰æ–Ê•ªŠ„‚ğ‹­§I—¹
 	Direct3D::SplitScrMode = SCREEN_FULL;
+
+	Instantiate<ClearScene_UI>(this);
 }
 
 void ClearScene::Update()
 {
-	if (Input::IsKeyAdd())
-	{
-		SCENE_CHANGE(SCENE_ID_MODE);
-	}
 }
 
 void ClearScene::Draw()

@@ -179,6 +179,7 @@
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp" />
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp" />
     <ClCompile Include="ClearScene.cpp" />
+    <ClCompile Include="ClearScene_UI.cpp" />
     <ClCompile Include="Door.cpp" />
     <ClCompile Include="Engine\RootJob.cpp" />
     <ClCompile Include="Engine\SceneManager.cpp" />
@@ -240,6 +241,7 @@
     <ClInclude Include="..\IntegratedEngine\Graphics\imstb_textedit.h" />
     <ClInclude Include="..\IntegratedEngine\Graphics\imstb_truetype.h" />
     <ClInclude Include="ClearScene.h" />
+    <ClInclude Include="ClearScene_UI.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Engine\RootJob.h" />
     <ClInclude Include="Engine\SceneManager.h" />
