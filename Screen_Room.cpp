@@ -74,14 +74,14 @@ void Screen_Room::Update()
 	switch (Direct3D::SplitScrMode)
 	{
 	case SCREEN_FULL:
-		if (Input::IsMouse(0))
+		if (Input::Mouse::IsPush(0))
 		{
 			Look_Around();
 		}
 		break;
 	case SCREEN_SPLIT_2:
 		//画面左にマウスがある場合にのみ呼び出す
-		if (Input::IsMouse(0) && Input::GetMousePosition().x < Direct3D::scrWidth / 2)
+		if (Input::Mouse::IsPush(0) && Input::Mouse::GetPosition().x < Direct3D::scrWidth / 2)
 		{
 			Look_Around();
 		}
@@ -131,17 +131,17 @@ void Screen_Room::MoveOther(char Type)
 
 void Screen_Room::Look_Around()
 {
-	if (Input::IsMouseDown(0))	//初期化
+	if (Input::Mouse::Down(0))	//初期化
 	{
-		PrevPosX_ = (short)Input::GetMousePosition().x;
-		PrevPosY_ = (short)Input::GetMousePosition().y;
+		PrevPosX_ = (short)Input::Mouse::GetPosition().x;
+		PrevPosY_ = (short)Input::Mouse::GetPosition().y;
 	}
 
 	float moveX;
-	moveX = (Input::GetMousePosition().x - PrevPosX_) / 2;
+	moveX = (Input::Mouse::GetPosition().x - PrevPosX_) / 2;
 
 	transform_.rotate_.z += moveX;
 
-	PrevPosX_ = (short)Input::GetMousePosition().x;
-	PrevPosY_ = (short)Input::GetMousePosition().y;
+	PrevPosX_ = (short)Input::Mouse::GetPosition().x;
+	PrevPosY_ = (short)Input::Mouse::GetPosition().y;
 }

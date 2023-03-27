@@ -180,7 +180,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			static char DrawRange = VP_LEFT;
 			{
 				//spaceキーを押したら描画変更
-				if (Input::IsKeyDown(DIK_SPACE))
+				if (Input::Mouse::Down(DIK_SPACE))
 				{
 					switch (Direct3D::SplitScrMode)
 					{
@@ -188,7 +188,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 						Direct3D::SplitScrMode = SCREEN_SPLIT_2;
 						break;
 					case SCREEN_SPLIT_2:
-						if (Input::GetMousePosition().x < winW / 2)	//マウスカーソルの位置でカメラの位置を決定
+						if (Input::Mouse::GetPosition().x < winW / 2)	//マウスカーソルの位置でカメラの位置を決定
 						{
 							DrawRange = VP_LEFT;
 						}
@@ -257,7 +257,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 				pRootJob->DrawSub();
 				break;
 			case SCREEN_SPLIT_2:
-				if (Input::GetMousePosition().x < winW / 2)
+				if (Input::Mouse::GetPosition().x < winW / 2)
 				{
 					//右画面描画
 					{
@@ -352,7 +352,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 		PostQuitMessage(0);  //プログラム終了
 		return 0;
 	case WM_MOUSEMOVE:
-		Input::SetMousePosition(LOWORD(lParam), HIWORD(lParam));
+		Input::Mouse::SetPosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
 	}
 

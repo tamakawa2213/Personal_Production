@@ -32,12 +32,12 @@ void Goal::Update()
 
 		//カメラより手前にあるドアには当たらないようにする
 		//マウスを押したタイミングで対象を指しているか
-		if (RayHit_ && Input::IsMouseDown(0) && dist > 1.0f)
+		if (RayHit_ && Input::Mouse::Down(0) && dist > 1.0f)
 		{
 			IsMouse_[0] = true;
 		}
 		//マウスを離したタイミングで対象を指しているか
-		if (RayHit_ && Input::IsMouseUp(0) && dist > 1.0f)
+		if (RayHit_ && Input::Mouse::Up(0) && dist > 1.0f)
 		{
 			IsMouse_[1] = true;
 		}
@@ -52,7 +52,7 @@ void Goal::Update()
 		}
 
 		//押していなければfalseになる
-		if (!Input::IsMouse(0))
+		if (!Input::Mouse::IsPush(0))
 		{
 			IsMouse_[0] = false;
 			IsMouse_[1] = false;
@@ -86,13 +86,13 @@ void Goal::InitialPosition(char pos)
 float Goal::MakeMouseRay()
 {
 	//マウス位置
-	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+	XMFLOAT3 mousePosFront = Input::Mouse::GetPosition();
 	mousePosFront.x = mousePosFront.x;
 	mousePosFront.z = 0;
 
 	XMVECTOR front = SetInvMat(mousePosFront);
 
-	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	XMFLOAT3 mousePosBack = Input::Mouse::GetPosition();
 	mousePosBack.x = mousePosBack.x;
 	mousePosBack.z = 1.0f;
 

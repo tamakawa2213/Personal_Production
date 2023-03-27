@@ -25,7 +25,7 @@ void PlayScene_UI::Initialize()
 
 void PlayScene_UI::FixedUpdate()
 {
-	if (Input::IsMouseDown(0) && Image::IsHitCursor(hPict_.at(0)))
+	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_.at(0)))
 	{
 		//メニューオブジェクトを捜索
 		auto pMenu = FindObject("PlayScene_Menu");

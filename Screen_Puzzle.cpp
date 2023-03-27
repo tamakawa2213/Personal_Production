@@ -101,13 +101,13 @@ void Screen_Puzzle::Update()
 		bool Ishit = MakeMouseRay();
 
 		//いずれかのパネルにカーソルが当たっていて左クリックをしたら呼び出す
-		if (Input::IsMouseDown(0) && Ishit)
+		if (Input::Mouse::Down(0) && Ishit)
 		{
 			Swap(PuzX_, PuzZ_);
 		}
 
 		//右クリックでピン差し
-		if (Input::IsMouseDown(1) && Ishit)
+		if (Input::Mouse::Down(1) && Ishit)
 		{
 			PrickPin();
 		}
@@ -434,12 +434,12 @@ void Screen_Puzzle::PrickPin()
 bool Screen_Puzzle::MakeMouseRay()
 {
 	//マウス位置
-	XMFLOAT3 mousePosFront = Input::GetMousePosition();
+	XMFLOAT3 mousePosFront = Input::Mouse::GetPosition();
 	mousePosFront.z = 0;
 
 	XMVECTOR front = SetInvMat(mousePosFront);
 
-	XMFLOAT3 mousePosBack = Input::GetMousePosition();
+	XMFLOAT3 mousePosBack = Input::Mouse::GetPosition();
 
 	switch (Direct3D::SplitScrMode)
 	{

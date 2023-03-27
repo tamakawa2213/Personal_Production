@@ -19,7 +19,7 @@ void ClearScene_UI::Initialize()
 
 void ClearScene_UI::FixedUpdate()
 {
-	if (Input::IsMouseDown(0) && Image::IsHitCursor(hPict_))
+	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_))
 	{
 		SCENE_CHANGE(SCENE_ID_MODE);
 	}

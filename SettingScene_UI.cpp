@@ -47,7 +47,7 @@ void SettingsScene_UI::Initialize()
 
 void SettingsScene_UI::Update()
 {
-	if (Input::IsMouseDown(0))
+	if (Input::Mouse::Down(0))
 	{
 		int choice = Image::IsHitCursorAny();
 		switch (choice)

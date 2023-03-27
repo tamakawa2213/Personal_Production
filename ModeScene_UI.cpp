@@ -37,7 +37,7 @@ void ModeScene_UI::Initialize()
 void ModeScene_UI::Update()
 {
 	//マウスの左クリックをした時
-	if (Input::IsMouseDown(0))
+	if (Input::Mouse::Down(0))
 	{
 		//どの画像にマウスカーソルが当たっているか取得
 		auto found = Func_.find(Image::IsHitCursorAny());

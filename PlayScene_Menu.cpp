@@ -31,7 +31,7 @@ void PlayScene_Menu::Initialize()
 
 void PlayScene_Menu::FixedUpdate()
 {
-	if (Input::IsMouseDown(0))
+	if (Input::Mouse::Down(0))
 	{
 		if (Image::IsHitCursor(hPict_.at(0)))
 		{
