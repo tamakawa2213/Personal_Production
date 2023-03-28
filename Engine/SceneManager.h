@@ -1,18 +1,18 @@
 #pragma once
 #include "../../IntegratedEngine/Engine/GameObject.h"
 
-enum SCENE_ID
+enum class SCENE_ID
 {
-	SCENE_ID_MODE = 0,
-	SCENE_ID_SETTINGS,
-	SCENE_ID_PLAY,
-	SCENE_ID_CLEAR
+	MODE = 0,
+	SETTINGS,
+	PLAY,
+	CLEAR
 };
 
 class SceneManager : public GameObject
 {
-	unsigned int CurrentSceneID_;
-	unsigned int NextSceneID_;
+	SCENE_ID CurrentSceneID_;
+	SCENE_ID NextSceneID_;
 public:
 	SceneManager(GameObject* parent);
 	~SceneManager();
@@ -20,5 +20,5 @@ public:
 	void Initialize() override;
 	void Update() override;
 
-	void ChangeScene(unsigned int SCENE_ID) { NextSceneID_ = SCENE_ID; }
+	void ChangeScene(SCENE_ID ID) { NextSceneID_ = ID; }
 };

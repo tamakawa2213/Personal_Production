@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\Data">
       <UniqueIdentifier>{8ab610c4-6c29-43be-8bea-fa8e8b9fbb81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Image">
+      <UniqueIdentifier>{57cc3fb8-88cb-4ad0-9b7a-c69556abc66f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SceneManager.cpp">

@@ -67,16 +67,16 @@ void ModeScene_UI::Release()
 void ModeScene_UI::SelectEasy()
 {
 	Storage::SetDifficulty(Difficulty::EASY);
-	SCENE_CHANGE(SCENE_ID_PLAY);
+	SCENE_CHANGE(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectHard()
 {
 	Storage::SetDifficulty(Difficulty::HARD);
-	SCENE_CHANGE(SCENE_ID_PLAY);
+	SCENE_CHANGE(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectSettings()
 {
-	SCENE_CHANGE(SCENE_ID_SETTINGS);
+	SCENE_CHANGE(SCENE_ID::SETTINGS);
 }

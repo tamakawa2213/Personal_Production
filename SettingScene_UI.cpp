@@ -62,7 +62,7 @@ void SettingsScene_UI::Update()
 			break;
 		case 4:
 		{
-			SCENE_CHANGE(SCENE_ID_MODE);
+			SCENE_CHANGE(SCENE_ID::MODE);
 			break;
 		}
 		default:

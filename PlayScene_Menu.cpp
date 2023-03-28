@@ -35,7 +35,7 @@ void PlayScene_Menu::FixedUpdate()
 	{
 		if (Image::IsHitCursor(hPict_.at(0)))
 		{
-			SCENE_CHANGE(SCENE_ID_MODE);
+			SCENE_CHANGE(SCENE_ID::MODE);
 			GameTime::TimeStart();
 		}
 		if (Image::IsHitCursor(hPict_.at(1)))

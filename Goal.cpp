@@ -48,7 +48,7 @@ void Goal::Update()
 			IsMouse_[0] = false;
 			IsMouse_[1] = false;
 			Judge::calculation();
-			SCENE_CHANGE(SCENE_ID_CLEAR);
+			SCENE_CHANGE(SCENE_ID::CLEAR);
 		}
 
 		//‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Îfalse‚É‚È‚é

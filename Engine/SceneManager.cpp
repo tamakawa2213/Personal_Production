@@ -8,7 +8,7 @@
 
 SceneManager::SceneManager(GameObject* parent) : GameObject(parent, "SceneManager")
 {
-	CurrentSceneID_ = SCENE_ID_MODE;
+	CurrentSceneID_ = SCENE_ID::MODE;
 	NextSceneID_ = CurrentSceneID_;
 }
 
@@ -34,10 +34,10 @@ void SceneManager::Update()
 
 		switch (NextSceneID_)
 		{
-		case SCENE_ID_MODE: Instantiate<ModeScene>(this); break;
-		case SCENE_ID_SETTINGS: Instantiate<SettingScene>(this); break;
-		case SCENE_ID_PLAY: Instantiate<PlayScene>(this); break;
-		case SCENE_ID_CLEAR: Instantiate<ClearScene>(this); break;
+		case SCENE_ID::MODE: Instantiate<ModeScene>(this); break;
+		case SCENE_ID::SETTINGS: Instantiate<SettingScene>(this); break;
+		case SCENE_ID::PLAY: Instantiate<PlayScene>(this); break;
+		case SCENE_ID::CLEAR: Instantiate<ClearScene>(this); break;
 		}
 
 		CurrentSceneID_ = NextSceneID_;
