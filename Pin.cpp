@@ -15,7 +15,7 @@ void Pin::Initialize()
 	hModel_ = Model::Load("Assets\\Pin.fbx");
 	assert(hModel_ >= 0);
 	const float Scale = 0.3f;
-	transform_.scale_ = { Scale, Scale, Scale };
+	transform_.scale_ = Scale;
 	transform_.rotate_.y = -45;
 	transform_.rotate_.z = -30;
 }

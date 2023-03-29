@@ -10,7 +10,7 @@
 //定数宣言
 namespace
 {
-	enum class Position
+	enum class POSITION
 	{
 		HIGH = 0,
 		LOW,
@@ -19,20 +19,20 @@ namespace
 		MAX
 	};
 
-	static const char POSITION[(char)Position::MAX] = { 0x01 << 3, 0x01 << 2, 0x01 << 1, 0x01 << 0 };
+	static const char POSITION[(char)POSITION::MAX] = { 0x01 << 3, 0x01 << 2, 0x01 << 1, 0x01 << 0 };
 
 	//H = 8, Lw = 4, Lt = 2, R = 1
 	//ドアの配置
 	const char DoorConfig[] =
-	{ POSITION[(char)Position::HIGH] | POSITION[(char)Position::LEFT] ,
-	  POSITION[(char)Position::HIGH] | POSITION[(char)Position::RIGHT] ,
-	  POSITION[(char)Position::LOW] | POSITION[(char)Position::LEFT] ,
-	  POSITION[(char)Position::LOW] | POSITION[(char)Position::RIGHT] ,
-	  POSITION[(char)Position::LEFT] | POSITION[(char)Position::RIGHT]};
+	{ POSITION[(char)POSITION::HIGH] | POSITION[(char)POSITION::LEFT] ,
+	  POSITION[(char)POSITION::HIGH] | POSITION[(char)POSITION::RIGHT] ,
+	  POSITION[(char)POSITION::LOW] | POSITION[(char)POSITION::LEFT] ,
+	  POSITION[(char)POSITION::LOW] | POSITION[(char)POSITION::RIGHT] ,
+	  POSITION[(char)POSITION::LEFT] | POSITION[(char)POSITION::RIGHT]};
 
 
 	//ドアの位置
-	const XMFLOAT3 DoorPos[(char)Position::MAX] =
+	const XMFLOAT3 DoorPos[(char)POSITION::MAX] =
 	{
 		XMFLOAT3(0, 0, 12.5f),
 		XMFLOAT3(0, 0, -12.5f),
@@ -47,7 +47,7 @@ Screen_Room::Screen_Room(GameObject* parent)
 	transform_.position_ = XMFLOAT3(-10.0f, 4.5f, 1.5f);
 	transform_.rotate_.x = 90;
 	float scale = 0.3f;
-	transform_.scale_ = XMFLOAT3(scale, scale, scale);
+	transform_.scale_ = scale;
 }
 
 Screen_Room::~Screen_Room()
@@ -105,7 +105,7 @@ void Screen_Room::MoveOther(char Type)
 	RoomType_ = Type;
 
 	int Num = 0;
-	char PosNum = (char)Position::MAX;
+	char PosNum = (char)POSITION::MAX;
 
 	while (Num < DoorNum && PosNum >= 0)
 	{

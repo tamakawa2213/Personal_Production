@@ -166,6 +166,8 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\Scale.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Text.cpp" />
@@ -226,6 +228,8 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Light.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Position.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\Scale.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Text.h" />

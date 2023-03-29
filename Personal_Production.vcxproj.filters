@@ -34,9 +34,6 @@
     <Filter Include="ソース ファイル\Data">
       <UniqueIdentifier>{8ab610c4-6c29-43be-8bea-fa8e8b9fbb81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Image">
-      <UniqueIdentifier>{57cc3fb8-88cb-4ad0-9b7a-c69556abc66f}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine\SceneManager.cpp">
@@ -179,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="Judge.cpp">
       <Filter>ソース ファイル\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Scale.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +336,12 @@
     </ClInclude>
     <ClInclude Include="Procedural.h">
       <Filter>ソース ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Position.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Scale.h">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
