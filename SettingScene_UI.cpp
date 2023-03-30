@@ -1,12 +1,11 @@
 #include "SettingScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
-#include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Text.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
 
 SettingsScene_UI::SettingsScene_UI(GameObject* parent)
-	: GameObject(parent, "SettingScene_UI"), pText_(nullptr), hPict_()
+	: MouseOperationUI(parent, "SettingScene_UI"), pText_(nullptr), hPict_()
 {
 }
 
@@ -45,29 +44,26 @@ void SettingsScene_UI::Initialize()
 	hPict_.push_back(pic);
 }
 
-void SettingsScene_UI::Update()
+void SettingsScene_UI::ClickLeftFirst()
 {
-	if (Input::Mouse::Down(0))
+	int choice = Image::IsHitCursorAny();
+	switch (choice)
 	{
-		int choice = Image::IsHitCursorAny();
-		switch (choice)
-		{
-		case 0:
-		case 1:
-		case 2:
-			Storage::SetFadeoutMode(choice);
-			break;
-		case 3:
-			assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
-			break;
-		case 4:
-		{
-			SCENE_CHANGE(SCENE_ID::MODE);
-			break;
-		}
-		default:
-			break;
-		}
+	case 0:
+	case 1:
+	case 2:
+		Storage::SetFadeoutMode(choice);
+		break;
+	case 3:
+		assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
+		break;
+	case 4:
+	{
+		SCENE_CHANGE(SCENE_ID::MODE);
+		break;
+	}
+	default:
+		break;
 	}
 }
 

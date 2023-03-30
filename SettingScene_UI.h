@@ -1,9 +1,9 @@
 #pragma once
-#include "../IntegratedEngine/Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/MouseOperationUI.h"
 
 class Text;
 
-class SettingsScene_UI : public GameObject
+class SettingsScene_UI : public MouseOperationUI
 {
 	Text* pText_;
 
@@ -14,7 +14,7 @@ public:
 
 	void Initialize() override;
 
-	void Update() override;
+	void ClickLeftFirst() override;
 
 	void Draw() override;
 

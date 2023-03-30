@@ -1,14 +1,12 @@
 #include "PlayScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
-#include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Gametime.h"
 #include "../IntegratedEngine/Engine/Time.h"
 #include "PlayScene_Menu.h"
 
 PlayScene_UI::PlayScene_UI(GameObject* parent)
-	: GameObject(parent, "PlayScene_UI")
+	: MouseOperationUI(parent, "PlayScene_UI"), hPict_(-1)
 {
-	hPict_.clear();
 }
 
 PlayScene_UI::~PlayScene_UI()
@@ -17,15 +15,13 @@ PlayScene_UI::~PlayScene_UI()
 
 void PlayScene_UI::Initialize()
 {
-	int pict = Image::Load("Assets\\Button_Menu.png");
-	assert(pict >= 0);
-
-	hPict_.push_back(pict);
+	hPict_ = Image::Load("Assets\\Button_Menu.png");
+	assert(hPict_ >= 0);
 }
 
-void PlayScene_UI::FixedUpdate()
+void PlayScene_UI::ClickLeftFirst()
 {
-	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_.at(0)))
+	if (Image::IsHitCursor(hPict_))
 	{
 		//メニューオブジェクトを捜索
 		auto pMenu = FindObject("PlayScene_Menu");
@@ -51,7 +47,7 @@ void PlayScene_UI::FixedUpdate()
 
 void PlayScene_UI::DrawUnique()
 {
-	Image::Draw(hPict_.at(0));
+	Image::Draw(hPict_);
 }
 
 void PlayScene_UI::Release()

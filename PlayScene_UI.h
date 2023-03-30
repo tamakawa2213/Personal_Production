@@ -1,10 +1,9 @@
 #pragma once
-#include "../IntegratedEngine/Engine/GameObject.h"
-#include <vector>
+#include "../IntegratedEngine/Engine/MouseOperationUI.h"
 
-class PlayScene_UI : public GameObject
+class PlayScene_UI : public MouseOperationUI
 {
-	std::vector<int> hPict_;
+	int hPict_;
 public:
 	PlayScene_UI(GameObject* parent);
 
@@ -12,7 +11,7 @@ public:
 
 	void Initialize() override;
 
-	void FixedUpdate() override;
+	void ClickLeftFirst() override;
 
 	void DrawUnique() override;
 

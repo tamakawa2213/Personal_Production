@@ -1,7 +1,7 @@
 #pragma once
-#include "../IntegratedEngine/Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/MouseOperationUI.h"
 
-class ClearScene_UI : public GameObject
+class ClearScene_UI : public MouseOperationUI
 {
 	int hPict_;
 public:
@@ -11,7 +11,7 @@ public:
 
 	void Initialize() override;
 
-	void FixedUpdate() override;
+	void ClickLeftFirst() override;
 
 	void DrawUnique() override;
 

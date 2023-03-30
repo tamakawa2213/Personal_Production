@@ -1,12 +1,10 @@
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
-#include "../IntegratedEngine/Engine/Input.h"
-#include "../IntegratedEngine/Engine/Math.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
 
 ModeScene_UI::ModeScene_UI(GameObject* parent)
-	: GameObject(parent, "ModeScene_UI")
+	: MouseOperationUI(parent, "ModeScene_UI")
 {
 	hPict_.clear();
 	Func_.clear();
@@ -34,22 +32,18 @@ void ModeScene_UI::Initialize()
 	Func_.insert({ pict, &ModeScene_UI::SelectSettings });
 }
 
-void ModeScene_UI::Update()
+void ModeScene_UI::ClickLeftFirst()
 {
-	//マウスの左クリックをした時
-	if (Input::Mouse::Down(0))
-	{
-		//どの画像にマウスカーソルが当たっているか取得
-		auto found = Func_.find(Image::IsHitCursorAny());
+	//どの画像にマウスカーソルが当たっているか取得
+	auto found = Func_.find(Image::IsHitCursorAny());
 
-		//いずれにも当たっていない場合
-		if (found == end(Func_)) {
-			return;
-		}
-
-		//当たっていれば該当処理を実行
-		(this->*found->second)();
+	//いずれにも当たっていない場合
+	if (found == end(Func_)) {
+		return;
 	}
+
+	//当たっていれば該当処理を実行
+	(this->*found->second)();
 }
 
 void ModeScene_UI::Draw()
