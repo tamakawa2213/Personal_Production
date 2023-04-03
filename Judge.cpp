@@ -40,9 +40,9 @@ namespace Judge
         }
 
         float NpS;          //1ïbÇ†ÇΩÇËÇÃéËêî
-        NpS = NoM / Time::GetTimef();
+        NpS = NoM / Time::GetSeconds<float>();
 
-        Score = (int)(std::max((1 - (NoM / 50.0f)), 0.0f) + (10 / Time::GetTimef()) * (NpS + 1) * revision * 1000);
+        Score = (int)(std::max((1 - (NoM / 50.0f)), 0.0f) + (10 / Time::GetSeconds<float>()) * (NpS + 1) * revision * 1000);
     }
     
     int GetScore()

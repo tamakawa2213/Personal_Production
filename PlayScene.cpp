@@ -31,7 +31,7 @@ void PlayScene::Update()
 void PlayScene::ShowGraphical()
 {
 	ImGui::Begin("Test");
-	ImGui::Text("Time = %g", Time::GetTimef());
+	ImGui::Text("Time = %g", Time::GetSeconds<float>());
 	ImGui::Text("NoM = %d", Judge::GetNom());
 	ImGui::Text("Score = %d", Judge::GetScore());
 	ImGui::End();

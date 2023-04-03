@@ -24,7 +24,7 @@ void Pin::Draw()
 {
 	if (Disp_)
 	{
-		transform_.position_ = { UVPosition_.x, 0, UVPosition_.y };
+		transform_.position_ = Position{ UVPosition_.x, 0, UVPosition_.y };
 		Model::SetTransform(hModel_, transform_);
 		Model::Draw(hModel_);
 	}
