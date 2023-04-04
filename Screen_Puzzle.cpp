@@ -320,8 +320,8 @@ void Screen_Puzzle::AssignGoal()
 	SAFE_RELEASE(pGoal);
 
 	//Emptyの位置を決める
-	char EmpX, EmpZ;
-	EmpX = ((char)(GoalPos_ / UnderSide) + 1) % 2;	//ゴールが置かれている場所が上半分ならEmptyを下にする
+	int EmpX, EmpZ;
+	EmpX = ((GoalPos_ / UnderSide) + 1) % 2;	//ゴールが置かれている場所が上半分ならEmptyを下にする
 	EmpZ = GoalPos_ % 2;
 
 	if (EmpX == 1)
@@ -330,8 +330,8 @@ void Screen_Puzzle::AssignGoal()
 	if (EmpZ == 1)
 		EmpZ = 3;
 
-	CLAMP(EmpX, 0, 3);
-	CLAMP(EmpZ, 0, 3);
+	EmpX = std::clamp(EmpX, 0, 3);
+	EmpZ = std::clamp(EmpZ, 0, 3);
 
 	Board_[EmpX][EmpZ] = Empty_;
 	DecidedData_.push_back(EmpX * BoardSize_ + EmpZ);
