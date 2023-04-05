@@ -15,11 +15,10 @@ ClearScene::~ClearScene()
 
 void ClearScene::Initialize()
 {
-	FontData* data = new FontData;
+	std::unique_ptr<FontData> data = std::make_unique<FontData>();
 	data->fontSize = 10;
-	pText_ = new Text(data);
+	pText_ = std::make_unique<Text>(data.get());
 	pText_->Initialize();
-	SAFE_DELETE(data);
 
 	//âÊñ ï™äÑÇã≠êßèIóπ
 	Direct3D::SplitScrMode = SCREEN_FULL;
@@ -38,5 +37,4 @@ void ClearScene::Draw()
 
 void ClearScene::Release()
 {
-	SAFE_DELETE(pText_);
 }

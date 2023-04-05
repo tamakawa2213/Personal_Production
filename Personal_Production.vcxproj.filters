@@ -16,9 +16,6 @@
     <Filter Include="ソース ファイル\Engine">
       <UniqueIdentifier>{bccd658a-cb07-4b6e-bcd0-4f207796aa53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics">
-      <UniqueIdentifier>{bfd4df27-0d24-4e84-ab68-98b03c725395}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Reader">
       <UniqueIdentifier>{070ac6f0-c770-4c06-a8de-cea3db71d10a}</UniqueIdentifier>
     </Filter>
@@ -33,6 +30,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Data">
       <UniqueIdentifier>{8ab610c4-6c29-43be-8bea-fa8e8b9fbb81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Graphics">
+      <UniqueIdentifier>{d444d7d2-143c-4b54-a5db-d09949b53b87}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -77,24 +77,6 @@
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp">
       <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Engine\RootJob.cpp">
       <Filter>ソース ファイル\Engine</Filter>
@@ -189,6 +171,24 @@
     <ClCompile Include="..\IntegratedEngine\Engine\FacadeMouse.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
+      <Filter>ソース ファイル\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Point3D.hlsl" />
@@ -240,30 +240,6 @@
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Transform.h">
       <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imconfig.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imgui.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_impl_win32.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imgui_internal.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_rectpack.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_textedit.h">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Graphics\imstb_truetype.h">
-      <Filter>ソース ファイル\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Engine\RootJob.h">
       <Filter>ソース ファイル\Engine</Filter>

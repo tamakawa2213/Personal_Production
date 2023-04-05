@@ -1,11 +1,12 @@
 #pragma once
 #include "../IntegratedEngine/Engine/GameObject.h"
+#include <memory>
 
 class Text;
 
 class ClearScene : public GameObject
 {
-	Text* pText_;
+	std::unique_ptr<Text> pText_;
 public:
 	ClearScene(GameObject* parent);
 

@@ -16,11 +16,10 @@ SettingsScene_UI::~SettingsScene_UI()
 
 void SettingsScene_UI::Initialize()
 {
-	FontData* data = new FontData();
+	std::unique_ptr<FontData> data = std::make_unique<FontData>();
 	data->fontSize = 5;
-	pText_ = new Text(data);
+	pText_ = std::make_unique<Text>(data.get());
 	pText_->Initialize();
-	SAFE_DELETE(data);
 
 	int pic;
 	ILoad(pic, "Assets\\Fadeout_slow.png");

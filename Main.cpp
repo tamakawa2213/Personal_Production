@@ -1,5 +1,8 @@
-//インクルード
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
 #include <Windows.h>
+#include <memory>
 #include <stdlib.h>
 #include <time.h>
 #include "../IntegratedEngine/Engine/Direct3D.h"
@@ -12,10 +15,19 @@
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
 #include "Engine/RootJob.h"
-#include "../IntegratedEngine/Graphics/imgui_impl_dx11.h"
-#include "../IntegratedEngine/Graphics/imgui_impl_win32.h"
+#include <imgui_impl_dx11.h>
+#include <imgui_impl_win32.h>
 
 #pragma comment(lib, "winmm.lib")
+
+#ifdef _DEBUG
+#define   new                   new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#define   malloc(s)             _malloc_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#define   calloc(c, s)          _calloc_dbg(c, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#define   realloc(p, s)         _realloc_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#define   _recalloc(p, c, s)    _recalloc_dbg(p, c, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#define   _expand(p, s)         _expand_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#endif
 
 //定数宣言
 LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
@@ -31,6 +43,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 //エントリーポイント(プログラムのスタート地点)
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nCmdShow)
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	srand((unsigned int)time(NULL));
 
 	//ウィンドウクラス(設計図)を作成
@@ -107,8 +120,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	}
 
 	//RootJob初期化
-	pRootJob = nullptr;
-	pRootJob = new RootJob(nullptr);
+	std::unique_ptr<RootJob> pRootJob = nullptr;
+	pRootJob = std::make_unique<RootJob>(nullptr);
 	pRootJob->Initialize();
 
 	//DirectInputの初期化
@@ -331,11 +344,14 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 #endif
 
 	pRootJob->ReleaseSub();
-	SAFE_DELETE(pRootJob);
 	Input::Release();
 	Model::Release();
 	Direct3D::Release();
 	CoUninitialize();	//COMのRelease
+
+	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
+	_CrtDumpMemoryLeaks();
+
 	return 0;
 }
 
