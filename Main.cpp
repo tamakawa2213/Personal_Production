@@ -1,6 +1,3 @@
-#define _CRTDBG_MAP_ALLOC
-#include <cstdlib>
-#include <crtdbg.h>
 #include <Windows.h>
 #include <memory>
 #include <stdlib.h>
@@ -12,30 +9,26 @@
 #include "../IntegratedEngine/Engine/GameTime.h"
 #include "../IntegratedEngine/Engine/Time.h"
 #include "../IntegratedEngine/Engine/Transform.h"
+#include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
 #include "Engine/RootJob.h"
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
 
-#pragma comment(lib, "winmm.lib")
-
 #ifdef _DEBUG
-#define   new                   new(_NORMAL_BLOCK, __FILE__, __LINE__)
-#define   malloc(s)             _malloc_dbg(s, _NORMAL_BLOCK, __FILE__, __LINE__)
-#define   calloc(c, s)          _calloc_dbg(c, s, _NORMAL_BLOCK, __FILE__, __LINE__)
-#define   realloc(p, s)         _realloc_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)
-#define   _recalloc(p, c, s)    _recalloc_dbg(p, c, s, _NORMAL_BLOCK, __FILE__, __LINE__)
-#define   _expand(p, s)         _expand_dbg(p, s, _NORMAL_BLOCK, __FILE__, __LINE__)
+#define _CRTDBG_MAP_ALLOC
+#include <crtdbg.h>
+#define new new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #endif
 
+#pragma comment(lib, "winmm.lib")
+
 //定数宣言
-LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
+const LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
 const unsigned int WINDOW_WIDTH = 1200;	//ウィンドウの幅
 const unsigned int WINDOW_HEIGHT = 600;	//ウィンドウの高さ
 const int MAX_FPS = 60;
-
-RootJob* pRootJob;
 
 //プロトタイプ宣言
 LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -345,12 +338,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 	pRootJob->ReleaseSub();
 	Input::Release();
+	Image::Release();
 	Model::Release();
 	Direct3D::Release();
 	CoUninitialize();	//COMのRelease
 
-	_CrtSetReportMode(_CRT_WARN, _CRTDBG_MODE_DEBUG);
-	_CrtDumpMemoryLeaks();
+	//_CrtDumpMemoryLeaks();
 
 	return 0;
 }

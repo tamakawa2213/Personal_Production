@@ -45,8 +45,7 @@ void SettingsScene_UI::Initialize()
 
 void SettingsScene_UI::ClickLeftFirst()
 {
-	int choice = Image::IsHitCursorAny();
-	switch (choice)
+	switch (int choice = Image::IsHitCursorAny(); choice)
 	{
 	case 0:
 	case 1:
@@ -70,9 +69,9 @@ void SettingsScene_UI::Draw()
 {
 	pText_->Draw({ 0, 15 }, "フェードアウトのスピード");
 
-	for (int i : hPict_)
+	for (auto&& itr : hPict_)
 	{
-		Image::Draw(hPict_.at(i));
+		Image::Draw(itr);
 	}
 }
 

@@ -1,6 +1,5 @@
 #pragma once
 #include "../IntegratedEngine/Engine/MouseOperationUI.h"
-#include <memory>
 
 class Text;
 
