@@ -1,11 +1,12 @@
 #include "PlayScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
+#include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Gametime.h"
 #include "../IntegratedEngine/Engine/Time.h"
 #include "PlayScene_Menu.h"
 
-PlayScene_UI::PlayScene_UI(GameObject* parent)
-	: MouseOperationUI(parent, "PlayScene_UI"), hPict_(-1)
+PlayScene_UI::PlayScene_UI(RootUI* ui)
+	: UserInterface(ui), hPict_(-1)
 {
 }
 
@@ -19,33 +20,28 @@ void PlayScene_UI::Initialize()
 	assert(hPict_ >= 0);
 }
 
-void PlayScene_UI::ClickLeftFirst()
+void PlayScene_UI::Update()
 {
-	if (Image::IsHitCursor(hPict_))
+	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_))
 	{
-		//メニューオブジェクトを捜索
-		auto pMenu = FindObject("PlayScene_Menu");
+		////オブジェクトがある = メニューを開いている
+		//if (pMenu)
+		//{
+		//	//メニューを閉じる
+		//	pMenu->KillMe();
 
-		//オブジェクトがある = メニューを開いている
-		if (pMenu)
-		{
-			//メニューを閉じる
-			pMenu->KillMe();
-
-			GameTime::TimeStart();
-			Time::UnLock();
-		}
-		else
-		{
+		//	GameTime::TimeStart();
+		//	Time::UnLock();
+		//}
+		//else
+		//{
 			//メニューを開く
-			Instantiate<PlayScene_Menu>(GetParent());
-		}
-
-		SAFE_RELEASE(pMenu);
+			pRootUI_->Link<PlayScene_Menu>();
+		//}
 	}
 }
 
-void PlayScene_UI::DrawUnique()
+void PlayScene_UI::Draw()
 {
 	Image::Draw(hPict_);
 }

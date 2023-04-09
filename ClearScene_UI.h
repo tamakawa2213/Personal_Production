@@ -1,19 +1,23 @@
 #pragma once
-#include "../IntegratedEngine/Engine/MouseOperationUI.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
+#include <memory>
 
-class ClearScene_UI : public MouseOperationUI
+class Text;
+
+class ClearScene_UI : public UserInterface
 {
 	int hPict_;
+	std::unique_ptr<Text> pText_;
 public:
-	ClearScene_UI(GameObject* parent);
+	ClearScene_UI(RootUI* ui);
 
 	~ClearScene_UI();
 
 	void Initialize() override;
 
-	void ClickLeftFirst() override;
+	void Update() override;
 
-	void DrawUnique() override;
+	void Draw() override;
 
 	void Release() override;
 };

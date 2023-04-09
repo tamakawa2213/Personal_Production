@@ -1,17 +1,17 @@
 #include "SettingScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
+#include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Text.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
 
-SettingsScene_UI::SettingsScene_UI(GameObject* parent)
-	: MouseOperationUI(parent, "SettingScene_UI"), pText_(nullptr), hPict_()
+SettingsScene_UI::SettingsScene_UI(RootUI* ui)
+	: UserInterface(ui), pText_(nullptr), hPict_()
 {
 }
 
 SettingsScene_UI::~SettingsScene_UI()
 {
-	hPict_.clear();
 }
 
 void SettingsScene_UI::Initialize()
@@ -43,30 +43,34 @@ void SettingsScene_UI::Initialize()
 	hPict_.push_back(pic);
 }
 
-void SettingsScene_UI::ClickLeftFirst()
+void SettingsScene_UI::Update()
 {
-	switch (int choice = Image::IsHitCursorAny(); choice)
+	if (Input::Mouse::Down(0))
 	{
-	case 0:
-	case 1:
-	case 2:
-		Storage::SetFadeoutMode(choice);
-		break;
-	case 3:
-		assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
-		break;
-	case 4:
-	{
-		SCENE_CHANGE(SCENE_ID::MODE);
-		break;
-	}
-	default:
-		break;
+		switch (int choice = Image::IsHitCursorAny(); choice)
+		{
+		case 0:
+		case 1:
+		case 2:
+			Storage::SetFadeoutMode(choice);
+			break;
+		case 3:
+			pRootUI_->assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
+			break;
+		case 4:
+		{
+			pRootUI_->SceneChange(SCENE_ID::MODE);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 }
 
 void SettingsScene_UI::Draw()
 {
+	if(pText_)
 	pText_->Draw({ 0, 15 }, "フェードアウトのスピード");
 
 	for (auto&& itr : hPict_)
@@ -77,4 +81,6 @@ void SettingsScene_UI::Draw()
 
 void SettingsScene_UI::Release()
 {
+	pText_->Release();
+	hPict_.clear();
 }

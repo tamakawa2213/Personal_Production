@@ -12,7 +12,7 @@ SettingScene::~SettingScene()
 
 void SettingScene::Initialize()
 {
-	Instantiate<SettingsScene_UI>(this);
+	SET_UI(SettingsScene_UI);
 }
 
 void SettingScene::Update()

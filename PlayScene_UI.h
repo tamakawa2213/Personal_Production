@@ -1,19 +1,19 @@
 #pragma once
-#include "../IntegratedEngine/Engine/MouseOperationUI.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
 
-class PlayScene_UI : public MouseOperationUI
+class PlayScene_UI : public UserInterface
 {
 	int hPict_;
 public:
-	PlayScene_UI(GameObject* parent);
+	PlayScene_UI(RootUI* ui);
 
 	~PlayScene_UI();
 
 	void Initialize() override;
 
-	void ClickLeftFirst() override;
+	void Update() override;
 
-	void DrawUnique() override;
+	void Draw() override;
 
 	void Release() override;
 };

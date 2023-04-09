@@ -1,6 +1,7 @@
 #include "SceneManager.h"
 #include "../../IntegratedEngine/Engine/Model.h"
 #include "../../IntegratedEngine/Engine/Image.h"
+#include "../../IntegratedEngine/Engine/RootUI.h"
 #include "../ModeScene.h"
 #include "../PlayScene.h"
 #include "../ClearScene.h"
@@ -31,6 +32,10 @@ void SceneManager::Update()
 
 		//‰æ–Ê‚Ì–¾‚é‚³‚ðŒ³‚É–ß‚·
 		assFunc_.SetFadeout(1);
+
+		//UI‚Ì•R•t‚¯‰ðœ
+		RootUI* pRootUI = (RootUI*)FindObject("RootUI");
+		pRootUI->UnLink();
 
 		switch (NextSceneID_)
 		{

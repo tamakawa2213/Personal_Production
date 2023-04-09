@@ -1,10 +1,11 @@
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Image.h"
+#include "../IntegratedEngine/Engine/Input.h"
 #include "Engine/SceneManager.h"
 #include "Storage.h"
 
-ModeScene_UI::ModeScene_UI(GameObject* parent)
-	: MouseOperationUI(parent, "ModeScene_UI")
+ModeScene_UI::ModeScene_UI(RootUI* ui)
+	: UserInterface(ui)
 {
 	hPict_.clear();
 	Func_.clear();
@@ -32,18 +33,21 @@ void ModeScene_UI::Initialize()
 	Func_.insert({ pict, &ModeScene_UI::SelectSettings });
 }
 
-void ModeScene_UI::ClickLeftFirst()
+void ModeScene_UI::Update()
 {
-	//どの画像にマウスカーソルが当たっているか取得
-	auto found = Func_.find(Image::IsHitCursorAny());
+	if (Input::Mouse::Down(0))
+	{
+		//どの画像にマウスカーソルが当たっているか取得
+		auto found = Func_.find(Image::IsHitCursorAny());
 
-	//いずれにも当たっていない場合
-	if (found == end(Func_)) {
-		return;
+		//いずれにも当たっていない場合
+		if (found == end(Func_)) {
+			return;
+		}
+
+		//当たっていれば該当処理を実行
+		(this->*found->second)();
 	}
-
-	//当たっていれば該当処理を実行
-	(this->*found->second)();
 }
 
 void ModeScene_UI::Draw()
@@ -61,16 +65,16 @@ void ModeScene_UI::Release()
 void ModeScene_UI::SelectEasy()
 {
 	Storage::SetDifficulty(Difficulty::EASY);
-	SCENE_CHANGE(SCENE_ID::PLAY);
+	pRootUI_->SceneChange(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectHard()
 {
 	Storage::SetDifficulty(Difficulty::HARD);
-	SCENE_CHANGE(SCENE_ID::PLAY);
+	pRootUI_->SceneChange(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectSettings()
 {
-	SCENE_CHANGE(SCENE_ID::SETTINGS);
+	pRootUI_->SceneChange(SCENE_ID::SETTINGS);
 }

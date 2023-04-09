@@ -21,7 +21,7 @@ void PlayScene::Initialize()
 	Direct3D::SplitScrMode = SCREEN_SPLIT_2;
 	Instantiate<Player>(this);
 	Judge::Initialize();
-	Instantiate<PlayScene_UI>(this);
+	SET_UI(PlayScene_UI);
 }
 
 void PlayScene::Update()

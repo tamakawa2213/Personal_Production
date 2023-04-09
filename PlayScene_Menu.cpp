@@ -5,8 +5,8 @@
 #include "Engine/SceneManager.h"
 #include "../IntegratedEngine/Engine/Time.h"
 
-PlayScene_Menu::PlayScene_Menu(GameObject* parent)
-	: GameObject(parent, "PlayScene_Menu")
+PlayScene_Menu::PlayScene_Menu(RootUI* ui)
+	: UserInterface(ui)
 {
 	hPict_.clear();
 }
@@ -29,25 +29,25 @@ void PlayScene_Menu::Initialize()
 	Time::Lock();
 }
 
-void PlayScene_Menu::FixedUpdate()
+void PlayScene_Menu::Update()
 {
 	if (Input::Mouse::Down(0))
 	{
 		if (Image::IsHitCursor(hPict_.at(0)))
 		{
-			SCENE_CHANGE(SCENE_ID::MODE);
+			pRootUI_->SceneChange(SCENE_ID::MODE);
 			GameTime::TimeStart();
 		}
 		if (Image::IsHitCursor(hPict_.at(1)))
 		{
 			Time::UnLock();
 			GameTime::TimeStart();
-			KillMe();
+			pRootUI_->UnLink();
 		}
 	}
 }
 
-void PlayScene_Menu::DrawUnique()
+void PlayScene_Menu::Draw()
 {
 	for (auto p : hPict_)
 	{

@@ -1,20 +1,20 @@
 #pragma once
-#include "../IntegratedEngine/Engine/GameObject.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
 #include <vector>
 
-class PlayScene_Menu : public GameObject
+class PlayScene_Menu : public UserInterface
 {
 	std::vector<int> hPict_;
 public:
-	PlayScene_Menu(GameObject* parent);
+	PlayScene_Menu(RootUI* ui);
 
 	~PlayScene_Menu();
 
 	void Initialize() override;
 
-	void FixedUpdate() override;
+	void Update() override;
 
-	void DrawUnique() override;
+	void Draw() override;
 
 	void Release() override;
 };
