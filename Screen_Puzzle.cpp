@@ -80,7 +80,7 @@ void Screen_Puzzle::Initialize()
 	{
 		std::string Name = "Assets\\" + Filename[i] + ".fbx";
 		hModel_[i] = Model::Load(Name);
-		assert(hModel_ >= 0);
+		assert(hModel_[i] >= 0);
 	}
 	Mode_ = (char)Storage::GetDifficulty();
 	Instantiate<Pin>(this);
