@@ -1,6 +1,7 @@
 #pragma once
-#include "../IntegratedEngine/Engine/RootUI.h"
+#include "../IntegratedEngine/Engine/UserInterface.h"
 #include <map>
+#include <vector>
 
 class ModeScene_UI : public UserInterface
 {
@@ -11,7 +12,7 @@ class ModeScene_UI : public UserInterface
 	void SelectHard();		//hard			ÅV
 	void SelectSettings();	//ê›íË			ÅV
 public:
-	ModeScene_UI(RootUI* ui);
+	ModeScene_UI();
 
 	~ModeScene_UI();
 

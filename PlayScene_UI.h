@@ -1,11 +1,11 @@
 #pragma once
-#include "../IntegratedEngine/Engine/RootUI.h"
+#include "../IntegratedEngine/Engine/UserInterface.h"
 
 class PlayScene_UI : public UserInterface
 {
 	int hPict_;
 public:
-	PlayScene_UI(RootUI* ui);
+	PlayScene_UI();
 
 	~PlayScene_UI();
 

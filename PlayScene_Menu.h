@@ -1,12 +1,12 @@
 #pragma once
-#include "../IntegratedEngine/Engine/RootUI.h"
+#include "../IntegratedEngine/Engine/UserInterface.h"
 #include <vector>
 
 class PlayScene_Menu : public UserInterface
 {
 	std::vector<int> hPict_;
 public:
-	PlayScene_Menu(RootUI* ui);
+	PlayScene_Menu();
 
 	~PlayScene_Menu();
 

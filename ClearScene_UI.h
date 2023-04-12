@@ -1,5 +1,5 @@
 #pragma once
-#include "../IntegratedEngine/Engine/RootUI.h"
+#include "../IntegratedEngine/Engine/UserInterface.h"
 #include <memory>
 
 class Text;
@@ -9,7 +9,7 @@ class ClearScene_UI : public UserInterface
 	int hPict_;
 	std::unique_ptr<Text> pText_;
 public:
-	ClearScene_UI(RootUI* ui);
+	ClearScene_UI();
 
 	~ClearScene_UI();
 

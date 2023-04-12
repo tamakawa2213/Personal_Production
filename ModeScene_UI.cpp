@@ -1,11 +1,13 @@
 #include "ModeScene_UI.h"
+#include "../IntegratedEngine/Engine/CallDef.h"
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
-#include "Engine/SceneManager.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "Storage.h"
+#include "SceneList.h"
 
-ModeScene_UI::ModeScene_UI(RootUI* ui)
-	: UserInterface(ui)
+ModeScene_UI::ModeScene_UI()
+	: UserInterface()
 {
 	hPict_.clear();
 	Func_.clear();
@@ -65,16 +67,16 @@ void ModeScene_UI::Release()
 void ModeScene_UI::SelectEasy()
 {
 	Storage::SetDifficulty(Difficulty::EASY);
-	pRootUI_->SceneChange(SCENE_ID::PLAY);
+	SCENE_CHANGE(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectHard()
 {
 	Storage::SetDifficulty(Difficulty::HARD);
-	pRootUI_->SceneChange(SCENE_ID::PLAY);
+	SCENE_CHANGE(SCENE_ID::PLAY);
 }
 
 void ModeScene_UI::SelectSettings()
 {
-	pRootUI_->SceneChange(SCENE_ID::SETTINGS);
+	SCENE_CHANGE(SCENE_ID::SETTINGS);
 }

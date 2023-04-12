@@ -1,5 +1,6 @@
 #include "PlayScene.h"
 #include "../IntegratedEngine/Engine/Direct3D.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
 #include "../IntegratedEngine/Engine/Time.h"
 #include "../IntegratedEngine/Graphics/imgui.h"
 #include "Judge.h"

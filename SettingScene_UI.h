@@ -1,5 +1,7 @@
 #pragma once
-#include "../IntegratedEngine/Engine/RootUI.h"
+#include "../IntegratedEngine/Engine/UserInterface.h"
+#include <memory>
+#include <vector>
 
 class Text;
 
@@ -9,7 +11,7 @@ class SettingsScene_UI : public UserInterface
 
 	std::vector<int> hPict_;							//ƒ[ƒh‚µ‚½‰æ‘œ‚Ì”z—ñ
 public:
-	SettingsScene_UI(RootUI* ui);
+	SettingsScene_UI();
 	~SettingsScene_UI();
 
 	void Initialize() override;

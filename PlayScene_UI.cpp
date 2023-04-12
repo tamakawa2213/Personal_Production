@@ -1,12 +1,12 @@
 #include "PlayScene_UI.h"
+#include "../IntegratedEngine/Engine/CallDef.h"
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
-#include "../IntegratedEngine/Engine/Gametime.h"
-#include "../IntegratedEngine/Engine/Time.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "PlayScene_Menu.h"
 
-PlayScene_UI::PlayScene_UI(RootUI* ui)
-	: UserInterface(ui), hPict_(-1)
+PlayScene_UI::PlayScene_UI()
+	: UserInterface(), hPict_(-1)
 {
 }
 
@@ -24,20 +24,8 @@ void PlayScene_UI::Update()
 {
 	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_))
 	{
-		////オブジェクトがある = メニューを開いている
-		//if (pMenu)
-		//{
-		//	//メニューを閉じる
-		//	pMenu->KillMe();
-
-		//	GameTime::TimeStart();
-		//	Time::UnLock();
-		//}
-		//else
-		//{
-			//メニューを開く
-			pRootUI_->Link<PlayScene_Menu>();
-		//}
+		//メニューを開く
+		PtrObserver::GetRootUI()->Link<PlayScene_Menu>();
 	}
 }
 

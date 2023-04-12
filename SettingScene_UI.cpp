@@ -1,12 +1,14 @@
 #include "SettingScene_UI.h"
+#include "../IntegratedEngine/Engine/CallDef.h"
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "../IntegratedEngine/Engine/Text.h"
-#include "Engine/SceneManager.h"
 #include "Storage.h"
+#include "SceneList.h"
 
-SettingsScene_UI::SettingsScene_UI(RootUI* ui)
-	: UserInterface(ui), pText_(nullptr), hPict_()
+SettingsScene_UI::SettingsScene_UI()
+	: UserInterface(), pText_(nullptr), hPict_()
 {
 }
 
@@ -55,11 +57,11 @@ void SettingsScene_UI::Update()
 			Storage::SetFadeoutMode(choice);
 			break;
 		case 3:
-			pRootUI_->assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
+			PtrObserver::GetSceneManager()->assFunc_.SetFadeout(Storage::GetFadeoutSpeed());
 			break;
 		case 4:
 		{
-			pRootUI_->SceneChange(SCENE_ID::MODE);
+			SCENE_CHANGE(SCENE_ID::MODE);
 			break;
 		}
 		default:

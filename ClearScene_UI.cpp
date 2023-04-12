@@ -1,12 +1,14 @@
 #include "ClearScene_UI.h"
+#include "../IntegratedEngine/Engine/CallDef.h"
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "../IntegratedEngine/Engine/Text.h"
-#include "Engine/SceneManager.h"
 #include "Judge.h"
+#include "SceneList.h"
 
-ClearScene_UI::ClearScene_UI(RootUI* ui)
-	: UserInterface(ui), hPict_(-1), pText_(nullptr)
+ClearScene_UI::ClearScene_UI()
+	: UserInterface(), hPict_(-1), pText_(nullptr)
 {
 }
 
@@ -28,7 +30,7 @@ void ClearScene_UI::Update()
 {
 	if (Input::Mouse::Down(0) && Image::IsHitCursor(hPict_))
 	{
-		pRootUI_->SceneChange(SCENE_ID::MODE);
+		SCENE_CHANGE(SCENE_ID::MODE);
 	}
 }
 

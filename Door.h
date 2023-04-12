@@ -1,5 +1,4 @@
 #pragma once
-#include "../IntegratedEngine/Engine/Model.h"
 #include "IDObject.h"
 
 class Door : public IDObject

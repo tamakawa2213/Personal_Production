@@ -36,9 +36,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Engine\SceneManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -76,9 +73,6 @@
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\RootJob.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp">
@@ -186,17 +180,23 @@
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
       <Filter>ソース ファイル\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Scene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneList.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\RootUI.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene_Menu.cpp">
       <Filter>ソース ファイル\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\PtrObserver.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\RootJob.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\SceneManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneList.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -205,9 +205,6 @@
     <FxCompile Include="..\IntegratedEngine\Shader\Simple3D.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\SceneManager.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
@@ -248,9 +245,6 @@
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Transform.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\RootJob.h">
       <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
@@ -337,12 +331,6 @@
     <ClInclude Include="..\IntegratedEngine\Engine\MouseOperationUI.h">
       <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneList.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
       <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
@@ -351,6 +339,21 @@
     </ClInclude>
     <ClInclude Include="PlayScene_Menu.h">
       <Filter>ソース ファイル\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\PtrObserver.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\RootJob.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\SceneManager.h">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneList.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
+      <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

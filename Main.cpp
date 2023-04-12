@@ -12,7 +12,8 @@
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
-#include "Engine/RootJob.h"
+#include "../IntegratedEngine/Engine/RootJob.h"
+#include "SceneList.h"
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
 
@@ -112,10 +113,12 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 #endif
 	}
 
+
 	//RootJob‰Šú‰»
 	std::unique_ptr<RootJob> pRootJob = nullptr;
 	pRootJob = std::make_unique<RootJob>(nullptr);
-	pRootJob->Initialize();
+	std::unique_ptr<SceneList> pScene = std::make_unique<SceneList>();
+	pRootJob->Initialize(std::move(pScene.get()));
 
 	//DirectInput‚Ì‰Šú‰»
 	Input::Initialize(hWnd);

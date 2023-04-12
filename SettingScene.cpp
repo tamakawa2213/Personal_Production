@@ -1,5 +1,6 @@
 #include "SettingScene.h"
 #include "SettingScene_UI.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
 
 SettingScene::SettingScene(GameObject* parent)
 	: GameObject(parent, "SettingScene")

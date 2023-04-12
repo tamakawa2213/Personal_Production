@@ -1,6 +1,7 @@
 #include "ModeScene.h"
 #include "ModeScene_UI.h"
 #include "../IntegratedEngine/Engine/Direct3D.h"
+#include "../IntegratedEngine/Engine/RootUI.h"
 
 ModeScene::ModeScene(GameObject* parent)
 	: GameObject(parent, "ModeScene")

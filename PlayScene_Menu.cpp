@@ -1,12 +1,14 @@
 #include "PlayScene_Menu.h"
+#include "../IntegratedEngine/Engine/CallDef.h"
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/GameTime.h"
 #include "../IntegratedEngine/Engine/Image.h"
-#include "Engine/SceneManager.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "../IntegratedEngine/Engine/Time.h"
+#include "SceneList.h"
 
-PlayScene_Menu::PlayScene_Menu(RootUI* ui)
-	: UserInterface(ui)
+PlayScene_Menu::PlayScene_Menu()
+	: UserInterface()
 {
 	hPict_.clear();
 }
@@ -18,7 +20,7 @@ PlayScene_Menu::~PlayScene_Menu()
 
 void PlayScene_Menu::Initialize()
 {
-	int pict;
+	int pict{};
 	ILoad(pict, "Assets\\ToDifficulty.png");
 	hPict_.push_back(pict);
 
@@ -35,14 +37,14 @@ void PlayScene_Menu::Update()
 	{
 		if (Image::IsHitCursor(hPict_.at(0)))
 		{
-			pRootUI_->SceneChange(SCENE_ID::MODE);
+			SCENE_CHANGE(SCENE_ID::MODE);
 			GameTime::TimeStart();
 		}
 		if (Image::IsHitCursor(hPict_.at(1)))
 		{
 			Time::UnLock();
 			GameTime::TimeStart();
-			pRootUI_->UnLink();
+			PtrObserver::GetRootUI()->UnLink();
 		}
 	}
 }

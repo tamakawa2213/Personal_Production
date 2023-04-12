@@ -1,7 +1,7 @@
 #pragma once
 #include "../IntegratedEngine/Engine/Scene.h"
 
-enum class SCENE_ID
+enum class SCENE_ID : int
 {
 	MODE = 0,
 	SETTINGS,
@@ -12,11 +12,11 @@ enum class SCENE_ID
 class SceneList : public Scene
 {
 public:
-	SceneList() : Scene() {}
+	SceneList();
 	~SceneList() {}
 
-	void Initialize();
+	void Initialize() override;
 
-	void Update();
+	void Update() override;
 };
 

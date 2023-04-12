@@ -3,9 +3,10 @@
 #include "../IntegratedEngine/Engine/Direct3D.h"
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
-#include "Engine/SceneManager.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "Judge.h"
 #include "Player.h"
+#include "SceneList.h"
 #include "Screen_Puzzle.h"
 
 Goal::Goal(GameObject* parent)
