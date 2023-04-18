@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Procedural.h"
 #include "Storage.h"
+#include <cmath>
 #include <random>
 
 namespace
@@ -55,7 +56,7 @@ namespace
 		{1,0},		//左
 		{-1,0}		//右
 	};
-}
+} // namespace
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(0), MoveDir_(0),
@@ -165,13 +166,14 @@ void Screen_Puzzle::Draw()
 				{
 					Transform Tr = transform_;
 					Tr.position_ = XMFLOAT3(x, 0, z);
-					float move = Moving_;
+					float move = (float)std::lerp(0, 1, (float)Moving_ / TIMETOMOVE);
+
 					switch (MoveDir_)
 					{
-					case 0x08: Tr.position_.z += (move / TIMETOMOVE); break;
-					case 0x04: Tr.position_.z -= (move / TIMETOMOVE); break;
-					case 0x02: Tr.position_.x -= (move / TIMETOMOVE); break;
-					case 0x01: Tr.position_.x += (move / TIMETOMOVE); break;
+					case 0x08: Tr.position_.z += move; break;
+					case 0x04: Tr.position_.z -= move; break;
+					case 0x02: Tr.position_.x -= move; break;
+					case 0x01: Tr.position_.x += move; break;
 					}
 					Model::SetTransform(hModel_[MovingPanel_], Tr);
 					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == 0)
