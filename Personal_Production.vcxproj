@@ -191,6 +191,7 @@
     <ClCompile Include="ClearScene.cpp" />
     <ClCompile Include="ClearScene_UI.cpp" />
     <ClCompile Include="Door.cpp" />
+    <ClCompile Include="DrawingManager.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="IDObject.cpp" />
     <ClCompile Include="Judge.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="ClearScene.h" />
     <ClInclude Include="ClearScene_UI.h" />
     <ClInclude Include="Door.h" />
+    <ClInclude Include="DrawingManager.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="IDObject.h" />
     <ClInclude Include="Judge.h" />

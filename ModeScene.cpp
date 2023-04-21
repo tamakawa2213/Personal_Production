@@ -14,7 +14,7 @@ ModeScene::~ModeScene()
 
 void ModeScene::Initialize()
 {
-	Direct3D::SplitScrMode = SCREEN_FULL;
+	Direct3D::SplitScrMode = SCREEN_MODE::FULL;
 
 	SET_UI(ModeScene_UI);
 }

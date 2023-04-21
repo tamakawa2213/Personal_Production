@@ -15,10 +15,9 @@ ClearScene::~ClearScene()
 void ClearScene::Initialize()
 {
 	//‰æ–Ê•ªŠ„‚ğ‹­§I—¹
-	Direct3D::SplitScrMode = SCREEN_FULL;
+	Direct3D::SplitScrMode = SCREEN_MODE::FULL;
 
 	SET_UI(ClearScene_UI);
-	//Instantiate<ClearScene_UI>(this);
 }
 
 void ClearScene::Update()

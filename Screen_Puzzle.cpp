@@ -445,7 +445,7 @@ bool Screen_Puzzle::MakeMouseRay()
 
 	switch (Direct3D::SplitScrMode)
 	{
-	case SCREEN_SPLIT_2:
+	case SCREEN_MODE::SPLIT_2:
 		mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / 2);
 		mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / 2);
 		break;
@@ -497,8 +497,8 @@ XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
 	float w = 0;
 	switch (Direct3D::SplitScrMode)
 	{
-	case SCREEN_FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
-	case SCREEN_SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
+	case SCREEN_MODE::FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
+	case SCREEN_MODE::SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
 	default: break;
 	}
 	float h = (float)Direct3D::scrHeight / 2.0f;
@@ -552,10 +552,8 @@ bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)
 
 void Screen_Puzzle::Moving()
 {
-	Moving_++;
-
 	//Moving_が設定した時間に達したら終了する
-	if (Moving_ > TIMETOMOVE)
+	if (++Moving_ > TIMETOMOVE)
 	{
 		Moving_ = 0;
 		Wait_ = false;

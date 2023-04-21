@@ -73,13 +73,13 @@ void Screen_Room::Update()
 {
 	switch (Direct3D::SplitScrMode)
 	{
-	case SCREEN_FULL:
+	case SCREEN_MODE::FULL:
 		if (Input::Mouse::IsPush(0))
 		{
 			Look_Around();
 		}
 		break;
-	case SCREEN_SPLIT_2:
+	case SCREEN_MODE::SPLIT_2:
 		//画面左にマウスがある場合にのみ呼び出す
 		if (Input::Mouse::IsPush(0) && Input::Mouse::GetPosition().x < Direct3D::scrWidth / 2)
 		{

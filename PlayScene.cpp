@@ -19,7 +19,7 @@ PlayScene::~PlayScene()
 
 void PlayScene::Initialize()
 {
-	Direct3D::SplitScrMode = SCREEN_SPLIT_2;
+	Direct3D::SplitScrMode = SCREEN_MODE::SPLIT_2;
 	Instantiate<Player>(this);
 	Judge::Initialize();
 	SET_UI(PlayScene_UI);

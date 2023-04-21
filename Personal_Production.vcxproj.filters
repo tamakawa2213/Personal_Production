@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\Graphics">
       <UniqueIdentifier>{d444d7d2-143c-4b54-a5db-d09949b53b87}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Manager">
+      <UniqueIdentifier>{ebbb3713-bc44-49e2-aa73-bfca01ff338f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -198,6 +201,9 @@
     <ClCompile Include="SceneList.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="DrawingManager.cpp">
+      <Filter>ソース ファイル\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Point3D.hlsl" />
@@ -354,6 +360,9 @@
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingManager.h">
+      <Filter>ソース ファイル\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

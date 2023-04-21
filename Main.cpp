@@ -13,6 +13,7 @@
 #include "../IntegratedEngine/Engine/Input.h"
 #include "../IntegratedEngine/Engine/Model.h"
 #include "../IntegratedEngine/Engine/RootJob.h"
+#include "DrawingManager.h"
 #include "SceneList.h"
 #include <imgui_impl_dx11.h>
 #include <imgui_impl_win32.h>
@@ -186,36 +187,9 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 
 			lastUpdateTime = nowTime;
 
-			static char DrawRange = VP_LEFT;
-			{
-				//spaceキーを押したら描画変更
-				if (Input::Mouse::Down(DIK_SPACE))
-				{
-					switch (Direct3D::SplitScrMode)
-					{
-					case SCREEN_FULL:
-						Direct3D::SplitScrMode = SCREEN_SPLIT_2;
-						break;
-					case SCREEN_SPLIT_2:
-						if (Input::Mouse::GetPosition().x < winW / 2)	//マウスカーソルの位置でカメラの位置を決定
-						{
-							DrawRange = VP_LEFT;
-						}
-						else
-						{
-							DrawRange = VP_RIGHT;
-						}
-						Direct3D::SplitScrMode = SCREEN_FULL;
-						break;
-					default: break;
-					}
-				}
-			}
-
 			Time::Update();
 
 			GameTime::Update();
-
 
 			//ゲームの処理
 			if (GameTime::IsStop())
@@ -237,92 +211,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 			pRootJob->FixedUpdate();
 			pRootJob->FixedUpdateSub();
 
+			DrawingManager::ChangeDraw();
+
 			Direct3D::BeginDraw();
 
-			XMVECTOR campos[2] = { {-10.0f, 5.5f, 1.2f, 0}, {1.6f, 6, 1.5f, 0} };
-			XMVECTOR camtar[2] = { {-10, 0, 1.3f, 0}, {1.5f, 0, 1.5f, 0} };
-
-
 			//描画処理
-			switch (Direct3D::SplitScrMode)
-			{
-			case SCREEN_FULL:
-				Direct3D::SetViewPort(VP_FULL);
-				switch (DrawRange)
-				{
-				case VP_LEFT:
-					Camera::SetPosition(campos[0]);
-					Camera::SetTarget(camtar[0]);
-					break;
-				case VP_RIGHT:
-					Camera::SetPosition(campos[1]);
-					Camera::SetTarget(camtar[1]);
-					break;
-				default: break;
-				}
-				Camera::Update();
-				//全オブジェクトを描画
-				//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-				pRootJob->DrawSub();
-				break;
-			case SCREEN_SPLIT_2:
-				if (Input::Mouse::GetPosition().x < winW / 2)
-				{
-					//右画面描画
-					{
-						Direct3D::SetViewPort(VP_RIGHT);
-						Camera::SetPosition(campos[1]);
-						Camera::SetTarget(camtar[1]);
+			DrawingManager::Draw(pRootJob.get());
 
-						Camera::Update();
-						//全オブジェクトを描画
-						//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-						pRootJob->DrawSub();
-					}
-
-					//左画面描画
-					{
-						Direct3D::SetViewPort(VP_LEFT);
-						Camera::SetPosition(campos[0]);
-						Camera::SetTarget(camtar[0]);
-
-						Camera::Update();
-						//全オブジェクトを描画
-						//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-						pRootJob->DrawSub();
-					}
-				}
-				else
-				{
-					//左画面描画
-					{
-						Direct3D::SetViewPort(VP_LEFT);
-						Camera::SetPosition(campos[0]);
-						Camera::SetTarget(camtar[0]);
-
-						Camera::Update();
-						//全オブジェクトを描画
-						//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-						pRootJob->DrawSub();
-					}
-					//右画面描画
-					{
-						Direct3D::SetViewPort(VP_RIGHT);
-						Camera::SetPosition(campos[1]);
-						Camera::SetTarget(camtar[1]);
-
-						Camera::Update();
-						//全オブジェクトを描画
-						//ルートオブジェクトのDrawを呼んだあと、自動的に子、孫のUpdateが呼ばれる
-						pRootJob->DrawSub();
-					}
-				}
-				break;
-			default:
-				break;
-			}
-			Direct3D::SetViewPort(VP_FULL);
-			pRootJob->DrawUniqueSub();
 
 #if _DEBUG
 			ImGui::Render();
