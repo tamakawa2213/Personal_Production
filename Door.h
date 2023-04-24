@@ -8,9 +8,6 @@ class Door : public IDObject
 
 	bool IsMouse_[2];					//マウスを押した瞬間と離した瞬間
 
-	float MakeMouseRay();
-	XMVECTOR SetInvMat(XMFLOAT3 pos);	//行列をかけてマウスカーソルのレイを作る
-
 	void SendtoPlayer();				//PlayerクラスにIDを送る
 public:
 	Door(GameObject* parent);

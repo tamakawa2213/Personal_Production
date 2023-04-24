@@ -22,16 +22,21 @@ void Door::Initialize()
 
 void Door::Update()
 {
-	float dist = MakeMouseRay();
+	RayCastData data;
+	data.CreateMouseRay();
+	Model::SetTransform(hModel_, transform_);
+	Model::RayCast(hModel_, data);
+
+	RayHit_ = data.hit;
 
 	//カメラより手前にあるドアには当たらないようにする
 	//マウスを押したタイミングで対象を指しているか
-	if (RayHit_ && Input::Mouse::Down(0) && dist > 1.0f)
+	if (RayHit_ && Input::Mouse::Down(0) && data.dist > 1.0f)
 	{
 		IsMouse_[0] = true;
 	}
 	//マウスを離したタイミングで対象を指しているか
-	if (RayHit_ && Input::Mouse::Up(0) && dist > 1.0f)
+	if (RayHit_ && Input::Mouse::Up(0) && data.dist > 1.0f)
 	{
 		IsMouse_[1] = true;
 	}
@@ -66,70 +71,6 @@ void Door::Draw()
 	{
 		Model::Draw(hModel_);
 	}
-}
-
-float Door::MakeMouseRay()
-{
-	//マウス位置
-	XMFLOAT3 mousePosFront = Input::Mouse::GetPosition();
-	mousePosFront.x = mousePosFront.x;
-	mousePosFront.z = 0;
-
-	XMVECTOR front = SetInvMat(mousePosFront);
-
-	XMFLOAT3 mousePosBack = Input::Mouse::GetPosition();
-	mousePosBack.x = mousePosBack.x;
-	mousePosBack.z = 1.0f;
-
-	XMVECTOR back = SetInvMat(mousePosBack);
-
-	XMVECTOR ray = back - front;
-	ray = XMVector3Normalize(ray);
-
-	RayCastData data;
-
-	XMStoreFloat3(&data.start, front);
-	XMStoreFloat3(&data.dir, ray);
-
-	Model::SetTransform(hModel_, transform_);
-	Model::RayCast(hModel_, data);
-
-	RayHit_ = data.hit;
-
-	return data.dist;
-}
-
-XMVECTOR Door::SetInvMat(XMFLOAT3 pos)
-{
-	//ビューポート行列
-	float w = 0;
-	switch (Direct3D::SplitScrMode)
-	{
-	case SCREEN_MODE::FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
-	case SCREEN_MODE::SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
-	default: break;
-	}
-	float h = (float)Direct3D::scrHeight / 2.0f;
-	XMMATRIX vp =
-	{
-		w, 0, 0, 0,
-		0,-h, 0, 0,
-		0, 0, 1, 0,
-		w, h, 0, 1
-	};
-
-	//各行列の逆行列
-	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
-
-	XMVECTOR vPos = XMLoadFloat3(&pos);
-
-	XMMATRIX mat = invVp * invPrj * invView;
-
-	vPos = XMVector3TransformCoord(vPos, mat);
-
-	return vPos;
 }
 
 void Door::SendtoPlayer()

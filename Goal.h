@@ -16,8 +16,6 @@ class Goal : public GameObject
 	Player* pPlayer_;
 
 	void InitialPosition(char pos);		//初期位置を生成する
-	float MakeMouseRay();
-	XMVECTOR SetInvMat(XMFLOAT3 pos);	//行列をかけてマウスカーソルのレイを作る
 public:
 	friend Screen_Puzzle;
 

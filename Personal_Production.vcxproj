@@ -171,6 +171,7 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\MouseOperationUI.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\RayCastData.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\RootJob.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\RootUI.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Scale.cpp" />
@@ -239,6 +240,7 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\MouseOperationUI.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Position.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\RayCastData.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\RootJob.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\RootUI.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Scale.h" />

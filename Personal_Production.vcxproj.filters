@@ -204,6 +204,9 @@
     <ClCompile Include="DrawingManager.cpp">
       <Filter>ソース ファイル\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\RayCastData.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Point3D.hlsl" />
@@ -363,6 +366,9 @@
     </ClInclude>
     <ClInclude Include="DrawingManager.h">
       <Filter>ソース ファイル\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\RayCastData.h">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
