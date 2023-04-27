@@ -99,7 +99,34 @@ void Screen_Puzzle::Update()
 	}
 	else if(!pPlayer_->GetWait())
 	{
-		bool Ishit = MakeMouseRay();
+		bool Ishit = false;
+		float distance = 9999.0f;
+
+		for (int x = 0; x < BoardSize_; x++)
+		{
+			for (int z = 0; z < BoardSize_; z++)
+			{
+				for (int type = 0; type < (char)Board::MAX; type++)
+				{
+					RayCastData data;
+					data.CreateMouseRay();
+
+					Transform Tr;
+					Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
+					Model::SetTransform(hModel_[type], Tr);
+
+					Model::RayCast(hModel_[type], data);
+
+					if (data.hit && distance > data.dist)
+					{
+						distance = data.dist;
+						PuzX_ = x;
+						PuzZ_ = z;
+						Ishit = true;
+					}
+				}
+			}
+		}
 
 		//いずれかのパネルにカーソルが当たっていて左クリックをしたら呼び出す
 		if (Input::Mouse::Down(0) && Ishit)
@@ -431,97 +458,6 @@ void Screen_Puzzle::PrickPin()
 		pPin->UVPosition_ = { (float)PuzX_, (float)PuzZ_ };	//押したマスにピンを打つ
 	}
 	SAFE_RELEASE(pPin);
-}
-
-bool Screen_Puzzle::MakeMouseRay()
-{
-	//マウス位置
-	XMFLOAT3 mousePosFront = Input::Mouse::GetPosition();
-	mousePosFront.z = 0;
-
-	XMVECTOR front = SetInvMat(mousePosFront);
-
-	XMFLOAT3 mousePosBack = Input::Mouse::GetPosition();
-
-	switch (Direct3D::SplitScrMode)
-	{
-	case SCREEN_MODE::SPLIT_2:
-		mousePosFront.x = mousePosFront.x - (Direct3D::scrWidth / 2);
-		mousePosBack.x = mousePosBack.x - (Direct3D::scrWidth / 2);
-		break;
-	default: break;
-	}
-	
-	mousePosBack.z = 1.0f;
-
-	XMVECTOR back = SetInvMat(mousePosBack);
-
-	XMVECTOR ray = back - front;
-	ray = XMVector3Normalize(ray);
-
-	float distance = 9999.0f;
-	bool Ishit = false;
-
-	for (int x = 0; x < BoardSize_; x++)
-	{
-		for (int z = 0; z < BoardSize_; z++)
-		{
-			for (int type = 0; type < (char)Board::MAX; type++)
-			{
-				RayCastData data;
-				XMStoreFloat3(&data.start, front);
-				XMStoreFloat3(&data.dir, ray);
-
-				Transform Tr;
-				Tr.position_ = XMFLOAT3((float)x, 0, (float)z);
-				Model::SetTransform(hModel_[type], Tr);
-
-				Model::RayCast(hModel_[type], data);
-
-				if (data.hit && distance > data.dist)
-				{
-					distance = data.dist;
-					PuzX_ = x;
-					PuzZ_ = z;
-					Ishit = true;
-				}
-			}
-		}
-	}
-	return Ishit;
-}
-
-XMVECTOR Screen_Puzzle::SetInvMat(XMFLOAT3 pos)
-{
-	//ビューポート行列
-	float w = 0;
-	switch (Direct3D::SplitScrMode)
-	{
-	case SCREEN_MODE::FULL: w = (float)Direct3D::scrWidth / 2.0f; break;
-	case SCREEN_MODE::SPLIT_2: w = (float)Direct3D::scrWidth / 4.0f; break;
-	default: break;
-	}
-	float h = (float)Direct3D::scrHeight / 2.0f;
-	XMMATRIX vp =
-	{
-		w, 0, 0, 0,
-		0,-h, 0, 0,
-		0, 0, 1, 0,
-		w, h, 0, 1
-	};
-
-	//各行列の逆行列
-	XMMATRIX invVp = XMMatrixInverse(nullptr, vp);
-	XMMATRIX invPrj = XMMatrixInverse(nullptr, Camera::GetProjectionMatrix());
-	XMMATRIX invView = XMMatrixInverse(nullptr, Camera::GetViewMatrix());
-
-	XMVECTOR vPos = XMLoadFloat3(&pos);
-
-	XMMATRIX mat = invVp * invPrj * invView;
-
-	vPos = XMVector3TransformCoord(vPos, mat);
-
-	return vPos;
 }
 
 bool Screen_Puzzle::DoorConfig(char BoardType, char DoorID)

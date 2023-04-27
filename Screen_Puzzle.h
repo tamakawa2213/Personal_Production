@@ -44,9 +44,6 @@ class Screen_Puzzle : public GameObject
 	void Swap(int x, int z);				//空白に隣り合っていれば交換する
 	void PrickPin();						//ピン刺し
 
-	bool MakeMouseRay();
-	XMVECTOR SetInvMat(XMFLOAT3 pos);		//行列をかけてマウスカーソルのレイを作る
-
 	bool DoorConfig(char BoardType, char DoorID);	//押したドアから隣り合う部屋に移動できるか
 
 	void Moving();	//押してからの待機時間
