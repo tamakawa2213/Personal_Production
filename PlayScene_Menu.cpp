@@ -5,6 +5,7 @@
 #include "../IntegratedEngine/Engine/Image.h"
 #include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "../IntegratedEngine/Engine/Time.h"
+#include "PlayScene_UI.h"
 #include "SceneList.h"
 
 PlayScene_Menu::PlayScene_Menu()
@@ -44,7 +45,7 @@ void PlayScene_Menu::Update()
 		{
 			Time::UnLock();
 			GameTime::TimeStart();
-			PtrObserver::GetRootUI()->UnLink();
+			PtrObserver::GetRootUI()->Link<PlayScene_UI>();
 		}
 	}
 }
