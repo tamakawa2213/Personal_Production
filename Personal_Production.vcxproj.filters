@@ -367,14 +367,14 @@
     <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h">
       <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
-      <Filter>ソース ファイル\Engine\2DObject</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
       <Filter>ソース ファイル\Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Light.h">
       <Filter>ソース ファイル\Engine\Others</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
