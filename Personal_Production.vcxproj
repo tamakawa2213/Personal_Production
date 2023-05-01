@@ -159,7 +159,6 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Debug.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Direct3D.cpp" />
-    <ClCompile Include="..\IntegratedEngine\Engine\FacadeMouse.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp" />
@@ -169,7 +168,6 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
-    <ClCompile Include="..\IntegratedEngine\Engine\MouseOperationUI.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\RayCastData.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\RootJob.cpp" />
@@ -228,7 +226,6 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Camera.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Debug.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Direct3D.h" />
-    <ClInclude Include="..\IntegratedEngine\Engine\FacadeMouse.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h" />
@@ -238,7 +235,6 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Light.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
-    <ClInclude Include="..\IntegratedEngine\Engine\MouseOperationUI.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Position.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\RayCastData.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\RootJob.h" />

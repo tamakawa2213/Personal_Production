@@ -16,14 +16,8 @@
     <Filter Include="ソース ファイル\Engine">
       <UniqueIdentifier>{bccd658a-cb07-4b6e-bcd0-4f207796aa53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Reader">
-      <UniqueIdentifier>{070ac6f0-c770-4c06-a8de-cea3db71d10a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{52ebacb2-d926-4dc1-aa2f-8990a8f1d43c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\GameObject">
-      <UniqueIdentifier>{8da07607-b881-4218-b411-53bfa0b8dcde}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\UI">
       <UniqueIdentifier>{c8ca6871-b6df-462a-bf7a-8f824f2140fb}</UniqueIdentifier>
@@ -31,70 +25,43 @@
     <Filter Include="ソース ファイル\Data">
       <UniqueIdentifier>{8ab610c4-6c29-43be-8bea-fa8e8b9fbb81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Graphics">
+    <Filter Include="ソース ファイル\Engine\Utility">
+      <UniqueIdentifier>{32e9d0ec-fd29-41fc-a9eb-72c79dee1ea0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\3DObject">
+      <UniqueIdentifier>{92a63eb7-e3e8-4a2d-9de6-c7307c05083c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Manager">
+      <UniqueIdentifier>{ebbb3713-bc44-49e2-aa73-bfca01ff338f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\2DObject">
+      <UniqueIdentifier>{bfc5ae85-b1ed-4139-8b92-714dfa2cfefe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object">
+      <UniqueIdentifier>{8da07607-b881-4218-b411-53bfa0b8dcde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\GameObject">
+      <UniqueIdentifier>{352cbb5d-1f39-463c-b8c9-ef9134be960e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\GameObject\Transform">
+      <UniqueIdentifier>{21217e10-49ac-42e1-9953-c521f8e1d1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Reader">
+      <UniqueIdentifier>{070ac6f0-c770-4c06-a8de-cea3db71d10a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Graphics">
       <UniqueIdentifier>{d444d7d2-143c-4b54-a5db-d09949b53b87}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Manager">
-      <UniqueIdentifier>{ebbb3713-bc44-49e2-aa73-bfca01ff338f}</UniqueIdentifier>
+    <Filter Include="ソース ファイル\Engine\Others">
+      <UniqueIdentifier>{0543fde4-bd7e-40bd-8393-02225f055e65}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Direct3D.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Texture.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Time.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Text.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Debug.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\IniOperator.cpp">
-      <Filter>ソース ファイル\Reader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\AssignmentFunction.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
+      <Filter>ソース ファイル\Engine\Reader</Filter>
     </ClCompile>
     <ClCompile Include="ClearScene.cpp">
       <Filter>ソース ファイル\Scene</Filter>
@@ -120,29 +87,26 @@
     <ClCompile Include="SettingScene_UI.cpp">
       <Filter>ソース ファイル\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="Door.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Goal.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="IDObject.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Pin.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Screen_Puzzle.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Screen_Room.cpp">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Storage.cpp">
       <Filter>ソース ファイル\Data</Filter>
@@ -153,59 +117,107 @@
     <ClCompile Include="Judge.cpp">
       <Filter>ソース ファイル\Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\Scale.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\MouseOperationUI.cpp">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\FacadeMouse.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_draw.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_dx11.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_impl_win32.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_tables.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Graphics\imgui_widgets.cpp">
-      <Filter>ソース ファイル\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\RootUI.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
+      <Filter>ソース ファイル\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="PlayScene_Menu.cpp">
       <Filter>ソース ファイル\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\PtrObserver.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\RootJob.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="..\IntegratedEngine\Engine\SceneManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="SceneList.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="DrawingManager.cpp">
-      <Filter>ソース ファイル\Manager</Filter>
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\PtrObserver.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Text.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Time.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Position.cpp">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Scale.cpp">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Transform.cpp">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Fbx.cpp">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\SceneManager.cpp">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Texture.cpp">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\GameTime.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Debug.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\GameObject.cpp">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\SphereCollider.cpp">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\RootJob.cpp">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\RootUI.cpp">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\RayCastData.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\AssignmentFunction.cpp">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Direct3D.cpp">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp">
+      <Filter>ソース ファイル\Engine\Others</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,65 +226,8 @@
     <FxCompile Include="..\IntegratedEngine\Shader\Simple3D.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Camera.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Direct3D.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Input.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Math.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Model.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Texture.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Time.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Transform.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Text.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Debug.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h">
-      <Filter>ソース ファイル\Reader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\AssignmentFunction.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Light.h">
-      <Filter>ソース ファイル\Engine</Filter>
+      <Filter>ソース ファイル\Engine\Reader</Filter>
     </ClInclude>
     <ClInclude Include="ClearScene.h">
       <Filter>ソース ファイル\Scene</Filter>
@@ -299,25 +254,25 @@
       <Filter>ソース ファイル\UI</Filter>
     </ClInclude>
     <ClInclude Include="Door.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Goal.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="IDObject.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Pin.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Screen_Puzzle.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Screen_Room.h">
-      <Filter>ソース ファイル\GameObject</Filter>
+      <Filter>ソース ファイル\Object</Filter>
     </ClInclude>
     <ClInclude Include="Storage.h">
       <Filter>ソース ファイル\Data</Filter>
@@ -328,47 +283,98 @@
     <ClInclude Include="Procedural.h">
       <Filter>ソース ファイル\Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Position.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Scale.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\FacadeMouse.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\MouseOperationUI.h">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
-      <Filter>ソース ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\RootUI.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="PlayScene_Menu.h">
       <Filter>ソース ファイル\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\PtrObserver.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\RootJob.h">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\SceneManager.h">
-      <Filter>ソース ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="SceneList.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="DrawingManager.h">
-      <Filter>ソース ファイル\Manager</Filter>
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Camera.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Math.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\PtrObserver.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Text.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Time.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Position.h">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Scale.h">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Transform.h">
+      <Filter>ソース ファイル\Engine\GameObject\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Fbx.h">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Model.h">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\SceneManager.h">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Image.h">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Sprite.h">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Texture.h">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\GameTime.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Debug.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\GameObject.h">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\SphereCollider.h">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\RootJob.h">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\RootUI.h">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\RayCastData.h">
-      <Filter>ソース ファイル\Engine</Filter>
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\AssignmentFunction.h">
+      <Filter>ソース ファイル\Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Direct3D.h">
+      <Filter>ソース ファイル\Engine\3DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Input.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\CallDef.h">
+      <Filter>ソース ファイル\Engine\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
+      <Filter>ソース ファイル\Engine\2DObject</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Scene.h">
+      <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\Light.h">
+      <Filter>ソース ファイル\Engine\Others</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
