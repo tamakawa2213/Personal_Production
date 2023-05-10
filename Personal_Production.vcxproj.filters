@@ -141,9 +141,6 @@
     <ClCompile Include="SceneList.cpp">
       <Filter>ソース ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="DrawingManager.cpp">
-      <Filter>ソース ファイル\Engine\Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\IntegratedEngine\Engine\Camera.cpp">
       <Filter>ソース ファイル\Engine\Utility</Filter>
     </ClCompile>
@@ -219,6 +216,9 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp">
       <Filter>ソース ファイル\Engine\Others</Filter>
     </ClCompile>
+    <ClCompile Include="DrawingManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Point3D.hlsl" />
@@ -288,9 +288,6 @@
     </ClInclude>
     <ClInclude Include="SceneList.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="DrawingManager.h">
-      <Filter>ソース ファイル\Engine\Manager</Filter>
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\Camera.h">
       <Filter>ソース ファイル\Engine\Utility</Filter>
@@ -375,6 +372,9 @@
     </ClInclude>
     <ClInclude Include="..\IntegratedEngine\Engine\UserInterface.h">
       <Filter>ソース ファイル\Engine\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="DrawingManager.h">
+      <Filter>ソース ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
