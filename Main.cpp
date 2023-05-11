@@ -27,7 +27,7 @@
 #pragma comment(lib, "winmm.lib")
 
 //定数宣言
-const LPCWSTR WIN_CLASS_NAME = L"PersonalProduction";	//ウィンドウクラス名
+const LPCWSTR WIN_CLASS_NAME = L"LabyrinthMansion";	//ウィンドウクラス名
 const unsigned int WINDOW_WIDTH = 1200;	//ウィンドウの幅
 const unsigned int WINDOW_HEIGHT = 600;	//ウィンドウの高さ
 const int MAX_FPS = 60;
@@ -67,7 +67,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 	//ウィンドウを作成
 	HWND hWnd = CreateWindow(
 		WIN_CLASS_NAME,			//ウィンドウクラス名
-		L"個人製作",		//タイトルバーに表示する内容
+		WIN_CLASS_NAME,		//タイトルバーに表示する内容
 		WS_OVERLAPPEDWINDOW,	//スタイル（普通のウィンドウ）
 		CW_USEDEFAULT,			//表示位置左（おまかせ）
 		CW_USEDEFAULT,			//表示位置上（おまかせ）
