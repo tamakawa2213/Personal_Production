@@ -22,6 +22,8 @@ ModeScene_UI::~ModeScene_UI()
 void ModeScene_UI::Initialize()
 {
 	int pict;
+	
+
 	ILoad(pict, "Assets\\Button_Easy.png");
 	hPict_.push_back(pict);
 	Func_.insert({ pict, &ModeScene_UI::SelectEasy });
@@ -33,6 +35,9 @@ void ModeScene_UI::Initialize()
 	ILoad(pict, "Assets\\Settings.png");
 	hPict_.push_back(pict);
 	Func_.insert({ pict, &ModeScene_UI::SelectSettings });
+
+	ILoad(pict, "Assets\\Background.png");
+	hPict_.push_back(pict);
 }
 
 void ModeScene_UI::Update()
