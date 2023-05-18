@@ -219,6 +219,9 @@
     <ClCompile Include="DrawingManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="..\IntegratedEngine\Engine\JsonOperator.cpp">
+      <Filter>ソース ファイル\Engine\Reader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Point3D.hlsl" />
@@ -375,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="DrawingManager.h">
       <Filter>ソース ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\IntegratedEngine\Engine\JsonOperator.h">
+      <Filter>ソース ファイル\Engine\Reader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

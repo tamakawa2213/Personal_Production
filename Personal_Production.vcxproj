@@ -165,6 +165,7 @@
     <ClCompile Include="..\IntegratedEngine\Engine\Image.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\IniOperator.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Input.cpp" />
+    <ClCompile Include="..\IntegratedEngine\Engine\JsonOperator.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Light.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Math.cpp" />
     <ClCompile Include="..\IntegratedEngine\Engine\Model.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="..\IntegratedEngine\Engine\Image.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\IniOperator.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Input.h" />
+    <ClInclude Include="..\IntegratedEngine\Engine\JsonOperator.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Light.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Math.h" />
     <ClInclude Include="..\IntegratedEngine\Engine\Model.h" />
