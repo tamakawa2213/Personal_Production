@@ -48,7 +48,8 @@ void ModeScene_UI::Initialize()
 	};
 	JsonOperator::OverWrite("Assets\\data.json", j);*/
 
-	Image::SetPosition(hPict_[0], { JsonOperator::GetData<float>(data, 0, "c", "f", "g"), 0,0});
+	std::string i = JsonOperator::GetData(data, std::string("a"), "c", "e");
+	Image::SetPosition(hPict_[0], { JsonOperator::GetData(data, 0.0f, "c", "f", "g"), 0,0});
 }
 
 void ModeScene_UI::Update()
