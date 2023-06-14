@@ -121,7 +121,7 @@ void Screen_Room::MoveOther(char Type)
 	}
 
 	Player* pPlayer = (Player*)GetParent();
-	Goal* pGoal = (Goal*)FindChildObject("Goal");
+	Goal* pGoal = (Goal*)FindObject("Goal");
 	pPlayer->SetGoal((pPlayer->GetUVPos().x == pGoal->GetUVPos().x) && (pPlayer->GetUVPos().y == pGoal->GetUVPos().y));
 	SAFE_RELEASE(pGoal);
 	SAFE_RELEASE(pPlayer);
@@ -138,7 +138,7 @@ void Screen_Room::Look_Around()
 	}
 
 	float moveX;
-	moveX = (Input::Mouse::GetPosition().x - PrevPosX_) / 2;
+	moveX = ((float)Input::Mouse::GetPosition().x - PrevPosX_) / 2;
 
 	transform_.rotate_.z += moveX;
 

@@ -77,7 +77,7 @@ void Door::SendtoPlayer()
 {
 	Player* pPlayer;
 	pPlayer = (Player*)GetParent()->GetParent();	//親オブジェクトの親オブジェクトがPlayer
-	if (!pPlayer->GetWait())						//待機状態かどうか
+	if (!pPlayer->IsWait())						//待機状態かどうか
 	{
 		pPlayer->SetID(this->GetID());				//自分自身のIDを送る
 		pPlayer->ReceiveFromDoor();

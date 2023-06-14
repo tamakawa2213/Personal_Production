@@ -33,9 +33,9 @@ public:
 	XMFLOAT2 GetUVPos() { return UVPosition_; }
 	void SetUVPos(XMFLOAT2 move);
 
-	bool GetWait() { return Wait_; }
+	bool IsWait() { return Wait_; }
 	void SetWait(bool wait);
 
 	void SetGoal(bool Goal) { SameGoal_ = Goal; }
-	bool GetGoal() { return SameGoal_; }
+	bool IsGoal() { return SameGoal_; }
 };

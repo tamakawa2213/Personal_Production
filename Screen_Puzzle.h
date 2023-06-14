@@ -5,10 +5,11 @@
 static const int BoardSize_ = 4;		//横・縦それぞれの大きさ
 
 class Player;
+enum class Difficulty;
 
 enum class Board
 {
-	HLt,
+	HLt = 0,
 	HR,
 	LwLt,
 	LwR,
@@ -29,7 +30,7 @@ class Screen_Puzzle : public GameObject
 
 	bool Wait_;			//待機時間かどうか
 
-	char Mode_;			//難易度指定
+	Difficulty Mode_;			//難易度指定
 
 	char Moving_;		//移動を開始してから経過したフレーム数を記録
 	char MovingPanel_;	//移動中のマスの値が入る

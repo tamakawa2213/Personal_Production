@@ -21,6 +21,10 @@ namespace
 	static const int TIMETOMOVE = 60;		//移動にかける時間
 	static const int BOARDTOTAL_ = 16;		//盤面のマスの総数
 
+	const XMFLOAT3 CHROMA_BRIGHT{ 0.8f, 0.8f, 0.8f };		//明るいマスの明度
+	const XMFLOAT3 CHROMA_CHOICE{ 0.7f, 0.7f, 0.7f };		//選択中のマスの明度
+	const XMFLOAT3 CHROMA_DARK{ 0.5f, 0.5f, 0.5f };			//暗いマスの明度
+
 	//各方向のドアを持っている番号のタグ付け
 	const char DoorHi[2] = { (char)Board::HLt, (char)Board::HR };
 	const char DoorLw[2] = { (char)Board::LwLt, (char)Board::LwR };
@@ -60,7 +64,7 @@ namespace
 
 Screen_Puzzle::Screen_Puzzle(GameObject* parent)
 	: GameObject(parent, "Screen_Puzzle"), hModel_(), Wait_(false), Moving_(0), MoveDir_(0),
-	MovingPanel_(0), pPlayer_(nullptr), Mode_(0), SeedData_(0), GoalPos_(0)
+	MovingPanel_(0), pPlayer_(nullptr), Mode_(Difficulty::EASY), SeedData_(0), GoalPos_(0)
 {
 	ZeroMemory(Board_, sizeof(Board_));
 	DecidedData_.clear();
@@ -83,7 +87,7 @@ void Screen_Puzzle::Initialize()
 		hModel_[i] = Model::Load(Name);
 		assert(hModel_[i] >= 0);
 	}
-	Mode_ = (char)Storage::GetDifficulty();
+	Mode_ = Storage::GetDifficulty();
 	Instantiate<Pin>(this);
 
 	//初期位置にゴールは来ないので
@@ -97,7 +101,7 @@ void Screen_Puzzle::Update()
 	{
 		Moving();
 	}
-	else if(!pPlayer_->GetWait())
+	else if(!pPlayer_->IsWait())
 	{
 		bool Ishit = false;
 		float distance = 9999.0f;
@@ -156,34 +160,33 @@ void Screen_Puzzle::Draw()
 
 				Model::SetTransform(hModel_[Type], Tr);
 
-				//Easyモードならば現在位置を表示
-				if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == 0)
-				{
-					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX);
-				}
-
-#if _DEBUG		//デバッグモードでのみ表示
-				Goal* pGoal = (Goal*)FindObject("Goal");
-				if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
-				{
-					const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-					Model::Draw(hModel_[Type], Chroma, UCHAR_MAX);
-				}
-				SAFE_RELEASE(pGoal);
-#endif
-				
 				if (PuzX_ == x && PuzZ_ == z)
 				{
 					if (!Wait_)
 					{
-						const XMFLOAT3 Chroma{ 0.5f, 0.5f, 0.5f };
-						Model::Draw(hModel_[Type], Chroma, UCHAR_MAX);
+						Model::Draw(hModel_[Type], CHROMA_CHOICE, 1);
 					}
 				}
 				else
 				{
-					Model::Draw(hModel_[Type]);
+#if _DEBUG			//デバッグモードでのみ表示
+					Goal* pGoal = (Goal*)FindObject("Goal");
+					if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
+					{
+						Model::Draw(hModel_[Type], CHROMA_BRIGHT, 1);
+					}
+					SAFE_RELEASE(pGoal);
+#endif
+
+					//Easyモードならば現在位置を表示
+					if (pPlayer_->GetUVPos().x == x && pPlayer_->GetUVPos().y == z && Mode_ == Difficulty::EASY)
+					{
+						Model::Draw(hModel_[Type], CHROMA_BRIGHT, 1);
+					}
+					else
+					{
+						Model::Draw(hModel_[Type], CHROMA_DARK, 1);
+					}
 				}
 			}
 			else
@@ -203,14 +206,14 @@ void Screen_Puzzle::Draw()
 					case 0x01: Tr.position_.x += move; break;
 					}
 					Model::SetTransform(hModel_[MovingPanel_], Tr);
-					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == 0)
+					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == Difficulty::EASY)
 					{
 						const XMFLOAT3 Chroma{ 0.7f, 0.7f, 0.7f };
-						Model::Draw(hModel_[MovingPanel_], Chroma, UCHAR_MAX);
+						Model::Draw(hModel_[MovingPanel_], CHROMA_BRIGHT, 1);
 					}
 					else
 					{
-						Model::Draw(hModel_[MovingPanel_]);
+						Model::Draw(hModel_[MovingPanel_], CHROMA_DARK, 1);
 					}
 				}
 			}
@@ -220,7 +223,6 @@ void Screen_Puzzle::Draw()
 
 void Screen_Puzzle::Release()
 {
-	//SAFE_RELEASE(pPlayer_);
 }
 
 void Screen_Puzzle::AssignPuzzle()
@@ -247,9 +249,8 @@ void Screen_Puzzle::AssignPuzzle()
 	//その他のパズルを作成
 	while (DecidedData_.size() < BOARDTOTAL_)
 	{
-		auto Find = std::find(DecidedData_.begin(), DecidedData_.end(), BoardDecide);
 		//決定済みデータにBoardDecideの値が存在しなければ
-		if (Find == DecidedData_.end())
+		if (auto Find = std::find(DecidedData_.begin(), DecidedData_.end(), BoardDecide); Find == DecidedData_.end())
 		{	//負の値になることを防ぐためにUINT型にキャストする
 			Board_[(char)(BoardDecide / BoardSize_)][(char)(BoardDecide % BoardSize_)] = (UINT)((SeedData_ + BoardDecide) / (BoardDecide + 1)) % (char)Board::MAX;
 			DecidedData_.push_back(BoardDecide);
@@ -317,7 +318,7 @@ void Screen_Puzzle::Shuffle()
 	pGoal->InitialPosition(GoalPos_);
 
 	//Player側に初期位置のIDを送る
-	Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] = pPlayer_->GetID();
+	pPlayer_->SetID(Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y]);
 }
 
 void Screen_Puzzle::AssignGoal()
@@ -328,6 +329,7 @@ void Screen_Puzzle::AssignGoal()
 	//ゴールの初期位置の判定
 	if (SeedData_ < 0)				//0未満ならば
 	{
+		SeedData_ *= -1;
 		GoalPos_ = UnderSide;		//下半分に置く
 	}
 	if (SeedData_ & 1)				//奇数ならば

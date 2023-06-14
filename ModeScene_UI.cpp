@@ -40,7 +40,7 @@ void ModeScene_UI::Initialize()
 
 	ILoad(pict, "Assets\\Background.png");
 	hPict_.push_back(pict);
-	std::string data = JsonOperator::Load("Assets\\data.json");
+	//std::string data = JsonOperator::Load("Assets\\data.json");
 	/*nlohmann::json j = {
 		{ "a", 100 },
 		{ "b", 110 },
@@ -48,8 +48,8 @@ void ModeScene_UI::Initialize()
 	};
 	JsonOperator::OverWrite("Assets\\data.json", j);*/
 
-	std::string i = JsonOperator::GetData(data, std::string("a"), "c", "e");
-	Image::SetPosition(hPict_[0], { JsonOperator::GetData(data, 0.0f, "c", "f", "g"), 0,0});
+	//std::string i = JsonOperator::GetData(data, std::string("a"), "c", "e");
+	//Image::SetPosition(hPict_[0], { JsonOperator::GetData(data, 0.0f, "c", "f", "g"), 0,0});
 }
 
 void ModeScene_UI::Update()

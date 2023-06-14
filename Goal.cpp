@@ -22,12 +22,12 @@ void Goal::Initialize()
 {
 	hModel_ = Model::Load("Assets\\Key.fbx");
 	assert(hModel_ >= 0);
-	pPlayer_ = (Player*)GetParent()->GetParent();
+	pPlayer_ = (Player*)FindObject("Player");
 }
 
 void Goal::Update()
 {
-	if (pPlayer_->GetGoal())
+	if (pPlayer_->IsGoal())
 	{
 		RayCastData data;
 		data.CreateMouseRay();
@@ -53,8 +53,9 @@ void Goal::Update()
 		{
 			IsMouse_[0] = false;
 			IsMouse_[1] = false;
-			Judge::calculation();
-			SCENE_CHANGE(SCENE_ID::CLEAR);
+			KillMe();
+			/*Judge::calculation();
+			SCENE_CHANGE(SCENE_ID::CLEAR);*/
 		}
 
 		//‰Ÿ‚µ‚Ä‚¢‚È‚¯‚ê‚Îfalse‚É‚È‚é
@@ -68,7 +69,7 @@ void Goal::Update()
 
 void Goal::Draw()
 {
-	if (pPlayer_->GetGoal())
+	if (pPlayer_->IsGoal())
 	{
 		Model::SetTransform(hModel_, transform_);
 
