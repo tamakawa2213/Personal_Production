@@ -27,6 +27,7 @@ void PlayScene::Initialize()
 
 void PlayScene::Update()
 {
+	Judge::JudgeClear();
 }
 
 void PlayScene::ShowGraphical()

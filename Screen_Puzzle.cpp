@@ -171,7 +171,7 @@ void Screen_Puzzle::Draw()
 				{
 #if _DEBUG			//デバッグモードでのみ表示
 					Goal* pGoal = (Goal*)FindObject("Goal");
-					if (pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
+					if (pGoal != nullptr && pGoal->GetUVPos().x == x && pGoal->GetUVPos().y == z)
 					{
 						Model::Draw(hModel_[Type], CHROMA_BRIGHT, 1);
 					}
@@ -317,8 +317,8 @@ void Screen_Puzzle::Shuffle()
 	//シャッフル後の位置を送信
 	pGoal->InitialPosition(GoalPos_);
 
-	//Player側に初期位置のIDを送る
-	pPlayer_->SetID(Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y]);
+	//Player側からIDを取得
+	Board_[(char)pPlayer_->GetUVPos().x][(char)pPlayer_->GetUVPos().y] = pPlayer_->GetID();
 }
 
 void Screen_Puzzle::AssignGoal()

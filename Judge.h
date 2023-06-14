@@ -7,4 +7,7 @@ namespace Judge
 	int GetNom();
 	void calculation();	//スコアの算出
 	int GetScore();		//スコアを取得する
+
+	//クリアしたか判定
+	void JudgeClear();
 };

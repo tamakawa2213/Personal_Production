@@ -1,5 +1,6 @@
 #include "Storage.h"
 #include <map>
+#include "Goal.h"
 
 namespace
 {
@@ -10,6 +11,8 @@ namespace
 	};
 
 	int FoMode = 0;	//フェードアウトのモード
+
+	std::list<Goal*> GoalList_;
 }
 
 namespace Storage
@@ -34,5 +37,10 @@ namespace Storage
 	int GetFadeoutSpeed()
 	{
 		return Fadeout[FoMode];
+	}
+
+	void InsertGoal(Goal* g)
+	{
+		GoalList_.push_back(g);
 	}
 }

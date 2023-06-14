@@ -1,6 +1,8 @@
 #include "Judge.h"
 #include <algorithm>
 #include "../IntegratedEngine/Engine/Time.h"
+#include "../IntegratedEngine/Engine/PtrObserver.h"
+#include "SceneList.h"
 #include "Storage.h"
 
 namespace
@@ -48,5 +50,14 @@ namespace Judge
     int GetScore()
     {
         return Score;
+    }
+
+    void JudgeClear()
+    {
+        if (PtrObserver::GetSceneManager()->FindObject("Goal") == nullptr)
+        {
+            calculation();
+            SCENE_CHANGE(SCENE_ID::CLEAR);
+        }
     }
 }
