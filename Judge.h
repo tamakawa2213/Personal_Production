@@ -1,5 +1,7 @@
 #pragma once
 
+class Goal;
+
 namespace Judge
 {
 	void Initialize();	//‰Šú‰»
@@ -10,4 +12,6 @@ namespace Judge
 
 	//ƒNƒŠƒA‚µ‚½‚©”»’è
 	void JudgeClear();
+
+	void AddGoal(Goal* g);
 };

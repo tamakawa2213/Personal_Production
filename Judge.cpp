@@ -1,7 +1,10 @@
 #include "Judge.h"
 #include <algorithm>
+#include <list>
+#include <memory>
 #include "../IntegratedEngine/Engine/Time.h"
 #include "../IntegratedEngine/Engine/PtrObserver.h"
+#include "Goal.h"
 #include "SceneList.h"
 #include "Storage.h"
 
@@ -9,6 +12,8 @@ namespace
 {
     int Score;  //ÉXÉRÉA
     int NoM;	//éËêî
+
+    std::list<std::weak_ptr<Goal>> GoalList_ = {};
 }
 
 namespace Judge
@@ -39,6 +44,7 @@ namespace Judge
         {
         case Difficulty::EASY: revision = 1; break;
         case Difficulty::HARD: revision = 5; break;
+        default:break;
         }
 
         float NpS;          //1ïbÇ†ÇΩÇËÇÃéËêî
@@ -54,10 +60,27 @@ namespace Judge
 
     void JudgeClear()
     {
-        if (PtrObserver::GetSceneManager()->FindObject("Goal") == nullptr)
+        if(!GoalList_.empty())
+        for (auto itr = GoalList_.begin(); itr != GoalList_.end();)
+        {
+            if (!(*itr).use_count())
+            {
+                itr = GoalList_.erase(itr);
+            }
+            else
+            {
+                itr++;
+            }
+        }
+
+        if (GoalList_.empty())
         {
             calculation();
             SCENE_CHANGE(SCENE_ID::CLEAR);
         }
+    }
+    void AddGoal(Goal* g)
+    {
+        GoalList_.push_back(std::make_shared<Goal>(g));
     }
 }

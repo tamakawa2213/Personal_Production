@@ -261,6 +261,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 	case WM_MOUSEMOVE:
 		Input::Mouse::SetPosition(LOWORD(lParam), HIWORD(lParam));
 		return 0;
+
+	default:break;
 	}
 
 #if _DEBUG

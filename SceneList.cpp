@@ -24,6 +24,8 @@ void SceneList::Update()
 	case SCENE_ID::SETTINGS: ptr_->Instantiate<SettingScene>(ptr_); break;
 	case SCENE_ID::PLAY: ptr_->Instantiate<PlayScene>(ptr_); break;
 	case SCENE_ID::CLEAR: ptr_->Instantiate<ClearScene>(ptr_); break;
+
+	default:break;
 	}
 
 	CurrentSceneID_ = NextSceneID_;

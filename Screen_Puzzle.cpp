@@ -204,6 +204,8 @@ void Screen_Puzzle::Draw()
 					case 0x04: Tr.position_.z -= move; break;
 					case 0x02: Tr.position_.x -= move; break;
 					case 0x01: Tr.position_.x += move; break;
+
+					default:break;
 					}
 					Model::SetTransform(hModel_[MovingPanel_], Tr);
 					if (pPlayer_->GetUVPos().x == PuzX_ && pPlayer_->GetUVPos().y == PuzZ_ && Mode_ == Difficulty::EASY)
@@ -243,6 +245,8 @@ void Screen_Puzzle::AssignPuzzle()
 		Board_[(char)(DecidedData_.at(1) / BoardSize_)][(char)((DecidedData_.at(1) - 1) % BoardSize_)] = DoorR[SeedData_ % 3];
 		DecidedData_.push_back(DecidedData_.at(1) - 1);
 		break;
+
+	default:break;
 	}
 
 	char BoardDecide = 0;	//生成するパネルの番号
@@ -380,6 +384,8 @@ void Screen_Puzzle::AssignGoal()
 		//左側にドアを持つパネルのみで判断
 		Board_[(char)(GoalPos_ / BoardSize_)][(char)(GoalPos_ % BoardSize_)] = DoorLt[SeedData_ % 3];
 		break;
+
+	default:break;
 	}
 	DecidedData_.push_back(GoalPos_);
 }
@@ -405,6 +411,8 @@ void Screen_Puzzle::Swap(int x, int z)
 				{
 				case 1: MoveDir_ = path.DoorH; break;
 				case -1: MoveDir_ = path.DoorLw; break;
+
+				default:break;
 				}
 			}
 			if (Dir.moveLtR != 0)
@@ -414,6 +422,8 @@ void Screen_Puzzle::Swap(int x, int z)
 				{
 				case 1: MoveDir_ = path.DoorR; break;
 				case -1: MoveDir_ = path.DoorLt; break;
+
+				default:break;
 				}
 			}
 			//押したマスがPlayerのいるマスだった場合

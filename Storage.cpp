@@ -1,6 +1,5 @@
 #include "Storage.h"
 #include <map>
-#include "Goal.h"
 
 namespace
 {
@@ -12,19 +11,16 @@ namespace
 
 	int FoMode = 0;	//フェードアウトのモード
 
-	std::list<Goal*> GoalList_;
+	Difficulty Dif;
 }
 
 namespace Storage
 {
-	Difficulty Dif;
-
-
 	void SetDifficulty(Difficulty dif)
 	{
 		Dif = dif;
 	}
-	Difficulty GetDifficulty()
+	const Difficulty GetDifficulty()
 	{
 		return Dif;
 	}
@@ -37,10 +33,5 @@ namespace Storage
 	int GetFadeoutSpeed()
 	{
 		return Fadeout[FoMode];
-	}
-
-	void InsertGoal(Goal* g)
-	{
-		GoalList_.push_back(g);
 	}
 }

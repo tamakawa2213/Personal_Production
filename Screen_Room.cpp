@@ -62,7 +62,7 @@ void Screen_Room::Initialize()
 	pDoor[0] = Instantiate<Door>(this);
 	pDoor[1] = Instantiate<Door>(this);
 
-	Instantiate<Goal>(this);
+	Judge::AddGoal(Instantiate<Goal>(this));
 
 	Player* pPlayer = (Player*)GetParent();
 	MoveOther(pPlayer->GetID());
