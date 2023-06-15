@@ -60,7 +60,7 @@ namespace Judge
 
     void JudgeClear()
     {
-        if(!GoalList_.empty())
+       /* if(!GoalList_.empty())
         for (auto itr = GoalList_.begin(); itr != GoalList_.end();)
         {
             if (!(*itr).use_count())
@@ -71,9 +71,10 @@ namespace Judge
             {
                 itr++;
             }
-        }
+        }*/
 
-        if (GoalList_.empty())
+        //if (GoalList_.empty())
+        if(PtrObserver::GetSceneManager()->FindObject("Goal") == nullptr)
         {
             calculation();
             SCENE_CHANGE(SCENE_ID::CLEAR);
@@ -81,6 +82,6 @@ namespace Judge
     }
     void AddGoal(Goal* g)
     {
-        GoalList_.push_back(std::make_shared<Goal>(g));
+        //GoalList_.push_back(std::make_shared<Goal>(g));
     }
 }
