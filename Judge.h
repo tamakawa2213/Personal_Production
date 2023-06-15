@@ -12,6 +12,4 @@ namespace Judge
 
 	//ƒNƒŠƒA‚µ‚½‚©”»’è
 	void JudgeClear();
-
-	void AddGoal(Goal* g);
 };

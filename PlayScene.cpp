@@ -6,7 +6,6 @@
 #include "Judge.h"
 #include "Player.h"
 #include "PlayScene_UI.h"
-#include "Storage.h"
 
 PlayScene::PlayScene(GameObject* parent)
 	: GameObject(parent, "PlayScene")

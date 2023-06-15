@@ -30,6 +30,11 @@ namespace Storage
 		FoMode = mode;
 	}
 
+	int GetFadeoutMode()
+	{
+		return FoMode;
+	}
+
 	int GetFadeoutSpeed()
 	{
 		return Fadeout[FoMode];

@@ -47,6 +47,13 @@ void SettingsScene_UI::Initialize()
 
 void SettingsScene_UI::Update()
 {
+	//選択中のモード以外を薄くする
+	for (int i = 0; i < 3; i++)
+	{
+		Image::SetAlpha(i, 0.5f);
+	}
+	Image::SetAlpha(Storage::GetFadeoutMode(), 1);
+
 	if (Input::Mouse::Down(0))
 	{
 		switch (int choice = Image::IsHitCursorAny(); choice)

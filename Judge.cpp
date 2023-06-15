@@ -1,7 +1,6 @@
 #include "Judge.h"
 #include <algorithm>
 #include <list>
-#include <memory>
 #include "../IntegratedEngine/Engine/Time.h"
 #include "../IntegratedEngine/Engine/PtrObserver.h"
 #include "Goal.h"
@@ -12,8 +11,6 @@ namespace
 {
     int Score;  //ÉXÉRÉA
     int NoM;	//éËêî
-
-    std::list<std::weak_ptr<Goal>> GoalList_ = {};
 }
 
 namespace Judge
@@ -79,9 +76,5 @@ namespace Judge
             calculation();
             SCENE_CHANGE(SCENE_ID::CLEAR);
         }
-    }
-    void AddGoal(Goal* g)
-    {
-        //GoalList_.push_back(std::make_shared<Goal>(g));
     }
 }

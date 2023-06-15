@@ -12,5 +12,6 @@ namespace Storage
 	const Difficulty GetDifficulty();
 
 	void SetFadeoutMode(int mode);
+	int GetFadeoutMode();
 	int GetFadeoutSpeed();
 };
