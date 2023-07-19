@@ -114,6 +114,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInst, LPSTR lpCmdLine, 
 #endif
 	}
 
+	Time::Initialize();
 
 	//RootJobèâä˙âª
 	std::unique_ptr<RootJob> pRootJob = nullptr;
